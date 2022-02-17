@@ -11,5 +11,5 @@ public enum TradeType {
     payment,
 
     /** 代扣 */
-    withHold;
+    withHold
 }
