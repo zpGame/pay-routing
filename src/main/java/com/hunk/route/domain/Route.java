@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
  */
 public class Route {
 
+    private String routeId;
+
     /** 路由规则 */
     private RouteRule routeRule;
     /** 优先级 */
@@ -22,7 +24,7 @@ public class Route {
      * 创建路由
      *
      * @param routeRule 路由规则
-     * @param priority 优先级
+     * @param priority 优先级java
      * @param beginDate 生效时间
      * @param endDate 过期时间
      * @return route
