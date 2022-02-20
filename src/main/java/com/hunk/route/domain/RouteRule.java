@@ -10,11 +10,11 @@ import java.util.List;
  */
 public class RouteRule {
 
+    private Long id;
+
     private String ruleId;
 
     private TradeType tradeType;
-
-    private CardType cardType;
 
     private AccountType accountType;
 

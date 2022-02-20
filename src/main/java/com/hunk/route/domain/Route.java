@@ -9,7 +9,13 @@ import java.time.LocalDateTime;
  */
 public class Route {
 
+    private Long id;
+
     private String routeId;
+
+    private String channel;
+
+    private String channelName;
 
     /** 路由规则 */
     private RouteRule routeRule;
@@ -45,6 +51,7 @@ public class Route {
 
     /**
      * 修改为维护状态
+     *
      * @return Route
      */
     public Route changeUpHoldOn() {
@@ -54,11 +61,11 @@ public class Route {
 
     /**
      * 修改为维护结束
+     *
      * @return Route
      */
     public Route changeUpHoldOff() {
         this.isUpHold = RouteConstants.UPHOLD_OFF;
         return this;
     }
-
 }
