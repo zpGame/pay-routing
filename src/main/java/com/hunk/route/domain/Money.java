@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import java.math.BigDecimal;
 
 /**
@@ -11,13 +13,19 @@ import java.math.BigDecimal;
  * @date 2022/2/17
  *     <p>
  */
+@Embeddable
 public class Money {
 
+    @Embedded
     public static Money ZERO = new Money(0);
 
     private BigDecimal amount;
 
-    private Money() {}
+    public Money getZERO() {
+        return ZERO;
+    }
+
+    public Money() {}
 
     public Money(BigDecimal amount) {
         this.amount = amount;

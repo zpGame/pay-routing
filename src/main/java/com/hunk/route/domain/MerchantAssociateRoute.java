@@ -1,5 +1,6 @@
 package com.hunk.route.domain;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -7,8 +8,13 @@ import java.util.List;
  * @date 2022/2/17
  *     <p>商户关联路由
  */
+@Entity
+@Table(name = "merchant_route")
+@Access(AccessType.FIELD)
 public class MerchantAssociateRoute {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     /** 商户号 */
@@ -18,5 +24,6 @@ public class MerchantAssociateRoute {
     private String merchantName;
 
     /** 路由规则 1:N */
+    @OneToMany
     private List<Route> routes;
 }

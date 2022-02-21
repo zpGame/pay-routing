@@ -1,5 +1,6 @@
 package com.hunk.route.domain;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -7,8 +8,12 @@ import java.time.LocalDateTime;
  * @date 2022/2/17
  *     <p>路由
  */
+@Entity
+@Table(name = "route")
 public class Route {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String routeId;
@@ -18,6 +23,7 @@ public class Route {
     private String channelName;
 
     /** 路由规则 */
+    @OneToOne
     private RouteRule routeRule;
     /** 优先级 */
     private int priority;
@@ -38,6 +44,9 @@ public class Route {
     public static Route createRoute(
             RouteRule routeRule, int priority, LocalDateTime beginDate, LocalDateTime endDate) {
         return new Route(routeRule, priority, beginDate, endDate);
+    }
+
+    public Route() {
     }
 
     public Route(

@@ -1,7 +1,9 @@
 package com.hunk.route.main;
 
+import com.hunk.route.config.ServiceWithRepositoriesConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author hunk
@@ -9,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *     <p>启动类
  */
 @SpringBootApplication
+@Import({ServiceWithRepositoriesConfiguration.class})
 public class RouteMain {
 
     public static void main(String[] args) {
