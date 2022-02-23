@@ -1,4 +1,5 @@
 package com.hunk.route;
+
 import com.hunk.route.domain.CardType;
 import com.hunk.route.domain.AccountType;
 import com.hunk.route.domain.TradeType;
@@ -16,35 +17,27 @@ import javax.annotation.Resource;
 /**
  * @author hunk
  * @date 2022/2/21
- * <p>
+ *     <p>
  */
-public class RepositoryTest extends RouteMainTests{
+public class RepositoryTest extends RouteMainTests {
 
-    @Resource
-    RouteRuleRepository ruleRepository;
+    @Resource RouteRuleRepository ruleRepository;
 
     @Test
-    public void save(){
-        RouteRule routeRule = new RouteRule();
-        routeRule.setId(0L);
-        routeRule.setRuleId(UUID.randomUUID().toString());
-        routeRule.setTradeType(TradeType.payment);
-        routeRule.setAccountType(AccountType.personal);
-
+    public void save() {
         ArrayList<BankInfo> bankInfos = new ArrayList<>();
-
-        BankInfo bankInfo = new BankInfo();
-        bankInfo.setBankName("111");
-        bankInfo.setBankShortName("222");
-        bankInfo.setCardType(CardType.CreditCard);
-
+        BankInfo bankInfo = new BankInfo("111", "222", CardType.CreditCard);
         bankInfos.add(bankInfo);
-        routeRule.setBankInfos(bankInfos);
-        routeRule.setMoney(new Money(1));
+        RouteRule routeRule =
+                new RouteRule(
+                        UUID.randomUUID().toString(),
+                        TradeType.payment,
+                        AccountType.personal,
+                        bankInfos,
+                        new Money(1));
 
         RouteRule save = ruleRepository.save(routeRule);
 
         System.out.println(ruleRepository.findAll());
     }
-
 }

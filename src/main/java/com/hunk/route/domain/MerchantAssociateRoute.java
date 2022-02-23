@@ -1,7 +1,9 @@
 package com.hunk.route.domain;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author hunk
@@ -13,9 +15,7 @@ import java.util.List;
 @Access(AccessType.FIELD)
 public class MerchantAssociateRoute {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    @Id @GeneratedValue private Long id;
 
     /** 商户号 */
     private String merchantNo;
@@ -24,6 +24,13 @@ public class MerchantAssociateRoute {
     private String merchantName;
 
     /** 路由规则 1:N */
-    @OneToMany
-    private List<Route> routes;
+    @OneToMany private List<Route> routes;
+
+    public List<Route> obtainRoutes() {
+        return routes.stream()
+                .filter(Route::isUpHold)
+                .filter(Route::validTime)
+                .sorted(Comparator.comparing(Route::getPriority))
+                .collect(Collectors.toList());
+    }
 }

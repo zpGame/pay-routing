@@ -2,6 +2,8 @@ package com.hunk.route.domain;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
+
 /**
  * @author hunk
  * @date 2022/2/21
@@ -23,5 +25,15 @@ public class RouteService {
         this.ruleRepository = ruleRepository;
         this.merchantRepository = merchantRepository;
         this.routeRepository = routeRepository;
+    }
+
+    public void createRoute(PaymentChannel paymentChannel,
+                             RouteRule routeRule,
+                             int priority,
+                             LocalDateTime beginDate,
+                             LocalDateTime endDate){
+
+
+        Route route = Route.createRoute(paymentChannel, routeRule, priority, beginDate, endDate);
     }
 }
