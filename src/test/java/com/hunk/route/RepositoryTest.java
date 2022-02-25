@@ -1,18 +1,11 @@
 package com.hunk.route;
 
-import com.hunk.route.domain.CardType;
-import com.hunk.route.domain.AccountType;
-import com.hunk.route.domain.TradeType;
-import com.hunk.route.domain.BankInfo;
-import com.hunk.route.domain.Money;
-import java.util.ArrayList;
-import java.util.UUID;
-
-import com.hunk.route.domain.RouteRule;
-import com.hunk.route.domain.RouteRuleRepository;
+import com.hunk.route.domain.*;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author hunk
@@ -22,22 +15,20 @@ import javax.annotation.Resource;
 public class RepositoryTest extends RouteMainTests {
 
     @Resource RouteRuleRepository ruleRepository;
+    @Resource BankInfoRepository bankInfoRepository;
 
     @Test
-    public void save() {
-        ArrayList<BankInfo> bankInfos = new ArrayList<>();
-        BankInfo bankInfo = new BankInfo("111", "222", CardType.CreditCard);
-        bankInfos.add(bankInfo);
+    public void bankInfoSave() {
+        BankInfo bankInfo = new BankInfo("中国工商银行", "ICBC", CardType.DebitCard);
+        bankInfoRepository.save(bankInfo);
+    }
+
+    @Test
+    public void RouteRuleSave() {
+        Set<BankInfo> bankInfos = new HashSet<>();
+        bankInfos.add(bankInfoRepository.findById(1L).get());
         RouteRule routeRule =
-                new RouteRule(
-                        UUID.randomUUID().toString(),
-                        TradeType.payment,
-                        AccountType.personal,
-                        bankInfos,
-                        new Money(1));
-
-        RouteRule save = ruleRepository.save(routeRule);
-
-        System.out.println(ruleRepository.findAll());
+                new RouteRule(TradeType.payment, AccountType.personal, bankInfos, new Money(1));
+        ruleRepository.save(routeRule);
     }
 }

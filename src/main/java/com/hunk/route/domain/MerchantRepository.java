@@ -7,4 +7,4 @@ import org.springframework.data.repository.CrudRepository;
  * @date 2022/2/17
  *     <p>
  */
-public interface MerchantRepository extends CrudRepository<MerchantAssociateRoute, Long> {}
+public interface MerchantRepository extends CrudRepository<MerchantRoute, Long> {}

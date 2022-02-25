@@ -1,26 +1,33 @@
 package com.hunk.route.domain;
 
-import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 /**
  * @author hunk
  * @date 2022/2/17
  *     <p>银行信息
  */
-@ToString
-@Embeddable
+@Entity
+@Table(name = "bank_info")
+@org.hibernate.annotations.Table(appliesTo = "bank_info", comment = "银行信息表")
 public class BankInfo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "bank_name", length = 32)
     private String bankName;
 
+    @Column(name = "bank_short_name", length = 8)
     private String bankShortName;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "card_type", length = 12)
     private CardType cardType;
 
     public String getBankShortName() {
@@ -60,5 +67,31 @@ public class BankInfo {
     public BankInfo changeCardType(CardType cardType) {
         this.cardType = cardType;
         return this;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        BankInfo bankInfo = (BankInfo) obj;
+
+        return new EqualsBuilder().append(id, bankInfo.id).isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("bankName", bankName)
+                .append("bankShortName", bankShortName)
+                .append("cardType", cardType)
+                .toString();
     }
 }

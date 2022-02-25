@@ -3,7 +3,8 @@ package com.hunk.route.domain;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -15,31 +16,50 @@ import java.util.stream.Collectors;
 @Entity
 @ToString
 @Table(name = "route_rule")
+@org.hibernate.annotations.Table(appliesTo = "route_rule", comment = "路由规则表")
 public class RouteRule {
 
-    @Id @GeneratedValue private Long id;
-
-    private String ruleId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "rule_id", length = 32)
+    private Long ruleId;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "trade_type", length = 32)
     private TradeType tradeType;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "account_type", length = 32)
     private AccountType accountType;
 
-    @ElementCollection private List<BankInfo> bankInfos;
+    @ManyToMany
+    @JoinTable(
+            name = "role_junction_bank",
+            joinColumns = {@JoinColumn(name = "sys_rule_id", referencedColumnName = "rule_id")},
+            inverseJoinColumns = {@JoinColumn(name = "sys_bank_id", referencedColumnName = "id")},
+            foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
+            inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private Set<BankInfo> bankInfos = new HashSet<>();
 
     @Embedded private Money money;
 
+    public void setBankInfos(Set<BankInfo> bankInfos) {
+        this.bankInfos = bankInfos;
+    }
+
+    public Set<BankInfo> getBankInfos() {
+        return bankInfos;
+    }
+
     public RouteRule() {}
 
+    public static RouteRule createRouteRule(
+            TradeType tradeType, AccountType accountType, Set<BankInfo> bankInfos, Money money) {
+        return new RouteRule(tradeType, accountType, bankInfos, money);
+    }
+
     public RouteRule(
-            String ruleId,
-            TradeType tradeType,
-            AccountType accountType,
-            List<BankInfo> bankInfos,
-            Money money) {
-        this.ruleId = ruleId;
+            TradeType tradeType, AccountType accountType, Set<BankInfo> bankInfos, Money money) {
         this.tradeType = tradeType;
         this.accountType = accountType;
         this.bankInfos = bankInfos;
@@ -54,8 +74,8 @@ public class RouteRule {
         return this.accountType.equals(accountType);
     }
 
-    public boolean validMoney() {
-        return true;
+    public boolean validMoney(Money money) {
+        return this.money.isGreaterThanOrEqual(money);
     }
 
     private BankInfo findBean(String bankShortName) {

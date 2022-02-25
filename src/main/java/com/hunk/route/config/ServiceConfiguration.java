@@ -1,9 +1,10 @@
 package com.hunk.route.config;
 
-import com.hunk.route.domain.MerchantRepository;
+import com.hunk.route.application.impl.RouteRuleServiceImpl;
+import com.hunk.route.application.impl.RouteServiceImpl;
+import com.hunk.route.domain.BankInfoRepository;
 import com.hunk.route.domain.RouteRepository;
 import com.hunk.route.domain.RouteRuleRepository;
-import com.hunk.route.domain.RouteService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,10 +17,13 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfiguration {
 
     @Bean
-    public RouteService routeService(
-            RouteRuleRepository ruleRepository,
-            MerchantRepository merchantRepository,
-            RouteRepository routeRepository) {
-        return new RouteService(ruleRepository, merchantRepository, routeRepository);
+    public RouteRuleServiceImpl routeRuleService(BankInfoRepository bankInfoRepository) {
+        return new RouteRuleServiceImpl(bankInfoRepository);
+    }
+
+    @Bean
+    public RouteServiceImpl routeService(
+            RouteRuleRepository ruleRepository, RouteRepository routeRepository) {
+        return new RouteServiceImpl(ruleRepository, routeRepository);
     }
 }

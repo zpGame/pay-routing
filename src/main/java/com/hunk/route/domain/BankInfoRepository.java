@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 /**
  * @author hunk
- * @date 2022/2/20
+ * @date 2022/2/24
  *     <p>
  */
-public interface RouteRepository extends CrudRepository<RouteChannel, Long> {}
+public interface BankInfoRepository extends CrudRepository<BankInfo, Long> {}

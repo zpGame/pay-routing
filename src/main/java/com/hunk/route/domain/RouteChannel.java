@@ -1,5 +1,8 @@
 package com.hunk.route.domain;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -9,17 +12,22 @@ import java.time.LocalDateTime;
  *     <p>路由
  */
 @Entity
-@Table(name = "route")
-public class Route {
+@Table(name = "route_channel")
+public class RouteChannel {
 
-    @Id @GeneratedValue private Long id;
-
-    private String routeId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Embedded private PaymentChannel paymentChannel;
 
     /** 路由规则 */
-    @OneToOne private RouteRule routeRule;
+    @OneToOne
+    @JoinColumn(
+            name = "associate_rule_id",
+            referencedColumnName = "rule_id",
+            foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private RouteRule routeRule;
     /** 优先级 */
     private int priority;
     /** 有效时间 */
@@ -38,18 +46,18 @@ public class Route {
      * @param endDate 过期时间
      * @return route
      */
-    public static Route createRoute(
+    public static RouteChannel createRoute(
             PaymentChannel paymentChannel,
             RouteRule routeRule,
             int priority,
             LocalDateTime beginDate,
             LocalDateTime endDate) {
-        return new Route(paymentChannel, routeRule, priority, beginDate, endDate);
+        return new RouteChannel(paymentChannel, routeRule, priority, beginDate, endDate);
     }
 
-    public Route() {}
+    public RouteChannel() {}
 
-    public Route(
+    public RouteChannel(
             PaymentChannel paymentChannel,
             RouteRule routeRule,
             int priority,
@@ -86,9 +94,9 @@ public class Route {
     /**
      * 修改为维护状态
      *
-     * @return Route
+     * @return RouteChannel
      */
-    public Route changeUpHoldOn() {
+    public RouteChannel changeUpHoldOn() {
         this.isUpHold = RouteConstants.UPHOLD_ON;
         return this;
     }
@@ -96,10 +104,39 @@ public class Route {
     /**
      * 修改为维护结束
      *
-     * @return Route
+     * @return RouteChannel
      */
-    public Route changeUpHoldOff() {
+    public RouteChannel changeUpHoldOff() {
         this.isUpHold = RouteConstants.UPHOLD_OFF;
         return this;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        RouteChannel routeChannel = (RouteChannel) obj;
+
+        return new EqualsBuilder().append(id, routeChannel.id).isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("paymentChannel", paymentChannel)
+                .append("routeRule", routeRule)
+                .append("priority", priority)
+                .append("beginDate", beginDate)
+                .append("endDate", endDate)
+                .append("isUpHold", isUpHold)
+                .toString();
     }
 }
