@@ -1,6 +1,5 @@
 package com.hunk.route.domain;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -20,52 +19,47 @@ public class BankInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "bank_name", length = 32)
-    private String bankName;
-
-    @Column(name = "bank_short_name", length = 8)
-    private String bankShortName;
+    @Embedded private BankName bankName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "card_type", length = 12)
     private CardType cardType;
 
-    public String getBankShortName() {
-        return bankShortName;
+    @Embedded private CreateInfo createInfo;
+
+    public static BankInfo createBankInfo(
+            BankName bankName, CardType cardType, CreateInfo createInfo) {
+        return new BankInfo(bankName, cardType, createInfo);
     }
 
     public BankInfo() {}
 
-    public BankInfo(String bankName, String bankShortName, CardType cardType) {
+    public BankInfo(BankName bankName, CardType cardType, CreateInfo createInfo) {
         this.bankName = bankName;
-        this.bankShortName = bankShortName;
         this.cardType = cardType;
+        this.createInfo = createInfo;
     }
 
     public boolean valid(String bankShortName, CardType cardType) {
-        return validBankShortName(bankShortName) && validCardType(cardType);
-    }
-
-    public boolean validBankShortName(String bankShortName) {
-        return StringUtils.isBlank(this.bankShortName) || this.bankShortName.equals(bankShortName);
+        return this.bankName.validBankShortName(bankShortName) && validCardType(cardType);
     }
 
     public boolean validCardType(CardType cardType) {
         return this.cardType == null || this.cardType.equals(cardType);
     }
 
-    public BankInfo changeBankName(String bankName) {
+    public BankInfo changeBankName(BankName bankName) {
         this.bankName = bankName;
-        return this;
-    }
-
-    public BankInfo changeBankShortName(String bankShortName) {
-        this.bankShortName = bankShortName;
         return this;
     }
 
     public BankInfo changeCardType(CardType cardType) {
         this.cardType = cardType;
+        return this;
+    }
+
+    public BankInfo changeCreateInfo(CreateInfo createInfo) {
+        this.createInfo = createInfo;
         return this;
     }
 
@@ -90,8 +84,8 @@ public class BankInfo {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("bankName", bankName)
-                .append("bankShortName", bankShortName)
                 .append("cardType", cardType)
+                .append("createInfo", createInfo)
                 .toString();
     }
 }

@@ -10,5 +10,7 @@ public enum AccountType {
     /** 对私 */
     personal,
     /** 对公 */
-    toThePublic
+    toThePublic,
+
+    all
 }

@@ -17,7 +17,8 @@ public class BankInfoTest {
 
     @Before
     public void createBean() {
-        bankInfo = new BankInfo("中国工商银行", "ICBC", CardType.DebitCard);
+        BankName bankName = new BankName("中国工商银行", "ICBC");
+        bankInfo = new BankInfo(bankName, CardType.DebitCard, CreateInfo.createInfo("system"));
     }
 
     @Test
@@ -26,11 +27,11 @@ public class BankInfoTest {
         Assert.isTrue(valid, "is false");
     }
 
-    @Test
-    public void validBankShortName() {
-        boolean valid = bankInfo.validBankShortName(bankShortName);
-        Assert.isTrue(valid, "is false");
-    }
+//    @Test
+//    public void validBankShortName() {
+//        boolean valid = bankInfo.validBankShortName(bankShortName);
+//        Assert.isTrue(valid, "is false");
+//    }
 
     @Test
     public void validCardType() {
@@ -38,17 +39,17 @@ public class BankInfoTest {
         Assert.isTrue(valid, "is false");
     }
 
-    @Test
-    public void changeBankName() {
-        BankInfo change = bankInfo.changeBankName("");
-        System.out.println(change);
-    }
-
-    @Test
-    public void changeBankShortName() {
-        BankInfo change = bankInfo.changeBankShortName(null);
-        System.out.println(change);
-    }
+//    @Test
+//    public void changeBankName() {
+//        BankInfo change = bankInfo.changeBankName("");
+//        System.out.println(change);
+//    }
+//
+//    @Test
+//    public void changeBankShortName() {
+//        BankInfo change = bankInfo.changeBankShortName(null);
+//        System.out.println(change);
+//    }
 
     @Test
     public void changeCardType() {

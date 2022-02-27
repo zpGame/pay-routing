@@ -19,7 +19,9 @@ public class RepositoryTest extends RouteMainTests {
 
     @Test
     public void bankInfoSave() {
-        BankInfo bankInfo = new BankInfo("中国工商银行", "ICBC", CardType.DebitCard);
+        BankName bankName = new BankName("中国工商银行", "ICBC");
+        BankInfo bankInfo =
+                new BankInfo(bankName, CardType.DebitCard, CreateInfo.createInfo("system"));
         bankInfoRepository.save(bankInfo);
     }
 

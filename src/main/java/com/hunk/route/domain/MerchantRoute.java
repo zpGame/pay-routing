@@ -11,14 +11,13 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "merchant_route")
-@Access(AccessType.FIELD)
 public class MerchantRoute {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "merchant_no")
+    @Column(name = "merchant_no", unique = true)
     private String merchantNo;
 
     @Column(name = "merchant_name")
@@ -32,6 +31,19 @@ public class MerchantRoute {
             foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
             inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Set<RouteChannel> routeChannels = new HashSet<>();
+
+    public static MerchantRoute createMerchant(
+            String merchantNo, String merchantName, Set<RouteChannel> routeChannels) {
+        return new MerchantRoute(merchantNo, merchantName, routeChannels);
+    }
+
+    public MerchantRoute() {}
+
+    public MerchantRoute(String merchantNo, String merchantName, Set<RouteChannel> routeChannels) {
+        this.merchantNo = merchantNo;
+        this.merchantName = merchantName;
+        this.routeChannels = routeChannels;
+    }
 
     public Set<RouteChannel> obtainRoutes() {
         return routeChannels.stream()

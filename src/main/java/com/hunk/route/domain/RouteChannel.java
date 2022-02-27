@@ -27,7 +27,7 @@ public class RouteChannel {
             name = "associate_rule_id",
             referencedColumnName = "rule_id",
             foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
-    private RouteRule routeRule;
+    private RouteRule routeRule = new RouteRule();
     /** 优先级 */
     private int priority;
     /** 有效时间 */

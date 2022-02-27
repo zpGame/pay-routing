@@ -11,5 +11,7 @@ public enum CardType {
     CreditCard,
 
     /** 借记卡 */
-    DebitCard
+    DebitCard,
+
+    all
 }

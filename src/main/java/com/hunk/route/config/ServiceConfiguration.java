@@ -1,5 +1,6 @@
 package com.hunk.route.config;
 
+import com.hunk.route.application.impl.BankInfoServiceImpl;
 import com.hunk.route.application.impl.RouteRuleServiceImpl;
 import com.hunk.route.application.impl.RouteServiceImpl;
 import com.hunk.route.domain.BankInfoRepository;
@@ -15,6 +16,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ServiceConfiguration {
+
+    @Bean
+    public BankInfoServiceImpl bankInfoService(BankInfoRepository bankInfoRepository) {
+        return new BankInfoServiceImpl(bankInfoRepository);
+    }
 
     @Bean
     public RouteRuleServiceImpl routeRuleService(BankInfoRepository bankInfoRepository) {

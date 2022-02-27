@@ -1,6 +1,6 @@
 package com.hunk.route.domain;
 
-import lombok.ToString;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
  *     <p>路由规则 交易类型、卡类型、账户类型、银行、限额
  */
 @Entity
-@ToString
 @Table(name = "route_rule")
 @org.hibernate.annotations.Table(appliesTo = "route_rule", comment = "路由规则表")
 public class RouteRule {
@@ -78,9 +77,20 @@ public class RouteRule {
         return this.money.isGreaterThanOrEqual(money);
     }
 
-    private BankInfo findBean(String bankShortName) {
-        return bankInfos.stream()
-                .collect(Collectors.toMap(BankInfo::getBankShortName, Function.identity()))
-                .get(bankShortName);
+//    private BankInfo findBean(String bankShortName) {
+//        return bankInfos.stream()
+//                .collect(Collectors.toMap(BankInfo::getBankShortName, Function.identity()))
+//                .get(bankShortName);
+//    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("ruleId", ruleId)
+                .append("tradeType", tradeType)
+                .append("accountType", accountType)
+                .append("bankInfos", bankInfos)
+                .append("money", money)
+                .toString();
     }
 }
