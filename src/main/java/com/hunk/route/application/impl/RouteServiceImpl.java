@@ -2,8 +2,9 @@ package com.hunk.route.application.impl;
 
 import com.hunk.route.application.RouteService;
 import com.hunk.route.domain.*;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * @author hunk
@@ -22,18 +23,70 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public RouteChannel createRoute(
             PaymentChannel paymentChannel,
             long ruleId,
             int priority,
-            LocalDateTime beginDate,
-            LocalDateTime endDate) {
+            EffectiveTime effectiveTime,
+            String createUser) {
         RouteRule routeRule =
                 ruleRepository
                         .findById(ruleId)
                         .orElseThrow(() -> new RuleNotFoundException(ruleId));
-        RouteChannel routeChannel = RouteChannel.createRoute(paymentChannel, routeRule, priority, beginDate, endDate);
-        routeRepository.save(routeChannel);
-        return routeChannel;
+        CreateInfo createInfo = CreateInfo.createInfo(createUser);
+
+        RouteChannel routeChannel =
+                RouteChannel.createRoute(
+                        paymentChannel, routeRule, priority, effectiveTime, createInfo);
+        return routeRepository.save(routeChannel);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<RouteChannel> findById(long routeId) {
+        return routeRepository.findById(routeId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public RouteChannel reviseInfo(
+            long routeId,
+            PaymentChannel paymentChannel,
+            long ruleId,
+            int priority,
+            EffectiveTime effectiveTime,
+            String modifyUser) {
+        RouteChannel routeChannel =
+                routeRepository
+                        .findById(routeId)
+                        .orElseThrow(() -> new RouteNotFoundException(routeId));
+        RouteRule routeRule =
+                ruleRepository
+                        .findById(ruleId)
+                        .orElseThrow(() -> new RuleNotFoundException(ruleId));
+        CreateInfo createInfo = routeChannel.getCreateInfo().reviseInfo(modifyUser);
+        RouteChannel newRouteChannel =
+                routeChannel
+                        .changePaymentChannel(paymentChannel)
+                        .changeRouteRule(routeRule)
+                        .changePriority(priority)
+                        .changeCreateInfo(createInfo);
+        return routeRepository.save(newRouteChannel);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public RouteChannel changeUpHold(long routeId, int isUpHold, String modifyUser) {
+        RouteChannel routeChannel =
+                routeRepository
+                        .findById(routeId)
+                        .orElseThrow(() -> new RouteNotFoundException(routeId));
+        CreateInfo createInfo = routeChannel.getCreateInfo().reviseInfo(modifyUser);
+        RouteChannel changeCreateInfo =
+                RouteConstants.UPHOLD_OFF == isUpHold
+                        ? routeChannel.changeCreateInfo(createInfo).changeUpHoldOff()
+                        : routeChannel.changeCreateInfo(createInfo).changeUpHoldOn();
+        return routeRepository.save(changeCreateInfo);
     }
 }

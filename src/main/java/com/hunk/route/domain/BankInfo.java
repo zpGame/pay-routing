@@ -40,8 +40,16 @@ public class BankInfo {
         this.createInfo = createInfo;
     }
 
-    public boolean valid(String bankShortName, CardType cardType) {
-        return this.bankName.validBankShortName(bankShortName) && validCardType(cardType);
+    public BankName getBankName() {
+        return bankName;
+    }
+
+    public CreateInfo getCreateInfo() {
+        return createInfo;
+    }
+
+    public boolean validBankShortName(String bankShortName) {
+        return this.bankName.validBankShortName(bankShortName);
     }
 
     public boolean validCardType(CardType cardType) {

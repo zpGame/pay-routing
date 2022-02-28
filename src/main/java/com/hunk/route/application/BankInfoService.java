@@ -3,7 +3,6 @@ package com.hunk.route.application;
 import com.hunk.route.domain.BankInfo;
 import com.hunk.route.domain.BankName;
 import com.hunk.route.domain.CardType;
-import com.hunk.route.domain.CreateInfo;
 
 import java.util.Optional;
 
@@ -19,10 +18,10 @@ public interface BankInfoService {
      *
      * @param bankName 银行名称
      * @param cardType 卡类型
-     * @param createInfo 创建信息
+     * @param createUser 创建人
      * @return BankInfo
      */
-    BankInfo createBankInfo(BankName bankName, CardType cardType, CreateInfo createInfo);
+    BankInfo createBankInfo(BankName bankName, CardType cardType, String createUser);
 
     /**
      * ID查询银行信息
@@ -38,9 +37,8 @@ public interface BankInfoService {
      * @param bankInfoId ID
      * @param bankName 银行名称
      * @param cardType 卡类型
-     * @param createInfo 创建信息
-     * @return
+     * @param modifyUser 修改人
+     * @return BankInfo
      */
-    BankInfo reviseInfo(
-            Long bankInfoId, BankName bankName, CardType cardType, CreateInfo createInfo);
+    BankInfo reviseInfo(Long bankInfoId, BankName bankName, CardType cardType, String modifyUser);
 }

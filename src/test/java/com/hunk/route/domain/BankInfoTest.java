@@ -13,8 +13,6 @@ public class BankInfoTest {
 
     private BankInfo bankInfo;
 
-    private final String bankShortName = "ICBC";
-
     @Before
     public void createBean() {
         BankName bankName = new BankName("中国工商银行", "ICBC");
@@ -22,16 +20,11 @@ public class BankInfoTest {
     }
 
     @Test
-    public void valid() {
-        boolean valid = bankInfo.valid(bankShortName, CardType.DebitCard);
+    public void validBankShortName() {
+        String bankShortName = "ICBC";
+        boolean valid = bankInfo.validBankShortName(bankShortName);
         Assert.isTrue(valid, "is false");
     }
-
-//    @Test
-//    public void validBankShortName() {
-//        boolean valid = bankInfo.validBankShortName(bankShortName);
-//        Assert.isTrue(valid, "is false");
-//    }
 
     @Test
     public void validCardType() {
@@ -39,17 +32,11 @@ public class BankInfoTest {
         Assert.isTrue(valid, "is false");
     }
 
-//    @Test
-//    public void changeBankName() {
-//        BankInfo change = bankInfo.changeBankName("");
-//        System.out.println(change);
-//    }
-//
-//    @Test
-//    public void changeBankShortName() {
-//        BankInfo change = bankInfo.changeBankShortName(null);
-//        System.out.println(change);
-//    }
+    @Test
+    public void changeBankName() {
+        BankInfo change = bankInfo.changeBankName(null);
+        System.out.println(change);
+    }
 
     @Test
     public void changeCardType() {

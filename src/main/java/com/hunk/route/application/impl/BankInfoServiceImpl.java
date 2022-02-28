@@ -21,7 +21,8 @@ public class BankInfoServiceImpl implements BankInfoService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BankInfo createBankInfo(BankName bankName, CardType cardType, CreateInfo createInfo) {
+    public BankInfo createBankInfo(BankName bankName, CardType cardType, String createUser) {
+        CreateInfo createInfo = CreateInfo.createInfo(createUser);
         BankInfo bankInfo = BankInfo.createBankInfo(bankName, cardType, createInfo);
         return bankInfoRepository.save(bankInfo);
     }
@@ -35,15 +36,16 @@ public class BankInfoServiceImpl implements BankInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public BankInfo reviseInfo(
-            Long bankInfoId, BankName bankName, CardType cardType, CreateInfo createInfo) {
+            Long bankInfoId, BankName bankName, CardType cardType, String modifyUser) {
         BankInfo bankInfo =
                 bankInfoRepository
                         .findById(bankInfoId)
                         .orElseThrow(() -> new BankInfoNotFoundException(bankInfoId));
-        bankInfo =
+        CreateInfo createInfo = bankInfo.getCreateInfo().reviseInfo(modifyUser);
+        BankInfo changeBankInfo =
                 bankInfo.changeBankName(bankName)
                         .changeCardType(cardType)
                         .changeCreateInfo(createInfo);
-        return bankInfoRepository.save(bankInfo);
+        return bankInfoRepository.save(changeBankInfo);
     }
 }

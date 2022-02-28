@@ -1,6 +1,5 @@
 package com.hunk.route.domain;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -28,18 +27,16 @@ public class BankName {
         this.bankShortName = bankShortName;
     }
 
+    public String getBankName() {
+        return bankName;
+    }
+
+    public String getBankShortName() {
+        return bankShortName;
+    }
+
     public boolean validBankShortName(String bankShortName) {
-        return StringUtils.isBlank(this.bankShortName) || this.bankShortName.equals(bankShortName);
-    }
-
-    public BankName changeBankName(String bankName) {
-        this.bankName = bankName;
-        return this;
-    }
-
-    public BankName changeBankShortName(String bankShortName) {
-        this.bankShortName = bankShortName;
-        return this;
+        return this.bankShortName.equals(bankShortName);
     }
 
     @Override

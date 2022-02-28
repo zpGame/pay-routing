@@ -5,8 +5,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author hunk
@@ -24,12 +22,14 @@ public class RouteRule {
     private Long ruleId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "trade_type", length = 32)
+    @Column(name = "trade_type", length = 24)
     private TradeType tradeType;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "account_type", length = 32)
+    @Column(name = "account_type", length = 24)
     private AccountType accountType;
+
+    @Embedded private CreateInfo createInfo;
 
     @ManyToMany
     @JoinTable(
@@ -42,10 +42,6 @@ public class RouteRule {
 
     @Embedded private Money money;
 
-    public void setBankInfos(Set<BankInfo> bankInfos) {
-        this.bankInfos = bankInfos;
-    }
-
     public Set<BankInfo> getBankInfos() {
         return bankInfos;
     }
@@ -53,16 +49,54 @@ public class RouteRule {
     public RouteRule() {}
 
     public static RouteRule createRouteRule(
-            TradeType tradeType, AccountType accountType, Set<BankInfo> bankInfos, Money money) {
-        return new RouteRule(tradeType, accountType, bankInfos, money);
+            TradeType tradeType,
+            AccountType accountType,
+            Set<BankInfo> bankInfos,
+            Money money,
+            CreateInfo createInfo) {
+        return new RouteRule(tradeType, accountType, bankInfos, money, createInfo);
     }
 
     public RouteRule(
-            TradeType tradeType, AccountType accountType, Set<BankInfo> bankInfos, Money money) {
+            TradeType tradeType,
+            AccountType accountType,
+            Set<BankInfo> bankInfos,
+            Money money,
+            CreateInfo createInfo) {
         this.tradeType = tradeType;
         this.accountType = accountType;
         this.bankInfos = bankInfos;
         this.money = money;
+        this.createInfo = createInfo;
+    }
+
+    public CreateInfo getCreateInfo() {
+        return createInfo;
+    }
+
+    public RouteRule changeTradeType(TradeType tradeType) {
+        this.tradeType = tradeType;
+        return this;
+    }
+
+    public RouteRule changeAccountType(AccountType accountType) {
+        this.accountType = accountType;
+        return this;
+    }
+
+    public RouteRule changeCreateInfo(CreateInfo createInfo) {
+        this.createInfo = createInfo;
+        return this;
+    }
+
+    public RouteRule changeBankInfos(Set<BankInfo> bankInfos) {
+        this.bankInfos = bankInfos;
+        return this;
+    }
+
+    public RouteRule changeMoney(Money money) {
+        this.money = money;
+        return this;
     }
 
     public boolean validTradeType(TradeType tradeType) {
@@ -77,18 +111,13 @@ public class RouteRule {
         return this.money.isGreaterThanOrEqual(money);
     }
 
-//    private BankInfo findBean(String bankShortName) {
-//        return bankInfos.stream()
-//                .collect(Collectors.toMap(BankInfo::getBankShortName, Function.identity()))
-//                .get(bankShortName);
-//    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("ruleId", ruleId)
                 .append("tradeType", tradeType)
                 .append("accountType", accountType)
+                .append("createInfo", createInfo)
                 .append("bankInfos", bankInfos)
                 .append("money", money)
                 .toString();

@@ -4,7 +4,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 /**
  * @author hunk
@@ -31,28 +30,29 @@ public class RouteChannel {
     /** 优先级 */
     private int priority;
     /** 有效时间 */
-    private LocalDateTime beginDate;
+    @Embedded private EffectiveTime effectiveTime;
 
-    private LocalDateTime endDate;
     /** 是否维护 */
     private int isUpHold;
+
+    @Embedded private CreateInfo createInfo;
 
     /**
      * 创建路由
      *
      * @param routeRule 路由规则
      * @param priority 优先级java
-     * @param beginDate 生效时间
-     * @param endDate 过期时间
+     * @param effectiveTime 有效时间
+     * @param createInfo 创建信息
      * @return route
      */
     public static RouteChannel createRoute(
             PaymentChannel paymentChannel,
             RouteRule routeRule,
             int priority,
-            LocalDateTime beginDate,
-            LocalDateTime endDate) {
-        return new RouteChannel(paymentChannel, routeRule, priority, beginDate, endDate);
+            EffectiveTime effectiveTime,
+            CreateInfo createInfo) {
+        return new RouteChannel(paymentChannel, routeRule, priority, effectiveTime, createInfo);
     }
 
     public RouteChannel() {}
@@ -61,14 +61,34 @@ public class RouteChannel {
             PaymentChannel paymentChannel,
             RouteRule routeRule,
             int priority,
-            LocalDateTime beginDate,
-            LocalDateTime endDate) {
+            EffectiveTime effectiveTime,
+            CreateInfo createInfo) {
         this.paymentChannel = paymentChannel;
         this.routeRule = routeRule;
         this.priority = priority;
-        this.beginDate = beginDate;
-        this.endDate = endDate;
+        this.effectiveTime = effectiveTime;
+        this.createInfo = createInfo;
         this.isUpHold = RouteConstants.UPHOLD_OFF;
+    }
+
+    public RouteChannel changePaymentChannel(PaymentChannel channel) {
+        this.paymentChannel = channel;
+        return this;
+    }
+
+    public RouteChannel changeRouteRule(RouteRule routeRule) {
+        this.routeRule = routeRule;
+        return this;
+    }
+
+    public RouteChannel changePriority(int priority) {
+        this.priority = priority;
+        return this;
+    }
+
+    public RouteChannel changeCreateInfo(CreateInfo createInfo) {
+        this.createInfo = createInfo;
+        return this;
     }
 
     public PaymentChannel getPaymentChannel() {
@@ -79,12 +99,16 @@ public class RouteChannel {
         return routeRule;
     }
 
+    public EffectiveTime getEffectiveTime() {
+        return effectiveTime;
+    }
+
     public int getPriority() {
         return priority;
     }
 
-    public boolean validTime() {
-        return LocalDateTime.now().isAfter(beginDate) && LocalDateTime.now().isBefore(endDate);
+    public CreateInfo getCreateInfo() {
+        return createInfo;
     }
 
     public boolean isUpHold() {
@@ -134,9 +158,9 @@ public class RouteChannel {
                 .append("paymentChannel", paymentChannel)
                 .append("routeRule", routeRule)
                 .append("priority", priority)
-                .append("beginDate", beginDate)
-                .append("endDate", endDate)
+                .append("effectiveTime", effectiveTime)
                 .append("isUpHold", isUpHold)
+                .append("createInfo", createInfo)
                 .toString();
     }
 }

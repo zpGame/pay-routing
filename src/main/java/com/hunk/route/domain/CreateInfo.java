@@ -2,6 +2,7 @@ package com.hunk.route.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.time.LocalDateTime;
 
@@ -13,9 +14,16 @@ import java.time.LocalDateTime;
 @Embeddable
 public class CreateInfo {
 
+    @Column(name = "create_user", length = 32)
     private String createUser;
+
+    @Column(name = "modify_user", length = 32)
     private String modifyUser;
+
+    @Column(name = "create_time", columnDefinition = "DATETIME DEFAULT NULL ")
     private LocalDateTime createTime;
+
+    @Column(name = "modify_time", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP ")
     private LocalDateTime modifyTime;
 
     public CreateInfo() {}

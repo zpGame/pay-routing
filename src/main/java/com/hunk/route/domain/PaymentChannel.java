@@ -2,6 +2,7 @@ package com.hunk.route.domain;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -13,8 +14,10 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class PaymentChannel {
 
+    @Column(name = "route_interface", length = 32)
     private String routeInterface;
 
+    @Column(name = "route_name", length = 32)
     private String routeName;
 
     public PaymentChannel() {}

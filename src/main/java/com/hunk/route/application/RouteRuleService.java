@@ -1,11 +1,9 @@
 package com.hunk.route.application;
 
-import com.hunk.route.domain.AccountType;
-import com.hunk.route.domain.Money;
-import com.hunk.route.domain.RouteRule;
-import com.hunk.route.domain.TradeType;
+import com.hunk.route.domain.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author hunk
@@ -21,8 +19,40 @@ public interface RouteRuleService {
      * @param accountType 账户类型
      * @param bankInfoIds 卡集
      * @param money 限额
+     * @param createUser 创建人
      * @return RouteRule
      */
     RouteRule createRouteRule(
-            TradeType tradeType, AccountType accountType, List<Long> bankInfoIds, Money money);
+            TradeType tradeType,
+            AccountType accountType,
+            List<Long> bankInfoIds,
+            Money money,
+            String createUser);
+
+    /**
+     * ID查询路由规则
+     *
+     * @param ruleId ID
+     * @return Optional
+     */
+    Optional<RouteRule> findById(Long ruleId);
+
+    /**
+     * 修改路由规则
+     *
+     * @param ruleId 规则ID
+     * @param tradeType 交易类型
+     * @param accountType 账户类型
+     * @param bankInfoIds 银行ID集
+     * @param money 限额
+     * @param modifyUser 修改人
+     * @return RouteRule
+     */
+    RouteRule reviseInfo(
+            Long ruleId,
+            TradeType tradeType,
+            AccountType accountType,
+            List<Long> bankInfoIds,
+            Money money,
+            String modifyUser);
 }
