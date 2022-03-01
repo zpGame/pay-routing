@@ -3,6 +3,8 @@ package com.hunk.route.application;
 import com.hunk.route.domain.BankInfo;
 import com.hunk.route.domain.BankName;
 import com.hunk.route.domain.CardType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Optional;
 
@@ -41,4 +43,11 @@ public interface BankInfoService {
      * @return BankInfo
      */
     BankInfo reviseInfo(Long bankInfoId, BankName bankName, CardType cardType, String modifyUser);
+
+    /**
+     * 分页查询
+     * @param pageRequest 分页参数
+     * @return Page
+     */
+    Page<BankInfo> findAll(PageRequest pageRequest);
 }

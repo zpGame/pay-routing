@@ -1,6 +1,5 @@
 package com.hunk.route.domain;
 
-import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
@@ -11,12 +10,19 @@ import java.util.Optional;
  * @date 2022/2/23
  *     <p>
  */
-@Getter
 public enum ServiceE {
 
     /** 业务枚举 */
     WITHHOLD("withHold", "代扣");
     private final String service, serviceName;
+
+    public String getService() {
+        return service;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
 
     ServiceE(String service, String serviceName) {
         this.service = service;

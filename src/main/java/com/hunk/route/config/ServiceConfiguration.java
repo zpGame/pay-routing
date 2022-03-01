@@ -20,6 +20,11 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfiguration {
 
     @Bean
+    public InitData initData(BankInfoRepository bankInfoRepository) {
+        return new InitData(bankInfoRepository);
+    }
+
+    @Bean
     public BankInfoServiceImpl bankInfoService(BankInfoRepository bankInfoRepository) {
         return new BankInfoServiceImpl(bankInfoRepository);
     }

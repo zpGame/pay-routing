@@ -2,6 +2,8 @@ package com.hunk.route.application.impl;
 
 import com.hunk.route.application.BankInfoService;
 import com.hunk.route.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -47,5 +49,10 @@ public class BankInfoServiceImpl implements BankInfoService {
                         .changeCardType(cardType)
                         .changeCreateInfo(createInfo);
         return bankInfoRepository.save(changeBankInfo);
+    }
+
+    @Override
+    public Page<BankInfo> findAll(PageRequest pageRequest) {
+        return bankInfoRepository.findAll(pageRequest);
     }
 }

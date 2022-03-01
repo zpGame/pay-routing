@@ -1,6 +1,5 @@
 package com.hunk.route.domain;
 
-import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
@@ -11,12 +10,19 @@ import java.util.Optional;
  * @date 2022/2/23
  *     <p>
  */
-@Getter
 public enum ChannelE {
 
     /** 渠道枚举 */
     UNION("union", "银联");
     private final String channel, channelName;
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
 
     ChannelE(String channel, String channelName) {
         this.channel = channel;

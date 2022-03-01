@@ -15,6 +15,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories( "com.hunk.route.domain" )
 @EnableAutoConfiguration
 @EntityScan("com.hunk.route.domain")
-@Import({ServiceConfiguration.class})
+@Import({ServiceConfiguration.class, ThymeleafConfig.class})
 public class ServiceWithRepositoriesConfiguration {
 }
