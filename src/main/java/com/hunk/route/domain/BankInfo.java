@@ -53,7 +53,7 @@ public class BankInfo {
     }
 
     public boolean validCardType(CardType cardType) {
-        return this.cardType == null || this.cardType.equals(cardType);
+        return this.cardType.equals(CardType.all) || this.cardType.equals(cardType);
     }
 
     public BankInfo changeBankName(BankName bankName) {

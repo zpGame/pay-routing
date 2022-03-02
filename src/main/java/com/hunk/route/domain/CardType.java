@@ -13,5 +13,6 @@ public enum CardType {
     /** 借记卡 */
     DebitCard,
 
+    /** 支持所有，默认参数 */
     all
 }

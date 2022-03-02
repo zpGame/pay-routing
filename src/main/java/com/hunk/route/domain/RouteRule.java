@@ -104,7 +104,7 @@ public class RouteRule {
     }
 
     public boolean validAccountType(AccountType accountType) {
-        return this.accountType.equals(accountType);
+        return this.accountType.equals(AccountType.all) || this.accountType.equals(accountType);
     }
 
     public boolean validMoney(Money money) {

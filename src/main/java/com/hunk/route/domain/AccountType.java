@@ -11,6 +11,6 @@ public enum AccountType {
     personal,
     /** 对公 */
     toThePublic,
-
+    /** 支持所有，默认参数 */
     all
 }
