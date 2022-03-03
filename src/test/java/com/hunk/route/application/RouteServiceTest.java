@@ -1,6 +1,6 @@
 package com.hunk.route.application;
 
-import com.hunk.route.RouteMainTests;
+import com.hunk.route.ApplicationTests;
 import com.hunk.route.domain.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @date 2022/2/28
  * <p>
  */
-public class RouteServiceTest  extends RouteMainTests {
+public class RouteServiceTest  extends ApplicationTests {
 
     @Autowired
     private RouteService routeService;

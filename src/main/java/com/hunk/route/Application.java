@@ -1,4 +1,4 @@
-package com.hunk.route.main;
+package com.hunk.route;
 
 import com.hunk.route.config.ServiceWithRepositoriesConfiguration;
 import org.springframework.boot.SpringApplication;
@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Import;
  */
 @SpringBootApplication
 @Import({ServiceWithRepositoriesConfiguration.class})
-public class RouteMain {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(RouteMain.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }

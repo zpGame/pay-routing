@@ -1,6 +1,6 @@
 package com.hunk.route.application;
 
-import com.hunk.route.RouteMainTests;
+import com.hunk.route.ApplicationTests;
 import com.hunk.route.domain.AccountType;
 import com.hunk.route.domain.Money;
 import com.hunk.route.domain.RouteRule;
@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2022/2/28
  *     <p>
  */
-public class RouteRuleServiceTest extends RouteMainTests {
+public class RouteRuleServiceTest extends ApplicationTests {
 
     @Autowired private RouteRuleService routeRuleService;
 

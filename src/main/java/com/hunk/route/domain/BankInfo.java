@@ -1,5 +1,6 @@
 package com.hunk.route.domain;
 
+import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
  * @date 2022/2/17
  *     <p>银行信息
  */
+@Getter
 @Entity
 @Table(name = "bank_info")
 @org.hibernate.annotations.Table(appliesTo = "bank_info", comment = "银行信息表")
@@ -38,14 +40,6 @@ public class BankInfo {
         this.bankName = bankName;
         this.cardType = cardType;
         this.createInfo = createInfo;
-    }
-
-    public BankName getBankName() {
-        return bankName;
-    }
-
-    public CreateInfo getCreateInfo() {
-        return createInfo;
     }
 
     public boolean validBankShortName(String bankShortName) {

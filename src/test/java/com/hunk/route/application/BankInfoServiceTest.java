@@ -1,6 +1,6 @@
 package com.hunk.route.application;
 
-import com.hunk.route.RouteMainTests;
+import com.hunk.route.ApplicationTests;
 import com.hunk.route.domain.BankInfo;
 import com.hunk.route.domain.BankName;
 import com.hunk.route.domain.CardType;
@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2022/2/28
  *     <p>
  */
-public class BankInfoServiceTest extends RouteMainTests {
+public class BankInfoServiceTest extends ApplicationTests {
 
     @Autowired private BankInfoService bankInfoService;
 
