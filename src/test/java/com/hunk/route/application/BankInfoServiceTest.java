@@ -6,10 +6,6 @@ import com.hunk.route.domain.BankName;
 import com.hunk.route.domain.CardType;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-
-import java.util.List;
 
 /**
  * @author hunk
@@ -40,13 +36,4 @@ public class BankInfoServiceTest extends ApplicationTests {
         System.out.println(bankInfoService.reviseInfo(1L, bankName, cardType, "admin"));
     }
 
-    @Test
-    public void findAll(){
-        PageRequest pageRequest = PageRequest.of(0,5);
-        Page<BankInfo> all = bankInfoService.findAll(pageRequest);
-        int totalPages = all.getTotalPages();
-        List<BankInfo> content = all.getContent();
-        System.out.println(totalPages);
-        System.out.println(content);
-    }
 }

@@ -6,40 +6,38 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title>首页</title>
 
-    <link href="webjars/bootstrap/5.1.3/dist/css/bootstrap.min.css"
-          th:href="@{webjars/bootstrap/5.1.3/dist/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen"/>
-    <script src="webjars/jquery/3.6.0/dist/jquery.min.js" th:href="@{webjars/jquery/3.6.0/dist/jquery.min.js}"></script>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" media="screen"/>
+    <script th:href="@{/js/bootstrap.js}"></script>
 </head>
 <body class="container">
 <br/>
-<h1>添加用户</h1>
+<h1>添加银行</h1>
 <br/><br/>
 <div class="with:80%">
-    <form class="form-horizontal"   th:action="@{/add}"  method="post">
+    <form class="form-horizontal" th:action="@{/bank/add.do}" method="post">
         <div class="form-group">
-            <label for="userName" class="col-sm-2 control-label">userName</label>
+            <label for="bankName" class="col-sm-2 control-label">bankName</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="username"  id="username" placeholder="userName"/>
+                <input type="text" class="form-control" name="bankName" id="bankName" placeholder="bankName"/>
             </div>
         </div>
         <div class="form-group">
-            <label for="password" class="col-sm-2 control-label" >Password</label>
+            <label for="bankShortName" class="col-sm-2 control-label">bankShortName</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
+                <input type="text" class="form-control" name="bankShortName" id="bankShortName"
+                       placeholder="bankShortName"/>
             </div>
         </div>
         <div class="form-group">
-            <label for="age" class="col-sm-2 control-label">age</label>
+            <label for="cardType" class="col-sm-2 control-label">cardType</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="age"  id="age" placeholder="age"/>
+                <input type="text" class="form-control" name="cardType" id="cardType" placeholder="cardType"/>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" value="Submit" class="btn btn-info" />
-                &nbsp; &nbsp; &nbsp;
-                <input type="reset" value="Reset" class="btn btn-info" />
+                <input type="submit" value="Submit" class="btn btn-info"/>
+                <input type="reset" value="Reset" class="btn btn-info"/>
             </div>
         </div>
     </form>
