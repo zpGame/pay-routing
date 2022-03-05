@@ -40,7 +40,7 @@ public class RouteRule {
             inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Set<BankInfo> bankInfos = new HashSet<>();
 
-    @Embedded private Money money;
+    @Embedded private Money money = Money.ZERO;
 
     public Set<BankInfo> getBankInfos() {
         return bankInfos;
@@ -108,7 +108,7 @@ public class RouteRule {
     }
 
     public boolean validMoney(Money money) {
-        return this.money.isGreaterThanOrEqual(money);
+        return this.money.equals(Money.ZERO) || this.money.isGreaterThanOrEqual(money);
     }
 
     @Override

@@ -44,8 +44,9 @@ public class MerchantServiceImpl implements MerchantService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Optional<MerchantRoute> findById(Long merchantId) {
-        return merchantRepository.findById(merchantId);
+    public MerchantRoute findByMerchantNo(String merchantNo) {
+        MerchantRoute merchantRoute = merchantRepository.findByMerchantNo(merchantNo);
+        return merchantRoute;
     }
 
     @Override

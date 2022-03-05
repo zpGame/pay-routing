@@ -10,19 +10,6 @@
     <script th:href="@{/js/bootstrap.js}"></script>
 </head>
 <body>
-<ul class="nav justify-content-center">
-    <li class="nav-item">
-        <a class="nav-link active" href="#">Active</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" th:href="@{/bank/list.do}">Bank</a>
-    </li>
-</ul>
+<div th:include="header :: header"></div>
 </body>
 </html>

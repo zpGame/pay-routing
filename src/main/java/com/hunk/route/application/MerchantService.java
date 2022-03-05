@@ -27,10 +27,10 @@ public interface MerchantService {
     /**
      * ID查询商户
      *
-     * @param merchantId ID
+     * @param merchantNo ID
      * @return Optional
      */
-    Optional<MerchantRoute> findById(Long merchantId);
+    MerchantRoute findByMerchantNo(String merchantNo);
 
     /**
      * 修改商户信息

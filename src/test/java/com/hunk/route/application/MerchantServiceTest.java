@@ -31,8 +31,7 @@ public class MerchantServiceTest extends ApplicationTests {
 
     @Test
     public void findById() {
-        MerchantRoute merchantRoute =
-                merchantService.findById(1L).orElseThrow(() -> new MerchantNotFoundException(1));
+        MerchantRoute merchantRoute = merchantService.findByMerchantNo("");
         RouteRule routeRule = merchantRoute.obtainRoutes().stream()
                 .map(RouteChannel::getRouteRule)
                 .filter(rule -> rule.validTradeType(TradeType.payment))
