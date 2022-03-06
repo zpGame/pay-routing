@@ -13,3 +13,11 @@
 ## 路由架构图
 
 ![avatar](/images/路由设计.png)
+
+## 路由主流程
+
+![avatar](/images/路由主流程.png)
+
+## 路由规则
+
+to be continuing ...
