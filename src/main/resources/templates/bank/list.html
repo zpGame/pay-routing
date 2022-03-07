@@ -1,48 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>BankInfo</title>
-
-    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" media="screen"/>
-    <script th:href="@{/js/bootstrap.js}"></script>
+    <meta charset="UTF-8">
+    <title>Full Layout - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="themes/icon.css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.easyui.min.js"></script>
 </head>
-<body>
-<br/>
-<div th:include="header :: header"></div>
-<br/>
-<div class="nav justify-content-center">
-    <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">银行名称</th>
-            <th scope="col">银行简称</th>
-            <th scope="col">卡类型</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!--each来进行for循环求值-->
-        <tr th:each="bank : ${bankInfos}">
-            <th scope="row" th:text="${bank.id}">1</th>
-            <td th:text="${bank.bankName}">neo</td>
-            <td th:text="${bank.bankShortName}">Otto</td>
-            <td th:text="${bank.cardType}">6</td>
-            <td><a th:href="@{/bank/toEdit.do(id=${bank.id})}">edit</a></td>
-            <td><a th:href="@{/bank/delete.do(id=${bank.id})}">delete</a></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="form-group">
-    <div class="col-sm-2 control-label">
-        <a th:href="@{/bank/toAdd.do}" class="btn btn-info">add</a>
-    </div>
-</div>
 
+<body class="easyui-layout">
+<table id="dg" title="My Users" class="easyui-datagrid" style="width:550px;height:250px"
+       url="get_users.php"
+       toolbar="#toolbar"
+       rownumbers="true" fitColumns="true" singleSelect="true">
+    <thead>
+    <tr>
+        <th field="bankName" width="50">银行名称</th>
+        <th field="bankShortName" width="50">银行简称</th>
+        <th field="cardType" width="50">卡类型</th>
+    </tr>
+    </thead>
+</table>
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Edit User</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove User</a>
+</div>
 </body>
 </html>

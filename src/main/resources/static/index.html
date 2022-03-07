@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Full Layout - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="themes/icon.css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.easyui.min.js"></script>
+</head>
+<body class="easyui-layout">
+
+<div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;padding:10px"></div>
+
+<div data-options="region:'west',split:true,title:'menu'" style="width:250px;padding:10px;">
+    <ul id="menu"></ul>
+</div>
+
+<div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;"></div>
+
+<div region="center" style="height:1000px;">
+    <div class="easyui-tabs" border="false" id="tabs">
+        <div title="首页">
+            <div align="center" style="padding-top: 100px;" name="main"><font color="red" size="10">欢迎使用</font></div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+    $(function () {
+        // 数据
+        const treeData = [
+            {
+                "id": 0,
+                "state": "open",
+                "iconCls": "fa fa-file-text-o",
+                "text": "bankInfo",
+                "attributes": {
+                    "url": "/routing/bank/list.do"
+                }
+            }
+        ];
+
+        // 实例化树菜单
+        $("#menu").tree({
+            data: treeData,
+            lines: true,
+            onClick: function (node) {
+                if (node.attributes) {
+                    openTab(node.text, node.attributes.url);
+                }
+            }
+        });
+
+        // 新增Tab
+        function openTab(text, url) {
+            if ($("#tabs").tabs('exists', text)) {
+                $("#tabs").tabs('select', text);
+            } else {
+                var content = "<iframe frameborder='0' scrolling='auto' style='width:100%;height:100%' src=" + url + "></iframe>";
+                $("#tabs").tabs('add', {
+                    title: text,
+                    closable: true,
+                    content: content
+                });
+            }
+        }
+    });
+
+</script>
+</html>
