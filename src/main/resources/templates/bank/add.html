@@ -18,8 +18,11 @@
                                    placeholder="bankShortName" required/>
                         </div>
                         <div class="mb-3 mt-3">
-                            <input type="text" class="form-control" name="cardType" id="cardType"
-                                   placeholder="cardType"/>
+                            <select class="form-select" name="cardType" id="cardType">
+                                <option value="all">默认</option>
+                                <option value="CreditCard">信用卡</option>
+                                <option value="DebitCard">借记卡</option>
+                            </select>
                         </div>
                         <div class="col-sm-offset-2 col-sm-10">
                             <input type="submit" value="Submit" class="btn btn-outline-primary btn-sm"/>

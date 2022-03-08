@@ -17,7 +17,8 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">BankInfo</h1>
                 <div class="form-group">
-                    <button type="button" class="btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addition">
+                    <button type="button" class="btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#addition">
                         新增
                     </button>
                 </div>
@@ -38,11 +39,12 @@
                     <tbody>
                     <!--each来进行for循环求值-->
                     <tr th:each="bank : ${bankInfos}">
-                        <th scope="row" th:text="${bank.id}">1</th>
-                        <td th:text="${bank.bankName}">neo</td>
-                        <td th:text="${bank.bankShortName}">Otto</td>
-                        <td th:text="${bank.cardType}">6</td>
-                        <!--                        <td><a th:href="@{/bank/toEdit.do(id=${bank.id})}">edit</a></td>-->
+                        <th scope="row" th:text="${bank.id}"></th>
+                        <td th:text="${bank.bankName}"></td>
+                        <td th:text="${bank.bankShortName}"></td>
+                        <td th:switch="${bank.cardType}" th:case="CreditCard">信用卡</td>
+                        <td th:switch="${bank.cardType}" th:case="DebitCard">借记卡</td>
+                        <td th:switch="${bank.cardType}" th:case="all">默认</td>
                         <td><a href="#" data-bs-toggle="modal" data-bs-target="#editor"
                                th:onclick="toEdit([[${bank.id}]],[[${bank.bankName}]],[[${bank.bankShortName}]],[[${bank.cardType}]])">edit</a>
                         </td>
