@@ -10,13 +10,13 @@ import lombok.Data;
 @Data
 public final class BankReviseCommand {
 
-    private Long id;
+    private Long oriId;
 
-    private String bankName;
+    private String alterBankName;
 
-    private String bankShortName;
+    private String alterBankShortName;
 
-    private String cardType;
+    private String alterCardType;
 
     private String modifyUser;
 }

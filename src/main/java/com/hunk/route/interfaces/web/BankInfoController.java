@@ -1,16 +1,21 @@
 package com.hunk.route.interfaces.web;
 
 import com.hunk.route.application.BankInfoService;
-import com.hunk.route.domain.*;
+import com.hunk.route.domain.BankInfo;
+import com.hunk.route.domain.BankInfoRepository;
+import com.hunk.route.domain.BankName;
+import com.hunk.route.domain.CardType;
 import com.hunk.route.interfaces.facade.dto.BankInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.BanInfoAssembler;
+import com.hunk.route.interfaces.facade.page.PageBean;
+import com.hunk.route.interfaces.facade.page.PageUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,17 +38,18 @@ public class BankInfoController {
     }
 
     @RequestMapping("/list.do")
-    public String list(Model model) {
-        Page<BankInfo> all = bankInfoRepository.findAll(PageRequest.of(0, 10));
+    public String list(Model model, HttpServletRequest request) {
+        PageBean pageBean = new PageBean();
+        pageBean.setRequest(request);
+        Page<BankInfo> all =
+                bankInfoRepository.findAll(
+                        PageRequest.of(pageBean.getPage() - 1, pageBean.getRows()));
         List<BankInfoDTO> infoDtoS =
                 all.getContent().stream().map(BanInfoAssembler::toDTO).collect(Collectors.toList());
+        pageBean.setTotal(all.getTotalElements() + "");
         model.addAttribute("bankInfos", infoDtoS);
+        model.addAttribute("pageCode", PageUtils.createPageCode(pageBean));
         return "bank/list";
-    }
-
-    @RequestMapping(value = "/toAdd.do", method = RequestMethod.GET)
-    public String toAdd() {
-        return "bank/add";
     }
 
     @RequestMapping("/add.do")
@@ -55,20 +61,12 @@ public class BankInfoController {
         return "redirect:/bank/list.do";
     }
 
-    @RequestMapping("/toEdit.do")
-    public String toEdit(Model model, Long id) {
-        BankInfo bankInfo =
-                bankInfoService.findById(id).orElseThrow(() -> new BankInfoNotFoundException(id));
-        model.addAttribute("bankInfo", BanInfoAssembler.toDTO(bankInfo));
-        return "bank/edit";
-    }
-
     @RequestMapping("/edit.do")
     public String edit(BankReviseCommand command) {
         bankInfoService.reviseInfo(
-                command.getId(),
-                new BankName(command.getBankName(), command.getBankShortName()),
-                CardType.valueOf(command.getCardType()),
+                command.getOriId(),
+                new BankName(command.getAlterBankName(), command.getAlterBankShortName()),
+                CardType.valueOf(command.getAlterCardType()),
                 command.getModifyUser());
         return "redirect:/bank/list.do";
     }

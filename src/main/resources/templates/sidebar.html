@@ -1,0 +1,32 @@
+<header th:fragment="sidebar">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a id="merchant" class="nav-link active" aria-current="page" href="#">
+                        <span data-feather="home"></span>
+                        Merchant
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="route" class="nav-link" href="#">
+                        <span data-feather="file"></span>
+                        Route
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="rule" class="nav-link" href="#">
+                        <span data-feather="file"></span>
+                        Rule
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="bankInfo" class="nav-link" th:href="@{/bank/list.do}">
+                        <span data-feather="file"></span>
+                        BankInfo
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

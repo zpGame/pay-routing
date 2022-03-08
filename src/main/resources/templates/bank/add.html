@@ -1,47 +1,33 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>首页</title>
+<header th:fragment="addit">
+    <div class="modal" id="addition">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">新增银行</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
-    <script th:href="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:href="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-</head>
-<body class="container">
-<br/>
-<h1>添加银行</h1>
-<br/><br/>
-<div class="with:80%">
-    <form class="form-horizontal" th:action="@{/bank/add.do}" method="post">
-        <div class="form-group">
-            <label for="bankName" class="col-sm-2 control-label">bankName</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="bankName" id="bankName" placeholder="bankName" required/>
+                <div class="modal-body">
+                    <form class="form-horizontal" th:action="@{/bank/add.do}" method="post">
+                        <div class="mb-3 mt-3">
+                            <input type="text" class="form-control" name="bankName" id="bankName"
+                                   placeholder="bankName" required/>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <input type="text" class="form-control" name="bankShortName" id="bankShortName"
+                                   placeholder="bankShortName" required/>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <input type="text" class="form-control" name="cardType" id="cardType"
+                                   placeholder="cardType"/>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="submit" value="Submit" class="btn btn-outline-primary btn-sm"/>
+                            <input type="reset" value="Reset" class="btn btn-outline-primary btn-sm"/>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="bankShortName" class="col-sm-2 control-label">bankShortName</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="bankShortName" id="bankShortName"
-                       placeholder="bankShortName" required/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="cardType" class="col-sm-2 control-label">cardType</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="cardType" id="cardType" placeholder="cardType"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" value="Submit" class="btn btn-info"/>
-                <input type="reset" value="Reset" class="btn btn-info"/>
-            </div>
-        </div>
-    </form>
-</div>
-</body>
-</html>
+    </div>
+</header>

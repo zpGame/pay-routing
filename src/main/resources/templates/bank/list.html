@@ -5,45 +5,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title>BankInfo</title>
-
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
-    <script th:href="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:href="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<br/>
 <div th:include="header :: header"></div>
-<br/>
-<div class="nav justify-content-center">
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">银行名称</th>
-            <th scope="col">银行简称</th>
-            <th scope="col">卡类型</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!--each来进行for循环求值-->
-        <tr th:each="bank : ${bankInfos}">
-            <th scope="row" th:text="${bank.id}">1</th>
-            <td th:text="${bank.bankName}">neo</td>
-            <td th:text="${bank.bankShortName}">Otto</td>
-            <td th:text="${bank.cardType}">6</td>
-            <td><a th:href="@{/bank/toEdit.do(id=${bank.id})}">edit</a></td>
-            <td><a th:href="@{/bank/delete.do(id=${bank.id})}">delete</a></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="form-group">
-    <div class="col-sm-2 control-label">
-        <a th:href="@{/bank/toAdd.do}" class="btn btn-info">add</a>
+<div class="container-fluid">
+    <div class="row">
+
+        <div th:include="sidebar :: sidebar"></div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">BankInfo</h1>
+                <div class="form-group">
+                    <button type="button" class="btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addition">
+                        新增
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">银行名称</th>
+                        <th scope="col">银行简称</th>
+                        <th scope="col">卡类型</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--each来进行for循环求值-->
+                    <tr th:each="bank : ${bankInfos}">
+                        <th scope="row" th:text="${bank.id}">1</th>
+                        <td th:text="${bank.bankName}">neo</td>
+                        <td th:text="${bank.bankShortName}">Otto</td>
+                        <td th:text="${bank.cardType}">6</td>
+                        <!--                        <td><a th:href="@{/bank/toEdit.do(id=${bank.id})}">edit</a></td>-->
+                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#editor"
+                               th:onclick="toEdit([[${bank.id}]],[[${bank.bankName}]],[[${bank.bankShortName}]],[[${bank.cardType}]])">edit</a>
+                        </td>
+                        <td><a th:href="@{/bank/delete.do(id=${bank.id})}">delete</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <ul class="pagination justify-content-end" th:utext="${pageCode}"></ul>
+            </div>
+        </main>
     </div>
 </div>
-
+<div th:include="bank/add :: addit"></div>
+<div th:include="bank/edit :: edit"></div>
+<div th:include="resources :: resources"></div>
 </body>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#merchant").attr("class", "nav-link");
+        $("#bankInfo").attr("class", "nav-link active");
+    });
+
+    function toEdit(id, bankName, bankShortName, cardType) {
+        $("#oriId").val(id);
+        $("#alterBankName").val(bankName);
+        $("#alterBankShortName").val(bankShortName);
+        $("#alterCardType").val(cardType);
+    }
+
+</script>
 </html>
