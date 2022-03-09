@@ -1,5 +1,6 @@
 package com.hunk.route.domain;
 
+import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Set;
  *     <p>路由规则 交易类型、卡类型、账户类型、银行、限额
  */
 @Entity
+@Getter
 @Table(name = "route_rule")
 @org.hibernate.annotations.Table(appliesTo = "route_rule", comment = "路由规则表")
 public class RouteRule {
@@ -42,10 +44,6 @@ public class RouteRule {
 
     @Embedded private Money money = Money.ZERO;
 
-    public Set<BankInfo> getBankInfos() {
-        return bankInfos;
-    }
-
     public RouteRule() {}
 
     public static RouteRule createRouteRule(
@@ -68,10 +66,6 @@ public class RouteRule {
         this.bankInfos = bankInfos;
         this.money = money;
         this.createInfo = createInfo;
-    }
-
-    public CreateInfo getCreateInfo() {
-        return createInfo;
     }
 
     public RouteRule changeTradeType(TradeType tradeType) {

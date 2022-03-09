@@ -2,6 +2,7 @@ package com.hunk.route.interfaces.facade.internal.assembler;
 
 import com.hunk.route.domain.BankInfo;
 import com.hunk.route.domain.MerchantRoute;
+import com.hunk.route.domain.RouteChannel;
 import com.hunk.route.domain.RouteRule;
 import com.hunk.route.interfaces.facade.dto.RouteInfoDTO;
 
@@ -13,7 +14,23 @@ import com.hunk.route.interfaces.facade.dto.RouteInfoDTO;
 public class RouteInfoAssembler {
 
     public static RouteInfoDTO toDto(
-            MerchantRoute merchantRoute, RouteRule routeRule, BankInfo bankInfo, boolean isResult) {
-        return new RouteInfoDTO();
+            MerchantRoute merchantRoute,
+            RouteChannel routeChannel,
+            RouteRule routeRule,
+            BankInfo bankInfo,
+            boolean isResult) {
+        return isResult
+                ? new RouteInfoDTO(
+                        merchantRoute.getMerchantNo(),
+                        merchantRoute.getMerchantName(),
+                        routeChannel.getPaymentChannel().getRouteInterface(),
+                        routeChannel.getPaymentChannel().getRouteName(),
+                        routeRule.getTradeType().name(),
+                        routeRule.getAccountType().name(),
+                        routeRule.getMoney().asString(),
+                        bankInfo.getBankName().getBankName(),
+                        bankInfo.getBankName().getBankShortName(),
+                        bankInfo.getCardType().name())
+                : new RouteInfoDTO();
     }
 }

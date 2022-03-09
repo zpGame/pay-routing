@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Rule</title>
+</head>
+<body>
+<div th:include="header :: header"></div>
+<div class="container-fluid">
+    <div class="row">
+
+        <div th:include="sidebar :: sidebar"></div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Rule</h1>
+                <div class="form-group">
+                    <button type="button" class="btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#addition">
+                        新增
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">交易类型</th>
+                        <th scope="col">账户类型</th>
+                        <th scope="col">限额</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--each来进行for循环求值-->
+                    <tr th:each="rule : ${routeRules}">
+                        <th scope="row" th:text="${rule.ruleId}"></th>
+                        <td th:switch="${rule.tradeType}" th:case="payment">代付</td>
+                        <td th:switch="${rule.tradeType}" th:case="withHold">代扣</td>
+                        <td th:switch="${rule.accountType}" th:case="all">默认</td>
+                        <td th:switch="${rule.accountType}" th:case="personal">对私</td>
+                        <td th:switch="${rule.accountType}" th:case="toThePublic">对公</td>
+                        <td th:text="${rule.money}"></td>
+                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#editor"
+                               th:onclick="toEdit([[${rule.ruleId}]],[[${rule.tradeType}]],[[${rule.accountType}]],[[${rule.money}]])">edit</a>
+                        </td>
+                        <td><a th:href="@{/rule/delete.do(id=${rule.ruleId})}">delete</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <ul class="pagination justify-content-end" th:utext="${pageCode}"></ul>
+            </div>
+        </main>
+    </div>
+</div>
+<div th:include="rule/add :: addit"></div>
+<div th:include="rule/edit :: edit"></div>
+<div th:include="resources :: resources"></div>
+</body>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#merchant").attr("class", "nav-link");
+        $("#rule").attr("class", "nav-link active");
+    });
+
+    function toEdit(ruleId, tradeType, accountType, money) {
+        $("#oriRuleId").val(ruleId);
+        $("#alterTradeType").val(tradeType);
+        $("#alterAccountType").val(accountType);
+        $("#alterMoney").val(money);
+    }
+
+</script>
+</html>

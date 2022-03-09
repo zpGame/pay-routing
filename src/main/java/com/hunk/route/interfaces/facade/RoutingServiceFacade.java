@@ -10,5 +10,11 @@ import com.hunk.route.interfaces.web.ObtainRouteCommand;
  */
 public interface RoutingServiceFacade {
 
+    /**
+     * 获取信息
+     *
+     * @param command 请求参数
+     * @return info
+     */
     RouteInfoDTO obtainRoute(ObtainRouteCommand command);
 }

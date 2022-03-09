@@ -1,5 +1,6 @@
 package com.hunk.route.domain;
 
+import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
  *     <p>路由
  */
 @Entity
+@Getter
 @Table(name = "route_channel")
 public class RouteChannel {
 
@@ -89,26 +91,6 @@ public class RouteChannel {
     public RouteChannel changeCreateInfo(CreateInfo createInfo) {
         this.createInfo = createInfo;
         return this;
-    }
-
-    public PaymentChannel getPaymentChannel() {
-        return paymentChannel;
-    }
-
-    public RouteRule getRouteRule() {
-        return routeRule;
-    }
-
-    public EffectiveTime getEffectiveTime() {
-        return effectiveTime;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public CreateInfo getCreateInfo() {
-        return createInfo;
     }
 
     public boolean isUpHold() {

@@ -1,5 +1,7 @@
 package com.hunk.route.domain;
 
+import lombok.Getter;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -8,6 +10,7 @@ import javax.persistence.Embeddable;
  * @date 2022/2/23
  *     <p>路由对象
  */
+@Getter
 @Embeddable
 public class PaymentChannel {
 

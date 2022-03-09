@@ -1,0 +1,38 @@
+<header th:fragment="addit">
+    <div class="modal" id="addition">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">新增规则</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-horizontal" th:action="@{/rule/add.do}" method="post">
+                        <div class="mb-3 mt-3">
+                            <select class="form-select" name="tradeType" id="tradeType">
+                                <option value="payment">代付</option>
+                                <option value="withHold">代扣</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <select class="form-select" name="accountType" id="accountType">
+                                <option value="all">默认</option>
+                                <option value="personal">对私</option>
+                                <option value="toThePublic">对公</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <input type="text" class="form-control" name="money" id="money"
+                                   placeholder="money" required/>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="submit" value="Submit" class="btn btn-outline-primary btn-sm"/>
+                            <input type="reset" value="Reset" class="btn btn-outline-primary btn-sm"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

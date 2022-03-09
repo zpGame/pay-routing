@@ -1,5 +1,7 @@
 package com.hunk.route.domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
  *     <p>商户关联路由
  */
 @Entity
+@Getter
 @Table(name = "merchant_route")
 public class MerchantRoute {
 
@@ -56,10 +59,6 @@ public class MerchantRoute {
         this.merchantName = merchantName;
         this.routeChannels = routeChannels;
         this.createInfo = createInfo;
-    }
-
-    public CreateInfo getCreateInfo() {
-        return createInfo;
     }
 
     public MerchantRoute changeMerchantNo(String merchantNo) {

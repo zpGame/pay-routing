@@ -1,0 +1,80 @@
+package com.hunk.route.interfaces.web;
+
+import com.hunk.route.application.RouteRuleService;
+import com.hunk.route.domain.*;
+import com.hunk.route.interfaces.facade.dto.RuleInfoDTO;
+import com.hunk.route.interfaces.facade.internal.assembler.RuleAssembler;
+import com.hunk.route.interfaces.facade.page.PageBean;
+import com.hunk.route.interfaces.facade.page.PageUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author hunk
+ * @date 2022/3/9
+ *     <p>
+ */
+@Controller
+@RequestMapping("/rule")
+public class RouteRuleController {
+
+    private final RouteRuleService routeRuleService;
+    private final RouteRuleRepository routeRuleRepository;
+
+    public RouteRuleController(
+            RouteRuleService routeRuleService, RouteRuleRepository routeRuleRepository) {
+        this.routeRuleService = routeRuleService;
+        this.routeRuleRepository = routeRuleRepository;
+    }
+
+    @RequestMapping("/list.do")
+    public String list(Model model, HttpServletRequest request) {
+        PageBean pageBean = new PageBean();
+        pageBean.setRequest(request);
+        Page<RouteRule> all =
+                routeRuleRepository.findAll(
+                        PageRequest.of(pageBean.getPage() - 1, pageBean.getRows()));
+        List<RuleInfoDTO> infoDtoS =
+                all.getContent().stream().map(RuleAssembler::toDTO).collect(Collectors.toList());
+        pageBean.setTotal(all.getTotalElements() + "");
+        model.addAttribute("routeRules", infoDtoS);
+        model.addAttribute("pageCode", PageUtils.createPageCode(pageBean));
+        return "rule/list";
+    }
+
+    @RequestMapping("/add.do")
+    public String add(RuleCreateCommand command) {
+        routeRuleService.createRouteRule(
+                TradeType.valueOf(command.getTradeType()),
+                AccountType.valueOf(command.getAccountType()),
+                command.getBankInfoIds(),
+                new Money(command.getMoney()),
+                command.getCreateUser());
+        return "redirect:/rule/list.do";
+    }
+
+    @RequestMapping("/edit.do")
+    public String edit(RuleReviseCommand command) {
+        routeRuleService.reviseInfo(
+                command.getOriRuleId(),
+                TradeType.valueOf(command.getAlterTradeType()),
+                AccountType.valueOf(command.getAlterAccountType()),
+                command.getAlterBankInfoIds(),
+                new Money(command.getAlterMoney()),
+                command.getModifyUser());
+        return "redirect:/rule/list.do";
+    }
+
+    @RequestMapping("/delete.do")
+    public String delete(Long id) {
+        routeRuleRepository.deleteById(id);
+        return "redirect:/rule/list.do";
+    }
+}

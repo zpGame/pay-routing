@@ -1,0 +1,39 @@
+<header th:fragment="edit">
+    <div class="modal" id="editor">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">修改规则</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-horizontal" th:action="@{/rule/edit.do}" method="post">
+                        <input type="text" class="form-control" name="oriRuleId" id="oriRuleId" hidden/>
+                        <div class="mb-3 mt-3">
+                            <select class="form-select" name="alterTradeType" id="alterTradeType">
+                                <option value="payment">代付</option>
+                                <option value="withHold">代扣</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <select class="form-select" name="alterAccountType" id="alterAccountType">
+                                <option value="all">默认</option>
+                                <option value="personal">对私</option>
+                                <option value="toThePublic">对公</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <input type="text" class="form-control" name="alterMoney" id="alterMoney"
+                                   placeholder="money" required/>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="submit" value="Submit" class="btn btn-outline-primary btn-sm"/>
+                            <a th:href="@{/rule/list.do}" class="btn btn-outline-primary btn-sm">Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
