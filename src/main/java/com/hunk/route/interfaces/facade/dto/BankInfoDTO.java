@@ -1,5 +1,6 @@
 package com.hunk.route.interfaces.facade.dto;
 
+import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * @date 2022/3/3
  *     <p>
  */
+@Getter
 public final class BankInfoDTO implements Serializable {
 
     private final Long id;
@@ -24,22 +26,6 @@ public final class BankInfoDTO implements Serializable {
         this.bankName = bankName;
         this.bankShortName = bankShortName;
         this.cardType = cardType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public String getBankShortName() {
-        return bankShortName;
-    }
-
-    public String getCardType() {
-        return cardType;
     }
 
     @Override

@@ -3,13 +3,13 @@
         <div class="position-sticky pt-3">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a id="merchant" class="nav-link active" aria-current="page" href="#">
+                    <a id="merchant" class="nav-link active" aria-current="page" th:href="@{/merchant/list.do}">
                         <span data-feather="home"></span>
                         Merchant
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="route" class="nav-link" href="#">
+                    <a id="route" class="nav-link" th:href="@{/route/list.do}">
                         <span data-feather="file"></span>
                         Route
                     </a>
