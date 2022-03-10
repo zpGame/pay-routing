@@ -1,4 +1,4 @@
-package com.hunk.route.interfaces.web;
+package com.hunk.route.interfaces.web.command;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class RuleReviseCommand {
 
-    private Long oriRuleId;
+    private Long oriId;
 
     private String alterTradeType;
 

@@ -32,15 +32,15 @@ public interface RouteRuleService {
     /**
      * ID查询路由规则
      *
-     * @param ruleId ID
+     * @param id ID
      * @return Optional
      */
-    Optional<RouteRule> findById(Long ruleId);
+    Optional<RouteRule> findById(Long id);
 
     /**
      * 修改路由规则
      *
-     * @param ruleId 规则ID
+     * @param id 规则ID
      * @param tradeType 交易类型
      * @param accountType 账户类型
      * @param bankInfoIds 银行ID集
@@ -49,7 +49,7 @@ public interface RouteRuleService {
      * @return RouteRule
      */
     RouteRule reviseInfo(
-            Long ruleId,
+            Long id,
             TradeType tradeType,
             AccountType accountType,
             List<Long> bankInfoIds,

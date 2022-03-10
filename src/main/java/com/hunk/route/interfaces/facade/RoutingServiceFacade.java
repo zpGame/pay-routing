@@ -1,7 +1,7 @@
 package com.hunk.route.interfaces.facade;
 
 import com.hunk.route.interfaces.facade.dto.RouteInfoDTO;
-import com.hunk.route.interfaces.web.ObtainRouteCommand;
+import com.hunk.route.interfaces.web.command.ObtainRouteCommand;
 
 /**
  * @author hunk

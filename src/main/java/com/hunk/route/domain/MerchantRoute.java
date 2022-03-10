@@ -17,11 +17,7 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Table(name = "merchant_route")
-public class MerchantRoute {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class MerchantRoute extends BaseEntity {
 
     @Column(name = "merchant_no", length = 32, unique = true)
     private String merchantNo;
@@ -37,8 +33,6 @@ public class MerchantRoute {
             foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
             inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Set<RouteChannel> routeChannels = new HashSet<>();
-
-    @Embedded private CreateInfo createInfo;
 
     public static MerchantRoute createMerchant(
             String merchantNo,

@@ -1,7 +1,8 @@
-package com.hunk.route.interfaces.web;
+package com.hunk.route.interfaces.web.command;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
 public class RuleCreateCommand {
     private String tradeType;
     private String accountType;
-    private List<Long> bankInfoIds;
+    private List<Long> bankInfoIds = new ArrayList<>();
     private String money;
     private String createUser;
 }

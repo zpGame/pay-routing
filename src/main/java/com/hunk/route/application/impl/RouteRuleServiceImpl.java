@@ -48,14 +48,14 @@ public class RouteRuleServiceImpl implements RouteRuleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Optional<RouteRule> findById(Long ruleId) {
-        return routeRuleRepository.findById(ruleId);
+    public Optional<RouteRule> findById(Long id) {
+        return routeRuleRepository.findById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RouteRule reviseInfo(
-            Long ruleId,
+            Long id,
             TradeType tradeType,
             AccountType accountType,
             List<Long> bankInfoIds,
@@ -63,8 +63,8 @@ public class RouteRuleServiceImpl implements RouteRuleService {
             String modifyUser) {
         RouteRule routeRule =
                 routeRuleRepository
-                        .findById(ruleId)
-                        .orElseThrow(() -> new RuleNotFoundException(ruleId));
+                        .findById(id)
+                        .orElseThrow(() -> new RuleNotFoundException(id));
         Set<BankInfo> bankInfos =
                 bankInfoIds.stream()
                         .map(bankInfoRepository::findById)

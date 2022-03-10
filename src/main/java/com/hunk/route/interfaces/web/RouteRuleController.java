@@ -6,6 +6,8 @@ import com.hunk.route.interfaces.facade.dto.RuleInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.RuleAssembler;
 import com.hunk.route.interfaces.facade.page.PageBean;
 import com.hunk.route.interfaces.facade.page.PageUtils;
+import com.hunk.route.interfaces.web.command.RuleCreateCommand;
+import com.hunk.route.interfaces.web.command.RuleReviseCommand;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -63,7 +65,7 @@ public class RouteRuleController {
     @RequestMapping("/edit.do")
     public String edit(RuleReviseCommand command) {
         routeRuleService.reviseInfo(
-                command.getOriRuleId(),
+                command.getOriId(),
                 TradeType.valueOf(command.getAlterTradeType()),
                 AccountType.valueOf(command.getAlterAccountType()),
                 command.getAlterBankInfoIds(),

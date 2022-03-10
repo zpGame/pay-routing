@@ -32,6 +32,7 @@
                         <th scope="col">交易类型</th>
                         <th scope="col">账户类型</th>
                         <th scope="col">限额</th>
+                        <th scope="col">支持银行</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                     </tr>
@@ -39,17 +40,18 @@
                     <tbody>
                     <!--each来进行for循环求值-->
                     <tr th:each="rule : ${routeRules}">
-                        <th scope="row" th:text="${rule.ruleId}"></th>
+                        <th scope="row" th:text="${rule.id}"></th>
                         <td th:switch="${rule.tradeType}" th:case="payment">代付</td>
                         <td th:switch="${rule.tradeType}" th:case="withHold">代扣</td>
                         <td th:switch="${rule.accountType}" th:case="all">默认</td>
                         <td th:switch="${rule.accountType}" th:case="personal">对私</td>
                         <td th:switch="${rule.accountType}" th:case="toThePublic">对公</td>
                         <td th:text="${rule.money}"></td>
+                        <td th:text="${rule.bankShortNames}"></td>
                         <td><a href="#" data-bs-toggle="modal" data-bs-target="#editor"
-                               th:onclick="toEdit([[${rule.ruleId}]],[[${rule.tradeType}]],[[${rule.accountType}]],[[${rule.money}]])">edit</a>
+                               th:onclick="toEdit([[${rule.id}]],[[${rule.tradeType}]],[[${rule.accountType}]],[[${rule.money}]],[[${rule.bankIds}]])">edit</a>
                         </td>
-                        <td><a th:href="@{/rule/delete.do(id=${rule.ruleId})}">delete</a></td>
+                        <td><a th:href="@{/rule/delete.do(id=${rule.id})}">delete</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -70,11 +72,13 @@
         $("#rule").attr("class", "nav-link active");
     });
 
-    function toEdit(ruleId, tradeType, accountType, money) {
-        $("#oriRuleId").val(ruleId);
+    function toEdit(id, tradeType, accountType, money, bankInfos) {
+        $("#oriId").val(id);
         $("#alterTradeType").val(tradeType);
         $("#alterAccountType").val(accountType);
         $("#alterMoney").val(money);
+        const arr = bankInfos.split(',');
+        $('#alterBankInfoIds').selectpicker('val', arr);
     }
 
 </script>

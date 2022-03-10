@@ -16,12 +16,7 @@ import java.util.Set;
 @Getter
 @Table(name = "route_rule")
 @org.hibernate.annotations.Table(appliesTo = "route_rule", comment = "路由规则表")
-public class RouteRule {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rule_id", length = 32)
-    private Long ruleId;
+public class RouteRule extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "trade_type", length = 24)
@@ -31,12 +26,10 @@ public class RouteRule {
     @Column(name = "account_type", length = 24)
     private AccountType accountType;
 
-    @Embedded private CreateInfo createInfo;
-
     @ManyToMany
     @JoinTable(
             name = "role_junction_bank",
-            joinColumns = {@JoinColumn(name = "sys_rule_id", referencedColumnName = "rule_id")},
+            joinColumns = {@JoinColumn(name = "sys_rule_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "sys_bank_id", referencedColumnName = "id")},
             foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
             inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
@@ -108,7 +101,7 @@ public class RouteRule {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("ruleId", ruleId)
+                .append("id", id)
                 .append("tradeType", tradeType)
                 .append("accountType", accountType)
                 .append("createInfo", createInfo)

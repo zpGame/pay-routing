@@ -15,19 +15,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "bank_info")
 @org.hibernate.annotations.Table(appliesTo = "bank_info", comment = "银行信息表")
-public class BankInfo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class BankInfo extends BaseEntity{
 
     @Embedded private BankName bankName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "card_type", length = 12)
     private CardType cardType;
-
-    @Embedded private CreateInfo createInfo;
 
     public static BankInfo createBankInfo(
             BankName bankName, CardType cardType, CreateInfo createInfo) {

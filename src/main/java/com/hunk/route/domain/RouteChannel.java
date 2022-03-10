@@ -14,11 +14,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "route_channel")
-public class RouteChannel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class RouteChannel extends BaseEntity {
 
     @Embedded private PaymentChannel paymentChannel;
 
@@ -26,7 +22,7 @@ public class RouteChannel {
     @OneToOne
     @JoinColumn(
             name = "associate_rule_id",
-            referencedColumnName = "rule_id",
+            referencedColumnName = "id",
             foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private RouteRule routeRule = new RouteRule();
     /** 优先级 */
@@ -36,8 +32,6 @@ public class RouteChannel {
 
     /** 是否维护 */
     private int isUpHold;
-
-    @Embedded private CreateInfo createInfo;
 
     /**
      * 创建路由

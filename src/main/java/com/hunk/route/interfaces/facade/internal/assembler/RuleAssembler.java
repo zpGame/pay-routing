@@ -20,7 +20,7 @@ public class RuleAssembler {
                         .map(BanInfoAssembler::toDTO)
                         .collect(Collectors.toList());
         return new RuleInfoDTO(
-                info.getRuleId(),
+                info.getId(),
                 info.getTradeType().name(),
                 info.getAccountType().name(),
                 infoDtoS,

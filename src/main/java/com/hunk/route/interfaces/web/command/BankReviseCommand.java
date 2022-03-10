@@ -1,4 +1,4 @@
-package com.hunk.route.interfaces.web;
+package com.hunk.route.interfaces.web.command;
 
 import lombok.Data;
 

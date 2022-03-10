@@ -5,7 +5,7 @@ import com.hunk.route.domain.*;
 import com.hunk.route.interfaces.facade.RoutingServiceFacade;
 import com.hunk.route.interfaces.facade.dto.RouteInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.RouteInfoAssembler;
-import com.hunk.route.interfaces.web.ObtainRouteCommand;
+import com.hunk.route.interfaces.web.command.ObtainRouteCommand;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
