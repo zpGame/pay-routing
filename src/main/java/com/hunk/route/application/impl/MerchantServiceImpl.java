@@ -4,8 +4,8 @@ import com.hunk.route.application.MerchantService;
 import com.hunk.route.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,7 +29,7 @@ public class MerchantServiceImpl implements MerchantService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public MerchantRoute createMerchant(
-            String merchantNo, String merchantName, Set<Long> routeIds, String createUser) {
+            String merchantNo, String merchantName, List<Long> routeIds, String createUser) {
         Set<RouteChannel> routeChannels =
                 routeIds.stream()
                         .map(routeRepository::findById)
@@ -55,7 +55,7 @@ public class MerchantServiceImpl implements MerchantService {
             Long merchantId,
             String merchantNo,
             String merchantName,
-            Set<Long> routeIds,
+            List<Long> routeIds,
             String modifyUser) {
         MerchantRoute merchantRoute =
                 merchantRepository

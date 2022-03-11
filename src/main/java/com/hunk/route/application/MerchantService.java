@@ -2,8 +2,7 @@ package com.hunk.route.application;
 
 import com.hunk.route.domain.MerchantRoute;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author hunk
@@ -22,7 +21,7 @@ public interface MerchantService {
      * @return MerchantRoute
      */
     MerchantRoute createMerchant(
-            String merchantNo, String merchantName, Set<Long> routeIds, String createUser);
+            String merchantNo, String merchantName, List<Long> routeIds, String createUser);
 
     /**
      * ID查询商户
@@ -46,6 +45,6 @@ public interface MerchantService {
             Long merchantId,
             String merchantNo,
             String merchantName,
-            Set<Long> routeIds,
+            List<Long> routeIds,
             String modifyUser);
 }

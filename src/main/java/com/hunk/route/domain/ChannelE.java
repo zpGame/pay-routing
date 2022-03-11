@@ -29,7 +29,7 @@ public enum ChannelE {
         this.channelName = channelName;
     }
 
-    public Optional<ChannelE> getEnum(String channel) {
+    public static Optional<ChannelE> getEnum(String channel) {
         return StringUtils.isBlank(channel)
                 ? Optional.empty()
                 : Arrays.stream(ChannelE.values())

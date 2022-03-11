@@ -10,7 +10,7 @@ import com.hunk.route.interfaces.facade.dto.RouteChannelDTO;
  */
 public class RouteChannelAssembler {
 
-    public static RouteChannelDTO toDTO(RouteChannel info) {
+    public static RouteChannelDTO toDto(RouteChannel info) {
 //        return new RouteChannelDTO(
 //                info.getId(),
 //                info.getPaymentChannel().getRouteInterface(),

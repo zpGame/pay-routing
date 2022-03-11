@@ -44,7 +44,7 @@ public class RouteRuleController {
                 routeRuleRepository.findAll(
                         PageRequest.of(pageBean.getPage() - 1, pageBean.getRows()));
         List<RuleInfoDTO> infoDtoS =
-                all.getContent().stream().map(RuleAssembler::toDTO).collect(Collectors.toList());
+                all.getContent().stream().map(RuleAssembler::toDto).collect(Collectors.toList());
         pageBean.setTotal(all.getTotalElements() + "");
         model.addAttribute("routeRules", infoDtoS);
         model.addAttribute("pageCode", PageUtils.createPageCode(pageBean));

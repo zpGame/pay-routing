@@ -10,7 +10,7 @@ import com.hunk.route.interfaces.facade.dto.BankInfoDTO;
  *     <p>
  */
 public class BanInfoAssembler {
-    public static BankInfoDTO toDTO(BankInfo info) {
+    public static BankInfoDTO toDto(BankInfo info) {
         BankName bankName = info.getBankName();
         return new BankInfoDTO(
                 info.getId(),

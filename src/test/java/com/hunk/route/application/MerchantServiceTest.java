@@ -5,8 +5,8 @@ import com.hunk.route.domain.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author hunk
@@ -21,7 +21,7 @@ public class MerchantServiceTest extends ApplicationTests {
     public void createMerchant() {
         String merchantNo = "4321541535234";
         String merchantName = "测试";
-        Set<Long> routeIds = new HashSet<>();
+        List<Long> routeIds = new ArrayList<>();
         routeIds.add(1L);
         String createUser = "system";
         MerchantRoute merchant =
@@ -32,22 +32,28 @@ public class MerchantServiceTest extends ApplicationTests {
     @Test
     public void findById() {
         MerchantRoute merchantRoute = merchantService.findByMerchantNo("");
-        RouteRule routeRule = merchantRoute.obtainRoutes().stream()
-                .map(RouteChannel::getRouteRule)
-                .filter(rule -> rule.validTradeType(TradeType.payment))
-                .filter(rule -> rule.validAccountType(AccountType.all))
-                .filter(rule -> rule.validMoney(new Money(9)))
-                .filter(
-                        rule ->
-                                rule.getBankInfos().stream()
-                                        .filter(bank -> bank.validBankShortName("ICBC"))
-                                        .filter(
-                                                bank ->
-                                                        bank.validCardType(
-                                                                CardType.DebitCard))
-                                        .findFirst()
-                                        .orElse(null)
-                                        != null).findFirst().orElse(null);
+        RouteRule routeRule =
+                merchantRoute.obtainRoutes().stream()
+                        .map(RouteChannel::getRouteRule)
+                        .filter(rule -> rule.validTradeType(TradeType.payment))
+                        .filter(rule -> rule.validAccountType(AccountType.all))
+                        .filter(rule -> rule.validMoney(new Money(9)))
+                        .filter(
+                                rule ->
+                                        rule.getBankInfos().stream()
+                                                        .filter(
+                                                                bank ->
+                                                                        bank.validBankShortName(
+                                                                                "ICBC"))
+                                                        .filter(
+                                                                bank ->
+                                                                        bank.validCardType(
+                                                                                CardType.DebitCard))
+                                                        .findFirst()
+                                                        .orElse(null)
+                                                != null)
+                        .findFirst()
+                        .orElse(null);
         System.out.println(routeRule);
     }
 

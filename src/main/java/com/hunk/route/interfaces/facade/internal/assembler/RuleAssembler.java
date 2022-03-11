@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
  */
 public class RuleAssembler {
 
-    public static RuleInfoDTO toDTO(RouteRule info) {
+    public static RuleInfoDTO toDto(RouteRule info) {
         List<BankInfoDTO> infoDtoS =
                 info.getBankInfos().stream()
-                        .map(BanInfoAssembler::toDTO)
+                        .map(BanInfoAssembler::toDto)
                         .collect(Collectors.toList());
         return new RuleInfoDTO(
                 info.getId(),

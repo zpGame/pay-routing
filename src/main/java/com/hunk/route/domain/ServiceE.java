@@ -29,7 +29,7 @@ public enum ServiceE {
         this.serviceName = serviceName;
     }
 
-    public Optional<ServiceE> getEnum(String service) {
+    public static Optional<ServiceE> getEnum(String service) {
         return StringUtils.isBlank(service)
                 ? Optional.empty()
                 : Arrays.stream(ServiceE.values())

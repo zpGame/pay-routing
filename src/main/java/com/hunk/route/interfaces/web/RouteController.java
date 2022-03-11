@@ -1,14 +1,13 @@
 package com.hunk.route.interfaces.web;
 
 import com.hunk.route.application.RouteService;
-import com.hunk.route.domain.RouteChannel;
-import com.hunk.route.domain.RouteRepository;
+import com.hunk.route.domain.*;
 import com.hunk.route.interfaces.facade.dto.RouteChannelDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.RouteChannelAssembler;
 import com.hunk.route.interfaces.facade.page.PageBean;
 import com.hunk.route.interfaces.facade.page.PageUtils;
-import com.hunk.route.interfaces.web.command.BankCreatCommand;
-import com.hunk.route.interfaces.web.command.BankReviseCommand;
+import com.hunk.route.interfaces.web.command.RouteCreateCommand;
+import com.hunk.route.interfaces.web.command.RouteReviseCommand;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -47,31 +48,63 @@ public class RouteController {
         PageBean pageBean = new PageBean();
         pageBean.setRequest(request);
         Page<RouteChannel> all =
-                routeRepository.findAll(
-                        PageRequest.of(pageBean.getPage() - 1, pageBean.getRows()));
+                routeRepository.findAll(PageRequest.of(pageBean.getPage() - 1, pageBean.getRows()));
         List<RouteChannelDTO> infoDtoS =
-                all.getContent().stream().map(RouteChannelAssembler::toDTO).collect(Collectors.toList());
+                all.getContent().stream()
+                        .map(RouteChannelAssembler::toDto)
+                        .collect(Collectors.toList());
         pageBean.setTotal(all.getTotalElements() + "");
         model.addAttribute("routeChannels", infoDtoS);
         model.addAttribute("pageCode", PageUtils.createPageCode(pageBean));
         return "route/list";
     }
 
+    Function<String, ChannelE> channelE =
+            channelE ->
+                    ChannelE.getEnum(channelE)
+                            .orElseThrow(() -> new NoSuchElementException(channelE));
+
+    Function<String, ServiceE> serviceE =
+            serviceE ->
+                    ServiceE.getEnum(serviceE)
+                            .orElseThrow(() -> new NoSuchElementException(serviceE));
+
     @RequestMapping("/add.do")
-    public String add(BankCreatCommand command) {
-//        routeService.createRoute();
+    public String add(RouteCreateCommand command) {
+        routeService.createRoute(
+                new PaymentChannel(
+                        channelE.apply(command.getChannelE()),
+                        serviceE.apply(command.getServiceE())),
+                command.getRuleId(),
+                command.getPriority(),
+                new EffectiveTime(command.getBeginDate(), command.getEndDate()),
+                command.getCreateUser());
         return "redirect:/route/list.do";
     }
 
     @RequestMapping("/edit.do")
-    public String edit(BankReviseCommand command) {
-//        routeService.reviseInfo();
+    public String edit(RouteReviseCommand command) {
+        routeService.reviseInfo(
+                command.getOriId(),
+                new PaymentChannel(
+                        channelE.apply(command.getAlterChannelE()),
+                        serviceE.apply(command.getAlterServiceE())),
+                command.getAlterRuleId(),
+                command.getAlterPriority(),
+                new EffectiveTime(command.getAlterBeginDate(), command.getAlterBndDate()),
+                command.getModifyUser());
         return "redirect:/route/list.do";
     }
 
     @RequestMapping("/delete.do")
     public String delete(Long id) {
         routeRepository.deleteById(id);
+        return "redirect:/route/list.do";
+    }
+
+    @RequestMapping("/changeUpHold.do")
+    public String changeUpHold(Long id, Integer upHold) {
+        routeService.changeUpHold(id, upHold, "system");
         return "redirect:/route/list.do";
     }
 }

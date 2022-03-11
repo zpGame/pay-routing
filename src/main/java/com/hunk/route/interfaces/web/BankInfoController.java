@@ -47,7 +47,7 @@ public class BankInfoController {
                 bankInfoRepository.findAll(
                         PageRequest.of(pageBean.getPage() - 1, pageBean.getRows()));
         List<BankInfoDTO> infoDtoS =
-                all.getContent().stream().map(BanInfoAssembler::toDTO).collect(Collectors.toList());
+                all.getContent().stream().map(BanInfoAssembler::toDto).collect(Collectors.toList());
         pageBean.setTotal(all.getTotalElements() + "");
         model.addAttribute("bankInfos", infoDtoS);
         model.addAttribute("pageCode", PageUtils.createPageCode(pageBean));
