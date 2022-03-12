@@ -11,7 +11,7 @@ import java.net.InetAddress;
  * @date 2022/3/10
  *     <p>
  */
-@Component
+//@Component
 public class OpenBrowser implements CommandLineRunner {
 
     @Value("${server.port}")
