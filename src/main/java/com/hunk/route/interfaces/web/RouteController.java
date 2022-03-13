@@ -3,16 +3,21 @@ package com.hunk.route.interfaces.web;
 import com.hunk.route.application.RouteService;
 import com.hunk.route.domain.*;
 import com.hunk.route.interfaces.facade.dto.RouteChannelDTO;
+import com.hunk.route.interfaces.facade.dto.RouteInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.RouteChannelAssembler;
 import com.hunk.route.interfaces.facade.page.PageBean;
 import com.hunk.route.interfaces.facade.page.PageUtils;
+import com.hunk.route.interfaces.web.command.ObtainRouteCommand;
 import com.hunk.route.interfaces.web.command.RouteCreateCommand;
 import com.hunk.route.interfaces.web.command.RouteReviseCommand;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +31,7 @@ import java.util.stream.Collectors;
  * @date 2022/2/27
  *     <p>
  */
+@Api(tags = "获取路由模块")
 @Controller
 @RequestMapping("/route")
 public class RouteController {
@@ -43,7 +49,13 @@ public class RouteController {
         return "index";
     }
 
-    @RequestMapping("/list.do")
+    @PostMapping("/obtainRoute.do")
+    @ApiOperation("获取路由信息")
+    public RouteInfoDTO obtainRoute(ObtainRouteCommand command){
+        return null;
+    }
+
+    @GetMapping("/list.do")
     public String list(Model model, HttpServletRequest request) {
         PageBean pageBean = new PageBean();
         pageBean.setRequest(request);
@@ -69,7 +81,7 @@ public class RouteController {
                     ServiceE.getEnum(serviceE)
                             .orElseThrow(() -> new NoSuchElementException(serviceE));
 
-    @RequestMapping("/add.do")
+    @PostMapping("/add.do")
     public String add(RouteCreateCommand command) {
         routeService.createRoute(
                 new PaymentChannel(
@@ -82,7 +94,7 @@ public class RouteController {
         return "redirect:/route/list.do";
     }
 
-    @RequestMapping("/edit.do")
+    @PostMapping("/edit.do")
     public String edit(RouteReviseCommand command) {
         routeService.reviseInfo(
                 command.getOriId(),
@@ -96,13 +108,13 @@ public class RouteController {
         return "redirect:/route/list.do";
     }
 
-    @RequestMapping("/delete.do")
+    @PostMapping("/delete.do")
     public String delete(Long id) {
         routeRepository.deleteById(id);
         return "redirect:/route/list.do";
     }
 
-    @RequestMapping("/changeUpHold.do")
+    @PostMapping("/changeUpHold.do")
     public String changeUpHold(Long id, Integer upHold) {
         routeService.changeUpHold(id, upHold, "system");
         return "redirect:/route/list.do";

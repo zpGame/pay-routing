@@ -1,5 +1,6 @@
 package com.hunk.route.infrastructure.interceptor;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
@@ -9,8 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -32,16 +31,15 @@ public class VisitInterceptor implements HandlerInterceptor {
         long startTime = System.currentTimeMillis();
         request.setAttribute("startTime", startTime);
         if (handler instanceof HandlerMethod) {
-            StringBuilder sb = new StringBuilder(1000);
-            sb.append("--start-----------------------------------\n");
             HandlerMethod h = (HandlerMethod) handler;
-            sb.append("URI       : ").append(request.getRequestURI()).append("\n");
-            sb.append("Controller: ").append(h.getBean().getClass().getName()).append("\n");
-            sb.append("Method    : ").append(h.getMethod().getName()).append("\n");
-            sb.append("Params    : ")
-                    .append(getParamString(request.getParameterMap()))
-                    .append("\n");
-            log.info(sb.toString());
+            String sb =
+                    String.format(
+                            "请求信息-URI:{%s};class:{%s};Method:{%s};Params:%s",
+                            request.getRequestURI(),
+                            h.getBean().getClass().getSimpleName(),
+                            h.getMethod().getName(),
+                            JSONObject.toJSONString(request.getParameterMap()));
+            log.info(sb);
         }
         return true;
     }
@@ -54,35 +52,18 @@ public class VisitInterceptor implements HandlerInterceptor {
             ModelAndView modelAndView)
             throws Exception {
         long startTime = (Long) request.getAttribute("startTime");
-        long endTime = System.currentTimeMillis();
-        long executeTime = endTime - startTime;
         if (handler instanceof HandlerMethod) {
-            StringBuilder sb = new StringBuilder(1000);
             HandlerMethod h = (HandlerMethod) handler;
-            sb.append("URI       : ").append(request.getRequestURI()).append("\n");
-            sb.append("Controller: ").append(h.getBean().getClass().getName()).append("\n");
-            sb.append("Method    : ").append(h.getMethod().getName()).append("\n");
-            sb.append("Params    : ")
-                    .append(getParamString(request.getParameterMap()))
-                    .append("\n");
-            sb.append("cost time  : ").append(executeTime).append("ms").append("\n");
-            sb.append("--end------------------------------------\n");
-            log.info(sb.toString());
+            String sb =
+                    String.format(
+                            "返回信息-URI:{%s};class:{%s};Method:{%s};Params:%s;CostTime:{%sms}",
+                            request.getRequestURI(),
+                            h.getBean().getClass().getSimpleName(),
+                            h.getMethod().getName(),
+                            JSONObject.toJSONString(request.getParameterMap()),
+                            System.currentTimeMillis() - startTime);
+            log.info(sb);
         }
-    }
-
-    private String getParamString(Map<String, String[]> map) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, String[]> e : map.entrySet()) {
-            sb.append(e.getKey()).append("=");
-            String[] value = e.getValue();
-            if (value != null && value.length == 1) {
-                sb.append(value[0]).append("\t");
-            } else {
-                sb.append(Arrays.toString(value)).append("\t");
-            }
-        }
-        return sb.toString();
     }
 
     @Override

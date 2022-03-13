@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +39,7 @@ public class MerchantController {
         this.merchantRepository = merchantRepository;
     }
 
-    @RequestMapping("/list.do")
+    @GetMapping("/list.do")
     public String list(Model model, HttpServletRequest request) {
         PageBean pageBean = new PageBean();
         pageBean.setRequest(request);
@@ -54,7 +56,7 @@ public class MerchantController {
         return "merchant/list";
     }
 
-    @RequestMapping("/add.do")
+    @PostMapping("/add.do")
     public String add(MerchantCreateCommand command) {
         merchantService.createMerchant(
                 command.getMerchantNo(),
@@ -64,7 +66,7 @@ public class MerchantController {
         return "redirect:/merchant/list.do";
     }
 
-    @RequestMapping("/edit.do")
+    @PostMapping("/edit.do")
     public String edit(MerchantReviseCommand command) {
         merchantService.reviseInfo(
                 command.getOriId(),
@@ -75,7 +77,7 @@ public class MerchantController {
         return "redirect:/merchant/list.do";
     }
 
-    @RequestMapping("/delete.do")
+    @PostMapping("/delete.do")
     public String delete(Long id) {
         merchantRepository.deleteById(id);
         return "redirect:/merchant/list.do";

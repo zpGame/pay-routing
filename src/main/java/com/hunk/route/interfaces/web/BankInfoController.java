@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +41,7 @@ public class BankInfoController {
         this.bankInfoRepository = bankInfoRepository;
     }
 
-    @RequestMapping("/list.do")
+    @GetMapping("/list.do")
     public String list(Model model, HttpServletRequest request) {
         PageBean pageBean = new PageBean();
         pageBean.setRequest(request);
@@ -54,7 +56,7 @@ public class BankInfoController {
         return "bank/list";
     }
 
-    @RequestMapping("/add.do")
+    @PostMapping("/add.do")
     public String add(BankCreatCommand command) {
         bankInfoService.createBankInfo(
                 new BankName(command.getBankName(), command.getBankShortName()),
@@ -63,7 +65,7 @@ public class BankInfoController {
         return "redirect:/bank/list.do";
     }
 
-    @RequestMapping("/edit.do")
+    @PostMapping("/edit.do")
     public String edit(BankReviseCommand command) {
         bankInfoService.reviseInfo(
                 command.getOriId(),
@@ -73,7 +75,7 @@ public class BankInfoController {
         return "redirect:/bank/list.do";
     }
 
-    @RequestMapping("/delete.do")
+    @PostMapping("/delete.do")
     public String delete(Long id) {
         bankInfoRepository.deleteById(id);
         return "redirect:/bank/list.do";

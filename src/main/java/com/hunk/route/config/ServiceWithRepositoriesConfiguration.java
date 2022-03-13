@@ -9,12 +9,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * @author hunk
  * @date 2022/2/21
- * <p>
+ *     <p>
  */
 @Configuration
-@EnableJpaRepositories( "com.hunk.route.domain" )
+@EnableJpaRepositories("com.hunk.route.domain")
 @EnableAutoConfiguration
 @EntityScan("com.hunk.route.domain")
-@Import({ServiceConfiguration.class, ThymeleafConfig.class, CustomWebMvcConfigurer.class})
-public class ServiceWithRepositoriesConfiguration {
-}
+@Import({
+    ServiceConfiguration.class,
+    ThymeleafConfig.class,
+    CustomWebMvcConfigurer.class,
+    SwaggerConfig.class
+})
+public class ServiceWithRepositoriesConfiguration {}

@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +38,7 @@ public class RouteRuleController {
         this.routeRuleRepository = routeRuleRepository;
     }
 
-    @RequestMapping("/list.do")
+    @GetMapping("/list.do")
     public String list(Model model, HttpServletRequest request) {
         PageBean pageBean = new PageBean();
         pageBean.setRequest(request);
@@ -51,7 +53,7 @@ public class RouteRuleController {
         return "rule/list";
     }
 
-    @RequestMapping("/add.do")
+    @PostMapping("/add.do")
     public String add(RuleCreateCommand command) {
         routeRuleService.createRouteRule(
                 TradeType.valueOf(command.getTradeType()),
@@ -62,7 +64,7 @@ public class RouteRuleController {
         return "redirect:/rule/list.do";
     }
 
-    @RequestMapping("/edit.do")
+    @PostMapping("/edit.do")
     public String edit(RuleReviseCommand command) {
         routeRuleService.reviseInfo(
                 command.getOriId(),
@@ -74,7 +76,7 @@ public class RouteRuleController {
         return "redirect:/rule/list.do";
     }
 
-    @RequestMapping("/delete.do")
+    @PostMapping("/delete.do")
     public String delete(Long id) {
         routeRuleRepository.deleteById(id);
         return "redirect:/rule/list.do";
