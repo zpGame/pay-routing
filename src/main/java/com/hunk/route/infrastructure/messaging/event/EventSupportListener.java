@@ -13,14 +13,14 @@ import java.util.Map;
 public abstract class EventSupportListener<E extends Event>
         implements EventListener<E>, InitializingBean {
 
-    @Autowired private EventBus fBankEventBus;
+    @Autowired private EventBus eventBus;
 
     protected Map<String, Object> publish(E event) {
-        return this.fBankEventBus.publish(event);
+        return this.eventBus.publish(event);
     }
 
     @Override
     public void afterPropertiesSet() {
-        this.fBankEventBus.register(this);
+        this.eventBus.register(this);
     }
 }
