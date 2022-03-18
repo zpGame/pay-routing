@@ -5,23 +5,23 @@ package com.hunk.route.infrastructure.messaging.event;
  * @date 2022/3/16
  *     <p>
  */
-public class EventException extends RuntimeException {
+public class CustomEventException extends RuntimeException {
 
-    public EventException() {}
+    public CustomEventException() {}
 
-    public EventException(String message) {
+    public CustomEventException(String message) {
         super(message);
     }
 
-    public EventException(String message, Throwable cause) {
+    public CustomEventException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public EventException(Throwable cause) {
+    public CustomEventException(Throwable cause) {
         super(cause);
     }
 
-    protected EventException(
+    protected CustomEventException(
             String message,
             Throwable cause,
             boolean enableSuppression,

@@ -10,10 +10,10 @@ import java.util.Map;
  * @date 2022/3/16
  *     <p>
  */
-public abstract class EventSupportListener<E extends Event>
-        implements EventListener<E>, InitializingBean {
+public abstract class EventSupportListener<E extends CustomEvent>
+        implements CustomEventListener<E>, InitializingBean {
 
-    @Autowired private EventBus eventBus;
+    @Autowired private CustomEventBus eventBus;
 
     protected Map<String, Object> publish(E event) {
         return this.eventBus.publish(event);

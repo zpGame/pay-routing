@@ -7,7 +7,7 @@ import java.util.Map;
  * @date 2022/3/16
  *     <p>
  */
-public interface EventListener<E> {
+public interface CustomEventListener<E> {
 
     Map<String, Object> onEvent(E paramE);
 

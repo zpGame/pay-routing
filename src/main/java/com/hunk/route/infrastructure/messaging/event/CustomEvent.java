@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Getter
 @Setter
-public abstract class Event {
+public abstract class CustomEvent {
 
     private String eventName;
 
