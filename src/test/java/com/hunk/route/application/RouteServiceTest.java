@@ -21,10 +21,9 @@ public class RouteServiceTest  extends ApplicationTests {
     public void createRoute() {
         PaymentChannel paymentChannel = new PaymentChannel(ChannelE.UNION, ServiceE.WITHHOLD);
         long ruleId = 1L;
-        int priority = 1;
         EffectiveTime effectiveTime = new EffectiveTime(LocalDateTime.now(), LocalDateTime.now().plusMonths(1));
         String createUser = "system";
-        RouteChannel route = routeService.createRoute(paymentChannel, ruleId, priority, effectiveTime, createUser);
+        RouteChannel route = routeService.createRoute(paymentChannel, ruleId, effectiveTime, createUser);
         System.out.println(route);
     }
 

@@ -17,7 +17,6 @@ public class RouteCreateCommand {
     private Long ruleId;
     private LocalDateTime beginDate;
     private LocalDateTime endDate;
-    private Integer priority;
     private Integer isUpHold;
     private String createUser;
 

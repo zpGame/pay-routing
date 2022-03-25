@@ -27,7 +27,6 @@ public class RouteServiceImpl implements RouteService {
     public RouteChannel createRoute(
             PaymentChannel paymentChannel,
             long ruleId,
-            int priority,
             EffectiveTime effectiveTime,
             String createUser) {
         RouteRule routeRule =
@@ -37,8 +36,7 @@ public class RouteServiceImpl implements RouteService {
         CreateInfo createInfo = CreateInfo.createInfo(createUser);
 
         RouteChannel routeChannel =
-                RouteChannel.createRoute(
-                        paymentChannel, routeRule, priority, effectiveTime, createInfo);
+                RouteChannel.createRoute(paymentChannel, routeRule, effectiveTime, createInfo);
         return routeRepository.save(routeChannel);
     }
 
@@ -54,7 +52,6 @@ public class RouteServiceImpl implements RouteService {
             long routeId,
             PaymentChannel paymentChannel,
             long ruleId,
-            int priority,
             EffectiveTime effectiveTime,
             String modifyUser) {
         RouteChannel routeChannel =
@@ -70,7 +67,6 @@ public class RouteServiceImpl implements RouteService {
                 routeChannel
                         .changePaymentChannel(paymentChannel)
                         .changeRouteRule(routeRule)
-                        .changePriority(priority)
                         .changeCreateInfo(createInfo);
         return routeRepository.save(newRouteChannel);
     }

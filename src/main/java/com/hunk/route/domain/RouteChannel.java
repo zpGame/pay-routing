@@ -25,8 +25,6 @@ public class RouteChannel extends BaseEntity {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private RouteRule routeRule = new RouteRule();
-    /** 优先级 */
-    private int priority;
     /** 有效时间 */
     @Embedded private EffectiveTime effectiveTime;
 
@@ -37,7 +35,6 @@ public class RouteChannel extends BaseEntity {
      * 创建路由
      *
      * @param routeRule 路由规则
-     * @param priority 优先级java
      * @param effectiveTime 有效时间
      * @param createInfo 创建信息
      * @return route
@@ -45,10 +42,9 @@ public class RouteChannel extends BaseEntity {
     public static RouteChannel createRoute(
             PaymentChannel paymentChannel,
             RouteRule routeRule,
-            int priority,
             EffectiveTime effectiveTime,
             CreateInfo createInfo) {
-        return new RouteChannel(paymentChannel, routeRule, priority, effectiveTime, createInfo);
+        return new RouteChannel(paymentChannel, routeRule, effectiveTime, createInfo);
     }
 
     public RouteChannel() {}
@@ -56,12 +52,10 @@ public class RouteChannel extends BaseEntity {
     public RouteChannel(
             PaymentChannel paymentChannel,
             RouteRule routeRule,
-            int priority,
             EffectiveTime effectiveTime,
             CreateInfo createInfo) {
         this.paymentChannel = paymentChannel;
         this.routeRule = routeRule;
-        this.priority = priority;
         this.effectiveTime = effectiveTime;
         this.createInfo = createInfo;
         this.isUpHold = RouteConstants.UPHOLD_OFF;
@@ -74,11 +68,6 @@ public class RouteChannel extends BaseEntity {
 
     public RouteChannel changeRouteRule(RouteRule routeRule) {
         this.routeRule = routeRule;
-        return this;
-    }
-
-    public RouteChannel changePriority(int priority) {
-        this.priority = priority;
         return this;
     }
 
@@ -133,7 +122,6 @@ public class RouteChannel extends BaseEntity {
                 .append("id", id)
                 .append("paymentChannel", paymentChannel)
                 .append("routeRule", routeRule)
-                .append("priority", priority)
                 .append("effectiveTime", effectiveTime)
                 .append("isUpHold", isUpHold)
                 .append("createInfo", createInfo)

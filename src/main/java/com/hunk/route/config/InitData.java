@@ -7,7 +7,6 @@ import org.thymeleaf.util.SetUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -55,14 +54,13 @@ public class InitData implements ApplicationRunner {
 
     private RouteChannel initRouteChannel(RouteRule routeRule) {
         PaymentChannel paymentChannel = new PaymentChannel(ChannelE.UNION, ServiceE.WITHHOLD);
-        int priority = 1;
         EffectiveTime effectiveTime =
                 new EffectiveTime(
                         LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
         CreateInfo createInfo = CreateInfo.createInfo("system");
         RouteChannel route =
                 RouteChannel.createRoute(
-                        paymentChannel, routeRule, priority, effectiveTime, createInfo);
+                        paymentChannel, routeRule, effectiveTime, createInfo);
         return routeRepository.save(route);
     }
 

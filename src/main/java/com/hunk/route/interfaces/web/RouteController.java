@@ -88,7 +88,6 @@ public class RouteController {
                         channelE.apply(command.getChannelE()),
                         serviceE.apply(command.getServiceE())),
                 command.getRuleId(),
-                command.getPriority(),
                 new EffectiveTime(command.getBeginDate(), command.getEndDate()),
                 command.getCreateUser());
         return "redirect:/route/list.do";
@@ -102,7 +101,6 @@ public class RouteController {
                         channelE.apply(command.getAlterChannelE()),
                         serviceE.apply(command.getAlterServiceE())),
                 command.getAlterRuleId(),
-                command.getAlterPriority(),
                 new EffectiveTime(command.getAlterBeginDate(), command.getAlterBndDate()),
                 command.getModifyUser());
         return "redirect:/route/list.do";

@@ -17,7 +17,6 @@ public class RouteReviseCommand {
     private Long alterRuleId;
     private LocalDateTime alterBeginDate;
     private LocalDateTime alterBndDate;
-    private Integer alterPriority;
     private Integer alterIsUpHold;
     private String modifyUser;
 }

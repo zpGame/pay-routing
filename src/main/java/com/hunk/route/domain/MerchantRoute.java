@@ -3,7 +3,6 @@ package com.hunk.route.domain;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -79,7 +78,6 @@ public class MerchantRoute extends BaseEntity {
         return routeChannels.stream()
                 .filter(RouteChannel::isUpHold)
                 .filter(route -> route.getEffectiveTime().validTime())
-                .sorted(Comparator.comparing(RouteChannel::getPriority))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 }

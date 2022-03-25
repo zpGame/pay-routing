@@ -19,7 +19,6 @@ public interface RouteService {
      *
      * @param paymentChannel 路由渠道
      * @param ruleId 规则 id
-     * @param priority 优先级
      * @param effectiveTime 有效时间
      * @param createUser 创建人
      * @return RouteChannel
@@ -27,7 +26,6 @@ public interface RouteService {
     RouteChannel createRoute(
             PaymentChannel paymentChannel,
             long ruleId,
-            int priority,
             EffectiveTime effectiveTime,
             String createUser);
 
@@ -45,7 +43,6 @@ public interface RouteService {
      * @param routeId 路由ID
      * @param paymentChannel 路由渠道
      * @param ruleId 规则ID
-     * @param priority 优先级
      * @param effectiveTime 有效时间
      * @param modifyUser 修改人
      * @return RouteChannel
@@ -54,7 +51,6 @@ public interface RouteService {
             long routeId,
             PaymentChannel paymentChannel,
             long ruleId,
-            int priority,
             EffectiveTime effectiveTime,
             String modifyUser);
 

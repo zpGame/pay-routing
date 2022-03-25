@@ -1,6 +1,7 @@
 package com.hunk.route.domain;
 
 import lombok.Getter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -20,7 +21,21 @@ public class ChannelCost extends BaseEntity{
     @Embedded
     private PaymentChannel paymentChannel;
 
-    @Column(name = "merchant_name", length = 56)
+    @Column(name = "rate", length = 12)
     private String rate;
 
+    public ChannelCost(PaymentChannel paymentChannel, String rate) {
+        this.paymentChannel = paymentChannel;
+        this.rate = rate;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("createInfo", createInfo)
+                .append("paymentChannel", paymentChannel)
+                .append("rate", rate)
+                .toString();
+    }
 }
