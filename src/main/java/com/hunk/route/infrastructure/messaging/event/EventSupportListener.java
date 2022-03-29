@@ -1,8 +1,8 @@
 package com.hunk.route.infrastructure.messaging.event;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -13,7 +13,8 @@ import java.util.Map;
 public abstract class EventSupportListener<E extends CustomEvent>
         implements CustomEventListener<E>, InitializingBean {
 
-    @Autowired private CustomEventBus eventBus;
+    @Resource
+    private CustomEventBus eventBus;
 
     protected Map<String, Object> publish(E event) {
         return this.eventBus.publish(event);

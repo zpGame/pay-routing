@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
     ServiceConfiguration.class,
     ThymeleafConfig.class,
     CustomWebMvcConfigurer.class,
-    SwaggerConfig.class
+    SwaggerConfig.class,
+    EventAutoConfiguration.class
 })
 public class ServiceWithRepositoriesConfiguration {}
