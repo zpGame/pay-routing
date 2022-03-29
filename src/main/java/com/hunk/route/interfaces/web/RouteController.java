@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,13 +37,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/route")
 public class RouteController {
 
-    private final RouteService routeService;
-    private final RouteRepository routeRepository;
+    @Resource
+    private RouteService routeService;
 
-    public RouteController(RouteService routeService, RouteRepository routeRepository) {
-        this.routeService = routeService;
-        this.routeRepository = routeRepository;
-    }
+    @Resource
+    private RouteRepository routeRepository;
 
     @GetMapping()
     public String index() {

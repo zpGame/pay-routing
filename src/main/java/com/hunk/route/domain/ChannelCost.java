@@ -2,6 +2,7 @@ package com.hunk.route.domain;
 
 import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
  * @author hunk
  * @date 2022/2/17
  *     <p>通道成本 目前是单笔收费
+ *     <p>通道成本作为目前优先级，前端页面必填
  */
 @Entity
 @Getter
@@ -61,6 +63,11 @@ public class ChannelCost extends BaseEntity {
         ChannelCost channelCost = (ChannelCost) obj;
 
         return new EqualsBuilder().append(id, channelCost.id).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(paymentChannel).append(rate).toHashCode();
     }
 
     @Override

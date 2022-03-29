@@ -16,7 +16,7 @@ import java.util.Set;
 @Getter
 @Table(name = "route_rule")
 @org.hibernate.annotations.Table(appliesTo = "route_rule", comment = "路由规则表")
-public class RouteRule extends BaseEntity{
+public class RouteRule extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "trade_type", length = 24)
@@ -96,6 +96,18 @@ public class RouteRule extends BaseEntity{
 
     public boolean validMoney(Money money) {
         return this.money.equals(Money.ZERO) || this.money.isGreaterThanOrEqual(money);
+    }
+
+    public boolean bankInfosIsNull() {
+        return bankInfos.isEmpty();
+    }
+
+    public BankInfo obtainBankInfo(String bankShortName, String cardType) {
+        return bankInfos.stream()
+                .filter(data -> data.validBankShortName(bankShortName))
+                .filter(data -> data.validCardType(CardType.valueOf(cardType)))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

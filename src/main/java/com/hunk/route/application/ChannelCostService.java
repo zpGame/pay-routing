@@ -3,6 +3,7 @@ package com.hunk.route.application;
 import com.hunk.route.domain.ChannelCost;
 import com.hunk.route.domain.PaymentChannel;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -41,4 +42,12 @@ public interface ChannelCostService {
      */
     ChannelCost reviseInfo(
             Long channelCostId, PaymentChannel paymentChannel, String rate, String modifyUser);
+
+    /**
+     * 根据路由查询渠道成本
+     *
+     * @param paymentChannels 路由集
+     * @return list
+     */
+    List<ChannelCost> findByPaymentChannelIn(List<PaymentChannel> paymentChannels);
 }

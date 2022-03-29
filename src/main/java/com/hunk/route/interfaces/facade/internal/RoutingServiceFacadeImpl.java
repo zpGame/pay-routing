@@ -1,56 +1,65 @@
 package com.hunk.route.interfaces.facade.internal;
 
+import com.hunk.route.application.ChannelCostService;
 import com.hunk.route.application.MerchantService;
 import com.hunk.route.domain.*;
 import com.hunk.route.interfaces.facade.RoutingServiceFacade;
 import com.hunk.route.interfaces.facade.dto.RouteInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.RouteInfoAssembler;
 import com.hunk.route.interfaces.web.command.ObtainRouteCommand;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author hunk
  * @date 2022/3/3
- *     <p>todo 临时代码，后期优化
+ *     <p>
  */
 public class RoutingServiceFacadeImpl implements RoutingServiceFacade {
 
     private final MerchantService merchantService;
+    private final ChannelCostService channelCostService;
 
-    public RoutingServiceFacadeImpl(MerchantService merchantService) {
+    public RoutingServiceFacadeImpl(
+            MerchantService merchantService, ChannelCostService channelCostService) {
         this.merchantService = merchantService;
+        this.channelCostService = channelCostService;
     }
 
     @Override
     public RouteInfoDTO obtainRoute(ObtainRouteCommand command) {
         MerchantRoute merchantRoute = merchantService.findByMerchantNo(command.getMerchantNo());
-        Set<RouteChannel> routeChannels = merchantRoute.obtainRoutes();
-        RouteChannel routeChannel = new RouteChannel();
-        RouteRule routeRule = new RouteRule();
-        BankInfo bankInfo = new BankInfo();
-        boolean isResult = false;
-        for (RouteChannel route : routeChannels) {
-            routeChannel = route;
-            routeRule = route.getRouteRule();
+        final Map<PaymentChannel, RouteChannel> channelMap = channelMap(merchantRoute);
+        final Set<ChannelCost> channelCosts = findChannelCost(channelMap.keySet());
+        for (ChannelCost channelCost : channelCosts) {
+            RouteChannel routeChannel = channelMap.get(channelCost.getPaymentChannel());
+            RouteRule routeRule = routeChannel.getRouteRule();
             if (!validRule(routeRule, command)) continue;
-            Set<BankInfo> bankInfos = routeRule.getBankInfos();
-            if (CollectionUtils.isEmpty(bankInfos)) {
-                isResult = true;
-                break;
+            if (routeRule.bankInfosIsNull()) {
+                return RouteInfoAssembler.toDto(merchantRoute, routeChannel, routeRule);
             }
-            bankInfo =
-                    bankInfos.stream()
-                            .filter(data -> data.validBankShortName(command.getBankShortName()))
-                            .findFirst()
-                            .orElse(null);
-            if (ObjectUtils.isEmpty(bankInfos)) continue;
-            if (!bankInfo.validCardType(CardType.valueOf(command.getCardType()))) continue;
-            isResult = true;
+            BankInfo bankInfo =
+                    routeRule.obtainBankInfo(command.getBankShortName(), command.getCardType());
+            if (null != bankInfo) {
+                return RouteInfoAssembler.toDto(merchantRoute, routeChannel, routeRule, bankInfo);
+            }
         }
-        return RouteInfoAssembler.toDto(merchantRoute, routeChannel, routeRule, bankInfo, isResult);
+        return new RouteInfoDTO();
+    }
+
+    private Map<PaymentChannel, RouteChannel> channelMap(MerchantRoute merchantRoute) {
+        Set<RouteChannel> routeChannels = merchantRoute.obtainRoutes();
+        return routeChannels.stream()
+                .collect(Collectors.toMap(RouteChannel::getPaymentChannel, Function.identity()));
+    }
+
+    private Set<ChannelCost> findChannelCost(Set<PaymentChannel> paymentChannels) {
+        final List<PaymentChannel> collect = new ArrayList<>(paymentChannels);
+        return channelCostService.findByPaymentChannelIn(collect).stream()
+                .sorted(Comparator.comparing(ChannelCost::getRate))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     private boolean validRule(RouteRule routeRule, ObtainRouteCommand command) {

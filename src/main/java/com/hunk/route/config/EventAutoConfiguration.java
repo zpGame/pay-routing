@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author hunk
  * @date 2022/3/18
- *     <p>
+ *     <p> eventBus
  */
 @Configuration
 public class EventAutoConfiguration {

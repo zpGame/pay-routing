@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,14 +31,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/merchant")
 public class MerchantController {
 
-    private final MerchantService merchantService;
-    private final MerchantRepository merchantRepository;
+    @Resource
+    private MerchantService merchantService;
 
-    public MerchantController(
-            MerchantService merchantService, MerchantRepository merchantRepository) {
-        this.merchantService = merchantService;
-        this.merchantRepository = merchantRepository;
-    }
+    @Resource
+    private MerchantRepository merchantRepository;
+
 
     @GetMapping("/list.do")
     public String list(Model model, HttpServletRequest request) {

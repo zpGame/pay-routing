@@ -14,23 +14,25 @@ import com.hunk.route.interfaces.facade.dto.RouteInfoDTO;
 public class RouteInfoAssembler {
 
     public static RouteInfoDTO toDto(
+            MerchantRoute merchantRoute, RouteChannel routeChannel, RouteRule routeRule) {
+        return RouteInfoAssembler.toDto(merchantRoute, routeChannel, routeRule, new BankInfo());
+    }
+
+    public static RouteInfoDTO toDto(
             MerchantRoute merchantRoute,
             RouteChannel routeChannel,
             RouteRule routeRule,
-            BankInfo bankInfo,
-            boolean isResult) {
-        return isResult
-                ? new RouteInfoDTO(
-                        merchantRoute.getMerchantNo(),
-                        merchantRoute.getMerchantName(),
-                        routeChannel.getPaymentChannel().getRouteInterface(),
-                        routeChannel.getPaymentChannel().getRouteName(),
-                        routeRule.getTradeType().name(),
-                        routeRule.getAccountType().name(),
-                        routeRule.getMoney().asString(),
-                        bankInfo.getBankName().getBankName(),
-                        bankInfo.getBankName().getBankShortName(),
-                        bankInfo.getCardType().name())
-                : new RouteInfoDTO();
+            BankInfo bankInfo) {
+        return new RouteInfoDTO(
+                merchantRoute.getMerchantNo(),
+                merchantRoute.getMerchantName(),
+                routeChannel.getPaymentChannel().getRouteInterface(),
+                routeChannel.getPaymentChannel().getRouteName(),
+                routeRule.getTradeType().name(),
+                routeRule.getAccountType().name(),
+                routeRule.getMoney().asString(),
+                bankInfo.getBankName().getBankName(),
+                bankInfo.getBankName().getBankShortName(),
+                bankInfo.getCardType().name());
     }
 }

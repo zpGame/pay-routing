@@ -1,13 +1,7 @@
 package com.hunk.route.config;
 
-import com.hunk.route.application.impl.BankInfoServiceImpl;
-import com.hunk.route.application.impl.MerchantServiceImpl;
-import com.hunk.route.application.impl.RouteRuleServiceImpl;
-import com.hunk.route.application.impl.RouteServiceImpl;
-import com.hunk.route.domain.BankInfoRepository;
-import com.hunk.route.domain.MerchantRepository;
-import com.hunk.route.domain.RouteRepository;
-import com.hunk.route.domain.RouteRuleRepository;
+import com.hunk.route.application.impl.*;
+import com.hunk.route.domain.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,6 +12,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ServiceConfiguration {
+
+    @Bean
+    public ChannelCostServiceImpl channelCostService(ChannelCostRepository channelCostRepository) {
+        return new ChannelCostServiceImpl(channelCostRepository);
+    }
 
     @Bean
     public BankInfoServiceImpl bankInfoService(BankInfoRepository bankInfoRepository) {

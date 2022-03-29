@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,14 +30,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/rule")
 public class RouteRuleController {
 
-    private final RouteRuleService routeRuleService;
-    private final RouteRuleRepository routeRuleRepository;
+    @Resource
+    private RouteRuleService routeRuleService;
 
-    public RouteRuleController(
-            RouteRuleService routeRuleService, RouteRuleRepository routeRuleRepository) {
-        this.routeRuleService = routeRuleService;
-        this.routeRuleRepository = routeRuleRepository;
-    }
+    @Resource
+    private RouteRuleRepository routeRuleRepository;
 
     @GetMapping("/list.do")
     public String list(Model model, HttpServletRequest request) {

@@ -3,6 +3,7 @@ package com.hunk.route.application.impl;
 import com.hunk.route.application.ChannelCostService;
 import com.hunk.route.domain.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,5 +46,10 @@ public class ChannelCostServiceImpl implements ChannelCostService {
                         .changeRate(rate)
                         .changeCreateInfo(createInfo);
         return channelCostRepository.save(changeCreateInfo);
+    }
+
+    @Override
+    public List<ChannelCost> findByPaymentChannelIn(List<PaymentChannel> paymentChannels) {
+        return channelCostRepository.findByPaymentChannelIn(paymentChannels);
     }
 }

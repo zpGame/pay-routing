@@ -1,6 +1,9 @@
 package com.hunk.route.domain;
 
 import lombok.Getter;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -29,5 +32,29 @@ public class PaymentChannel {
 
     private String compose(String a, String b) {
         return a + "-" + b;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        PaymentChannel channel = (PaymentChannel) obj;
+
+        return new EqualsBuilder().append(routeInterface, channel.routeInterface).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(routeInterface).append(routeName).toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("routeInterface", routeInterface)
+                .append("routeName", routeName)
+                .toString();
     }
 }

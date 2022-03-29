@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,14 +33,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/bank")
 public class BankInfoController {
 
-    private final BankInfoService bankInfoService;
-    private final BankInfoRepository bankInfoRepository;
+    @Resource
+    private BankInfoService bankInfoService;
 
-    public BankInfoController(
-            BankInfoService bankInfoService, BankInfoRepository bankInfoRepository) {
-        this.bankInfoService = bankInfoService;
-        this.bankInfoRepository = bankInfoRepository;
-    }
+    @Resource
+    private BankInfoRepository bankInfoRepository;
+
 
     @GetMapping("/list.do")
     public String list(Model model, HttpServletRequest request) {

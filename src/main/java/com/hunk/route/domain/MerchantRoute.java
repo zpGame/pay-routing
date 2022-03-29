@@ -4,7 +4,6 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -78,6 +77,6 @@ public class MerchantRoute extends BaseEntity {
         return routeChannels.stream()
                 .filter(RouteChannel::isUpHold)
                 .filter(route -> route.getEffectiveTime().validTime())
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+                .collect(Collectors.toSet());
     }
 }
