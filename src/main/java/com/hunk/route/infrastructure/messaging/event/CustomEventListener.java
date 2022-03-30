@@ -9,6 +9,11 @@ import java.util.Map;
  */
 public interface CustomEventListener<E> {
 
+    /**
+     * 执行流程
+     *
+     * @param paramE 参数
+     * @return map
+     */
     Map<String, Object> onEvent(E paramE);
-
 }

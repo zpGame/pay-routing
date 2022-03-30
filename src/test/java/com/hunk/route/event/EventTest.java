@@ -1,9 +1,11 @@
 package com.hunk.route.event;
 
 import com.hunk.route.ApplicationTests;
+import com.hunk.route.infrastructure.messaging.event.injvm.DefaultCustomEventBus;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author hunk
@@ -13,11 +15,14 @@ import javax.annotation.Resource;
 public class EventTest extends ApplicationTests {
 
     @Resource
-    private BankInfoListener bankInfoListener;
+    private DefaultCustomEventBus defaultCustomEventBus;
 
     @Test
-    public void bank(){
-
+    public void bank() throws InterruptedException {
+        BankInfoEvent bankInfoEvent = new BankInfoEvent();
+        bankInfoEvent.setName("test");
+        defaultCustomEventBus.publish(bankInfoEvent);
+        TimeUnit.SECONDS.sleep(10);
     }
 
 }

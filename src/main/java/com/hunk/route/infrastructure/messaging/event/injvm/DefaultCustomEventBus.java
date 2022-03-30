@@ -1,6 +1,5 @@
 package com.hunk.route.infrastructure.messaging.event.injvm;
 
-import com.google.common.collect.Maps;
 import com.google.common.eventbus.EventBus;
 import com.hunk.route.infrastructure.messaging.event.CustomEvent;
 import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
@@ -20,13 +19,12 @@ public class DefaultCustomEventBus implements CustomEventBus {
 
     @Override
     public Map<String, Object> publish(CustomEvent customEvent) throws CustomEventException {
-        Map<String, Object> result = Maps.newHashMap();
         try {
             this.eventBus.post(customEvent);
         } catch (Exception e) {
             throw new CustomEventException("publish event error", e);
         }
-        return result;
+        return customEvent.getContext();
     }
 
     @Override
@@ -38,5 +36,4 @@ public class DefaultCustomEventBus implements CustomEventBus {
     public void unRegister(CustomEventListener<?> eventListener) {
         this.eventBus.unregister(eventListener);
     }
-
 }
