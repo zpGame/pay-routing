@@ -7,7 +7,7 @@ import java.util.Map;
  * @date 2022/3/16
  *     <p>
  */
-public interface CustomEventListener<E> {
+public interface CustomEventListen<E> {
 
     /**
      * 执行流程

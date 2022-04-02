@@ -1,5 +1,6 @@
 package com.hunk.route.config;
 
+import com.hunk.route.domain.event.MerchantRouteListen;
 import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
 import com.hunk.route.infrastructure.messaging.event.injvm.DefaultCustomEventBus;
 import org.springframework.context.annotation.Bean;
@@ -16,5 +17,10 @@ public class EventAutoConfiguration {
     @Bean
     public CustomEventBus defaultCustomEventBus() {
         return new DefaultCustomEventBus();
+    }
+
+    @Bean
+    public MerchantRouteListen merchantRouteListen(){
+        return new MerchantRouteListen();
     }
 }

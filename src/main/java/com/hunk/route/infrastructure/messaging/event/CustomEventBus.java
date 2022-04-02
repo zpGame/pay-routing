@@ -20,14 +20,14 @@ public interface CustomEventBus {
     /**
      * 注册eventBus
      *
-     * @param paramEventListener 监听器
+     * @param customEventListen 监听器
      */
-    void register(CustomEventListener<?> paramEventListener);
+    void register(CustomEventListen<?> customEventListen);
 
     /**
      * 取消注册eventBus
      *
-     * @param paramEventListener 监听器
+     * @param customEventListen 监听器
      */
-    void unRegister(CustomEventListener<?> paramEventListener);
+    void unRegister(CustomEventListen<?> customEventListen);
 }

@@ -4,7 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.hunk.route.infrastructure.messaging.event.CustomEvent;
 import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
 import com.hunk.route.infrastructure.messaging.event.CustomEventException;
-import com.hunk.route.infrastructure.messaging.event.CustomEventListener;
+import com.hunk.route.infrastructure.messaging.event.CustomEventListen;
 
 import java.util.Map;
 
@@ -28,12 +28,12 @@ public class DefaultCustomEventBus implements CustomEventBus {
     }
 
     @Override
-    public void register(CustomEventListener<?> eventListener) {
+    public void register(CustomEventListen<?> eventListener) {
         this.eventBus.register(eventListener);
     }
 
     @Override
-    public void unRegister(CustomEventListener<?> eventListener) {
+    public void unRegister(CustomEventListen<?> eventListener) {
         this.eventBus.unregister(eventListener);
     }
 }
