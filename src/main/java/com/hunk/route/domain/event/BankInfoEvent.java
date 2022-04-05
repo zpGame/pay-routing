@@ -14,12 +14,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Getter
 public class BankInfoEvent extends CustomEvent {
 
-    private final String bankInfoId;
+    private final String bankId;
     private final BankName bankName;
     private final CardType cardType;
 
-    public BankInfoEvent(String bankInfoId, BankName bankName, CardType cardType) {
-        this.bankInfoId = bankInfoId;
+    public BankInfoEvent(String bankId, BankName bankName, CardType cardType) {
+        this.bankId = bankId;
         this.bankName = bankName;
         this.cardType = cardType;
     }
@@ -27,7 +27,7 @@ public class BankInfoEvent extends CustomEvent {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("bankInfoId", bankInfoId)
+                .append("bankId", bankId)
                 .append("bankName", bankName)
                 .append("cardType", cardType)
                 .toString();

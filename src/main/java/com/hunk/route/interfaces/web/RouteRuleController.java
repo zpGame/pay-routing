@@ -56,7 +56,7 @@ public class RouteRuleController {
         routeRuleService.createRouteRule(
                 TradeType.valueOf(command.getTradeType()),
                 AccountType.valueOf(command.getAccountType()),
-                command.getBankInfoIds(),
+                command.getBankIds(),
                 new Money(command.getMoney()),
                 command.getCreateUser());
         return "redirect:/rule/list.do";

@@ -7,4 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2022/2/24
  *     <p>
  */
-public interface BankInfoRepository extends JpaRepository<BankInfo, Long> {}
+public interface BankInfoRepository extends JpaRepository<BankInfo, Long> {
+
+    /**
+     * 查询银行信息根据bankId
+     *
+     * @param bankId id
+     * @return BankInfo
+     */
+    BankInfo findBankInfoByBankId(String bankId);
+}

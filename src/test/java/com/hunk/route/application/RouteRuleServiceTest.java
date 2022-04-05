@@ -24,20 +24,13 @@ public class RouteRuleServiceTest extends ApplicationTests {
     public void createRouteRule() {
         TradeType tradeType = TradeType.payment;
         AccountType accountType = AccountType.all;
-        List<Long> bankInfoIds = new ArrayList<>();
-        bankInfoIds.add(1L);
-        bankInfoIds.add(2L);
+        List<String> bankInfoIds = new ArrayList<>();
         Money money = new Money(10);
         String createUser = "system";
         RouteRule routeRule =
                 routeRuleService.createRouteRule(
                         tradeType, accountType, bankInfoIds, money, createUser);
         System.out.println(routeRule);
-    }
-
-    @Test
-    public void findById() {
-        System.out.println(routeRuleService.findById(1L));
     }
 
     @Test

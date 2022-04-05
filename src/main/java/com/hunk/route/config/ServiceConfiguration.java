@@ -1,8 +1,9 @@
 package com.hunk.route.config;
 
+import com.hunk.route.application.*;
 import com.hunk.route.application.impl.*;
 import com.hunk.route.domain.*;
-import com.hunk.route.infrastructure.messaging.event.injvm.DefaultCustomEventBus;
+import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,30 +16,32 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfiguration {
 
     @Bean
-    public ChannelCostServiceImpl channelCostService(ChannelCostRepository channelCostRepository) {
+    public ChannelCostService channelCostService(ChannelCostRepository channelCostRepository) {
         return new ChannelCostServiceImpl(channelCostRepository);
     }
 
     @Bean
-    public BankInfoServiceImpl bankInfoService(
-            BankInfoRepository bankInfoRepository, DefaultCustomEventBus defaultCustomEventBus) {
-        return new BankInfoServiceImpl(bankInfoRepository, defaultCustomEventBus);
+    public BankInfoService bankInfoService(
+            BankInfoRepository bankInfoRepository, CustomEventBus customEventBus) {
+        return new BankInfoServiceImpl(bankInfoRepository, customEventBus);
     }
 
     @Bean
-    public RouteRuleServiceImpl routeRuleService(
-            BankInfoRepository bankInfoRepository, RouteRuleRepository routeRuleRepository) {
-        return new RouteRuleServiceImpl(bankInfoRepository, routeRuleRepository);
+    public RouteRuleService routeRuleService(
+            CustomEventBus customEventBus,
+            BankInfoRepository bankInfoRepository,
+            RouteRuleRepository routeRuleRepository) {
+        return new RouteRuleServiceImpl(customEventBus, bankInfoRepository, routeRuleRepository);
     }
 
     @Bean
-    public RouteServiceImpl routeService(
+    public RouteService routeService(
             RouteRuleRepository ruleRepository, RouteRepository routeRepository) {
         return new RouteServiceImpl(ruleRepository, routeRepository);
     }
 
     @Bean
-    public MerchantServiceImpl merchantService(
+    public MerchantService merchantService(
             MerchantRepository merchantRepository, RouteRepository routeRepository) {
         return new MerchantServiceImpl(merchantRepository, routeRepository);
     }
@@ -46,10 +49,9 @@ public class ServiceConfiguration {
     @Bean
     public InitData initData(
             RouteRepository routeRepository,
-            BankInfoRepository bankInfoRepository,
+            BankInfoService bankInfoService,
             MerchantRepository merchantRepository,
-            RouteRuleRepository routeRuleRepository) {
-        return new InitData(
-                routeRepository, bankInfoRepository, merchantRepository, routeRuleRepository);
+            RouteRuleService routeRuleService) {
+        return new InitData(routeRepository, bankInfoService, merchantRepository, routeRuleService);
     }
 }

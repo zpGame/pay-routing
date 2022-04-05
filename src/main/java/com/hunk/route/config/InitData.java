@@ -1,5 +1,7 @@
 package com.hunk.route.config;
 
+import com.hunk.route.application.BankInfoService;
+import com.hunk.route.application.RouteRuleService;
 import com.hunk.route.domain.*;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,20 +20,22 @@ import java.util.stream.Collectors;
  */
 public class InitData implements ApplicationRunner {
 
+    private static final String CREATE_USER = "system";
+
     private final RouteRepository routeRepository;
-    private final BankInfoRepository bankInfoRepository;
+    private final BankInfoService bankInfoService;
     private final MerchantRepository merchantRepository;
-    private final RouteRuleRepository routeRuleRepository;
+    private final RouteRuleService routeRuleService;
 
     public InitData(
             RouteRepository routeRepository,
-            BankInfoRepository bankInfoRepository,
+            BankInfoService bankInfoService,
             MerchantRepository merchantRepository,
-            RouteRuleRepository routeRuleRepository) {
+            RouteRuleService routeRuleService) {
         this.routeRepository = routeRepository;
-        this.bankInfoRepository = bankInfoRepository;
+        this.bankInfoService = bankInfoService;
         this.merchantRepository = merchantRepository;
-        this.routeRuleRepository = routeRuleRepository;
+        this.routeRuleService = routeRuleService;
     }
 
     @Override
@@ -67,63 +71,38 @@ public class InitData implements ApplicationRunner {
         TradeType tradeType = TradeType.payment;
         AccountType accountType = AccountType.personal;
         Money money = new Money(12);
-        CreateInfo createInfo = CreateInfo.createInfo("system");
-        Set<BankInfo> collect = bankInfos.stream().limit(3).collect(Collectors.toSet());
-        RouteRule routeRule =
-                RouteRule.createRouteRule(tradeType, accountType, collect, money, createInfo);
-        return routeRuleRepository.save(routeRule);
+        List<String> bankIds =
+                bankInfos.stream().map(BankInfo::getBankId).limit(3).collect(Collectors.toList());
+        return routeRuleService.createRouteRule(
+                tradeType, accountType, bankIds, money, CREATE_USER);
     }
 
     private List<BankInfo> initBankInfo() {
         List<BankInfo> bankInfos = new ArrayList<>();
         bankInfos.add(
-                BankInfo.createBankInfo(
-                                new BankName("中国工商银行", "ICBC"),
-                                CardType.DebitCard,
-                                CreateInfo.createInfo("system"))
-                        .result);
+                bankInfoService.createBankInfo(
+                        new BankName("中国工商银行", "ICBC"), CardType.DebitCard, CREATE_USER));
         bankInfos.add(
-                BankInfo.createBankInfo(
-                                new BankName("中国建设银行", "CBC"),
-                                CardType.DebitCard,
-                                CreateInfo.createInfo("system"))
-                        .result);
+                bankInfoService.createBankInfo(
+                        new BankName("中国建设银行", "CBC"), CardType.DebitCard, CREATE_USER));
         bankInfos.add(
-                BankInfo.createBankInfo(
-                                new BankName("中国银行", "BC"),
-                                CardType.DebitCard,
-                                CreateInfo.createInfo("system"))
-                        .result);
+                bankInfoService.createBankInfo(
+                        new BankName("中国银行", "BC"), CardType.DebitCard, CREATE_USER));
         bankInfos.add(
-                BankInfo.createBankInfo(
-                                new BankName("中国农业银行", "ABC"),
-                                CardType.DebitCard,
-                                CreateInfo.createInfo("system"))
-                        .result);
+                bankInfoService.createBankInfo(
+                        new BankName("中国农业银行", "ABC"), CardType.DebitCard, CREATE_USER));
         bankInfos.add(
-                BankInfo.createBankInfo(
-                                new BankName("民生银行", "CMSB"),
-                                CardType.DebitCard,
-                                CreateInfo.createInfo("system"))
-                        .result);
+                bankInfoService.createBankInfo(
+                        new BankName("民生银行", "CMSB"), CardType.DebitCard, CREATE_USER));
         bankInfos.add(
-                BankInfo.createBankInfo(
-                                new BankName("招商银行", "CMBC"),
-                                CardType.DebitCard,
-                                CreateInfo.createInfo("system"))
-                        .result);
+                bankInfoService.createBankInfo(
+                        new BankName("招商银行", "CMBC"), CardType.DebitCard, CREATE_USER));
         bankInfos.add(
-                BankInfo.createBankInfo(
-                                new BankName("兴业银行", "CIB"),
-                                CardType.DebitCard,
-                                CreateInfo.createInfo("system"))
-                        .result);
+                bankInfoService.createBankInfo(
+                        new BankName("兴业银行", "CIB"), CardType.DebitCard, CREATE_USER));
         bankInfos.add(
-                BankInfo.createBankInfo(
-                                new BankName("国家开发银行", "CDB"),
-                                CardType.DebitCard,
-                                CreateInfo.createInfo("system"))
-                        .result);
-        return bankInfoRepository.saveAll(bankInfos);
+                bankInfoService.createBankInfo(
+                        new BankName("国家开发银行", "CDB"), CardType.DebitCard, CREATE_USER));
+        return bankInfos;
     }
 }

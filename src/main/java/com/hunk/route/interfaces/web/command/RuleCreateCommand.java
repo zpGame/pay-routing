@@ -14,7 +14,7 @@ import java.util.List;
 public class RuleCreateCommand {
     private String tradeType;
     private String accountType;
-    private List<Long> bankInfoIds = new ArrayList<>();
+    private List<String> bankIds = new ArrayList<>();
     private String money;
     private String createUser;
 }

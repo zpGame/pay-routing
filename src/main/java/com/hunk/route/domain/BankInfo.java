@@ -22,12 +22,12 @@ public class BankInfo extends BaseEntity {
     public static ResultWithDomainEvents<BankInfo, BankInfoEvent> createBankInfo(
             BankName bankName, CardType cardType, CreateInfo createInfo) {
         BankInfo bankInfo = new BankInfo(bankName, cardType, createInfo);
-        BankInfoEvent events = new BankInfoEvent(bankInfo.getBankInfoId(), bankName, cardType);
-        return new ResultWithDomainEvents<>(bankInfo, events);
+        BankInfoEvent event = new BankInfoEvent(bankInfo.getBankId(), bankName, cardType);
+        return new ResultWithDomainEvents<>(bankInfo, event);
     }
 
-    @Column(name = "bank_info_id", length = 32)
-    private String bankInfoId;
+    @Column(name = "bank_id", length = 32)
+    private String bankId;
 
     @Embedded private BankName bankName;
 
@@ -38,7 +38,7 @@ public class BankInfo extends BaseEntity {
     public BankInfo() {}
 
     public BankInfo(BankName bankName, CardType cardType, CreateInfo createInfo) {
-        this.bankInfoId = MajorKey.getId();
+        this.bankId = MajorKey.getId();
         this.bankName = bankName;
         this.cardType = cardType;
         this.createInfo = createInfo;
@@ -87,7 +87,7 @@ public class BankInfo extends BaseEntity {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("bankInfoId", bankInfoId)
+                .append("bankId", bankId)
                 .append("bankName", bankName)
                 .append("cardType", cardType)
                 .append("createInfo", createInfo)

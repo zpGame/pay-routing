@@ -1,11 +1,14 @@
 package com.hunk.route.domain;
 
+import com.hunk.route.domain.event.ResultWithDomainEvents;
+import com.hunk.route.domain.event.RouteRuleEvent;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author hunk
@@ -18,6 +21,23 @@ import java.util.Set;
 @org.hibernate.annotations.Table(appliesTo = "route_rule", comment = "路由规则表")
 public class RouteRule extends BaseEntity {
 
+    public static ResultWithDomainEvents<RouteRule, RouteRuleEvent> createRouteRule(
+            TradeType tradeType,
+            AccountType accountType,
+            Set<BankInfo> bankInfos,
+            Money money,
+            CreateInfo createInfo) {
+        RouteRule routeRule = new RouteRule(tradeType, accountType, bankInfos, money, createInfo);
+        Set<String> bankIds =
+                bankInfos.stream().map(BankInfo::getBankId).collect(Collectors.toSet());
+        RouteRuleEvent event =
+                new RouteRuleEvent(routeRule.getRuleId(), tradeType, accountType, money, bankIds);
+        return new ResultWithDomainEvents<>(routeRule, event);
+    }
+
+    @Column(name = "rule_id", length = 32)
+    private String ruleId;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "trade_type", length = 24)
     private TradeType tradeType;
@@ -29,8 +49,8 @@ public class RouteRule extends BaseEntity {
     @ManyToMany
     @JoinTable(
             name = "role_junction_bank",
-            joinColumns = {@JoinColumn(name = "sys_rule_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "sys_bank_id", referencedColumnName = "id")},
+            joinColumns = {@JoinColumn(name = "rule_id", referencedColumnName = "rule_id")},
+            inverseJoinColumns = {@JoinColumn(name = "bank_id", referencedColumnName = "bank_id")},
             foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
             inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Set<BankInfo> bankInfos = new HashSet<>();
@@ -39,21 +59,13 @@ public class RouteRule extends BaseEntity {
 
     public RouteRule() {}
 
-    public static RouteRule createRouteRule(
-            TradeType tradeType,
-            AccountType accountType,
-            Set<BankInfo> bankInfos,
-            Money money,
-            CreateInfo createInfo) {
-        return new RouteRule(tradeType, accountType, bankInfos, money, createInfo);
-    }
-
     public RouteRule(
             TradeType tradeType,
             AccountType accountType,
             Set<BankInfo> bankInfos,
             Money money,
             CreateInfo createInfo) {
+        this.ruleId = MajorKey.getId();
         this.tradeType = tradeType;
         this.accountType = accountType;
         this.bankInfos = bankInfos;
@@ -114,6 +126,7 @@ public class RouteRule extends BaseEntity {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
+                .append("ruleId", ruleId)
                 .append("tradeType", tradeType)
                 .append("accountType", accountType)
                 .append("createInfo", createInfo)

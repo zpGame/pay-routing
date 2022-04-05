@@ -4,7 +4,7 @@ import com.hunk.route.application.BankInfoService;
 import com.hunk.route.domain.*;
 import com.hunk.route.domain.event.BankInfoEvent;
 import com.hunk.route.domain.event.ResultWithDomainEvents;
-import com.hunk.route.infrastructure.messaging.event.injvm.DefaultCustomEventBus;
+import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -17,12 +17,12 @@ import java.util.Optional;
 public class BankInfoServiceImpl implements BankInfoService {
 
     private final BankInfoRepository bankInfoRepository;
-    private final DefaultCustomEventBus defaultCustomEventBus;
+    private final CustomEventBus customEventBus;
 
     public BankInfoServiceImpl(
-            BankInfoRepository bankInfoRepository, DefaultCustomEventBus defaultCustomEventBus) {
+            BankInfoRepository bankInfoRepository, CustomEventBus customEventBus) {
         this.bankInfoRepository = bankInfoRepository;
-        this.defaultCustomEventBus = defaultCustomEventBus;
+        this.customEventBus = customEventBus;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class BankInfoServiceImpl implements BankInfoService {
                 BankInfo.createBankInfo(bankName, cardType, createInfo);
         BankInfo bankInfo = domainEvents.result;
         bankInfoRepository.save(bankInfo);
-        defaultCustomEventBus.publish(domainEvents.events);
+        customEventBus.publish(domainEvents.event);
         return bankInfo;
     }
 

@@ -11,10 +11,10 @@ public class ResultWithDomainEvents<A, E extends CustomEvent> {
 
     public final A result;
 
-    public final E events;
+    public final E event;
 
-    public ResultWithDomainEvents(A result, E events) {
+    public ResultWithDomainEvents(A result, E event) {
         this.result = result;
-        this.events = events;
+        this.event = event;
     }
 }
