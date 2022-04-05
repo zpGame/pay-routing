@@ -17,6 +17,9 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    @Version
+    private Long version;
+
     @Embedded
     protected CreateInfo createInfo;
 

@@ -59,8 +59,7 @@ public class InitData implements ApplicationRunner {
                         LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
         CreateInfo createInfo = CreateInfo.createInfo("system");
         RouteChannel route =
-                RouteChannel.createRoute(
-                        paymentChannel, routeRule, effectiveTime, createInfo);
+                RouteChannel.createRoute(paymentChannel, routeRule, effectiveTime, createInfo);
         return routeRepository.save(route);
     }
 
@@ -79,44 +78,52 @@ public class InitData implements ApplicationRunner {
         List<BankInfo> bankInfos = new ArrayList<>();
         bankInfos.add(
                 BankInfo.createBankInfo(
-                        new BankName("中国工商银行", "ICBC"),
-                        CardType.DebitCard,
-                        CreateInfo.createInfo("system")));
+                                new BankName("中国工商银行", "ICBC"),
+                                CardType.DebitCard,
+                                CreateInfo.createInfo("system"))
+                        .result);
         bankInfos.add(
                 BankInfo.createBankInfo(
-                        new BankName("中国建设银行", "CBC"),
-                        CardType.DebitCard,
-                        CreateInfo.createInfo("system")));
+                                new BankName("中国建设银行", "CBC"),
+                                CardType.DebitCard,
+                                CreateInfo.createInfo("system"))
+                        .result);
         bankInfos.add(
                 BankInfo.createBankInfo(
-                        new BankName("中国银行", "BC"),
-                        CardType.DebitCard,
-                        CreateInfo.createInfo("system")));
+                                new BankName("中国银行", "BC"),
+                                CardType.DebitCard,
+                                CreateInfo.createInfo("system"))
+                        .result);
         bankInfos.add(
                 BankInfo.createBankInfo(
-                        new BankName("中国农业银行", "ABC"),
-                        CardType.DebitCard,
-                        CreateInfo.createInfo("system")));
+                                new BankName("中国农业银行", "ABC"),
+                                CardType.DebitCard,
+                                CreateInfo.createInfo("system"))
+                        .result);
         bankInfos.add(
                 BankInfo.createBankInfo(
-                        new BankName("民生银行", "CMSB"),
-                        CardType.DebitCard,
-                        CreateInfo.createInfo("system")));
+                                new BankName("民生银行", "CMSB"),
+                                CardType.DebitCard,
+                                CreateInfo.createInfo("system"))
+                        .result);
         bankInfos.add(
                 BankInfo.createBankInfo(
-                        new BankName("招商银行", "CMBC"),
-                        CardType.DebitCard,
-                        CreateInfo.createInfo("system")));
+                                new BankName("招商银行", "CMBC"),
+                                CardType.DebitCard,
+                                CreateInfo.createInfo("system"))
+                        .result);
         bankInfos.add(
                 BankInfo.createBankInfo(
-                        new BankName("兴业银行", "CIB"),
-                        CardType.DebitCard,
-                        CreateInfo.createInfo("system")));
+                                new BankName("兴业银行", "CIB"),
+                                CardType.DebitCard,
+                                CreateInfo.createInfo("system"))
+                        .result);
         bankInfos.add(
                 BankInfo.createBankInfo(
-                        new BankName("国家开发银行", "CDB"),
-                        CardType.DebitCard,
-                        CreateInfo.createInfo("system")));
+                                new BankName("国家开发银行", "CDB"),
+                                CardType.DebitCard,
+                                CreateInfo.createInfo("system"))
+                        .result);
         return bankInfoRepository.saveAll(bankInfos);
     }
 }

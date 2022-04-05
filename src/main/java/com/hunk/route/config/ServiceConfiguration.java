@@ -2,6 +2,7 @@ package com.hunk.route.config;
 
 import com.hunk.route.application.impl.*;
 import com.hunk.route.domain.*;
+import com.hunk.route.infrastructure.messaging.event.injvm.DefaultCustomEventBus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,8 +20,9 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public BankInfoServiceImpl bankInfoService(BankInfoRepository bankInfoRepository) {
-        return new BankInfoServiceImpl(bankInfoRepository);
+    public BankInfoServiceImpl bankInfoService(
+            BankInfoRepository bankInfoRepository, DefaultCustomEventBus defaultCustomEventBus) {
+        return new BankInfoServiceImpl(bankInfoRepository, defaultCustomEventBus);
     }
 
     @Bean
