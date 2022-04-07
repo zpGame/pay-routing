@@ -1,7 +1,9 @@
 package com.hunk.route.config;
 
 import com.hunk.route.application.BankInfoService;
+import com.hunk.route.application.MerchantService;
 import com.hunk.route.application.RouteRuleService;
+import com.hunk.route.application.RouteService;
 import com.hunk.route.domain.*;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -22,19 +24,19 @@ public class InitData implements ApplicationRunner {
 
     private static final String CREATE_USER = "system";
 
-    private final RouteRepository routeRepository;
+    private final RouteService routeService;
     private final BankInfoService bankInfoService;
-    private final MerchantRepository merchantRepository;
+    private final MerchantService merchantService;
     private final RouteRuleService routeRuleService;
 
     public InitData(
-            RouteRepository routeRepository,
+            RouteService routeService,
             BankInfoService bankInfoService,
-            MerchantRepository merchantRepository,
+            MerchantService merchantService,
             RouteRuleService routeRuleService) {
-        this.routeRepository = routeRepository;
+        this.routeService = routeService;
         this.bankInfoService = bankInfoService;
-        this.merchantRepository = merchantRepository;
+        this.merchantService = merchantService;
         this.routeRuleService = routeRuleService;
     }
 
@@ -49,11 +51,8 @@ public class InitData implements ApplicationRunner {
     private void initMerchantRoute(RouteChannel routeChannel) {
         String merchantNo = "88888888";
         String merchantName = "山外山";
-        Set<RouteChannel> routeChannels = SetUtils.singletonSet(routeChannel);
-        CreateInfo createInfo = CreateInfo.createInfo("system");
-        MerchantRoute merchant =
-                MerchantRoute.createMerchant(merchantNo, merchantName, routeChannels, createInfo);
-        merchantRepository.save(merchant);
+        Set<String> routeChannels = SetUtils.singletonSet(routeChannel.getChannelId());
+        merchantService.createMerchant(merchantNo, merchantName, routeChannels, CREATE_USER);
     }
 
     private RouteChannel initRouteChannel(RouteRule routeRule) {
@@ -61,10 +60,8 @@ public class InitData implements ApplicationRunner {
         EffectiveTime effectiveTime =
                 new EffectiveTime(
                         LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
-        CreateInfo createInfo = CreateInfo.createInfo("system");
-        RouteChannel route =
-                RouteChannel.createRoute(paymentChannel, routeRule, effectiveTime, createInfo);
-        return routeRepository.save(route);
+        return routeService.createRoute(
+                paymentChannel, routeRule.getRuleId(), effectiveTime, CREATE_USER);
     }
 
     private RouteRule initRouteRule(List<BankInfo> bankInfos) {

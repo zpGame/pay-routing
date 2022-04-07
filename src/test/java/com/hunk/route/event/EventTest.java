@@ -21,7 +21,7 @@ public class EventTest extends ApplicationTests {
     @Test
     public void merchantRoute() throws InterruptedException {
         MerchantRouteEvent bankInfoEvent =
-                new MerchantRouteEvent(1L, "999999", "山外山", Collections.singleton(2L));
+                new MerchantRouteEvent("", "999999", "山外山", Collections.singleton("2"));
         defaultCustomEventBus.publish(bankInfoEvent);
         TimeUnit.SECONDS.sleep(10);
     }

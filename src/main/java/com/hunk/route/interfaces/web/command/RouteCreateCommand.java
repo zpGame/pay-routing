@@ -14,7 +14,7 @@ public class RouteCreateCommand {
 
     private String channelE;
     private String serviceE;
-    private Long ruleId;
+    private String ruleId;
     private LocalDateTime beginDate;
     private LocalDateTime endDate;
     private Integer isUpHold;

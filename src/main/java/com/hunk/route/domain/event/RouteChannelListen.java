@@ -7,15 +7,13 @@ import java.util.Map;
 
 /**
  * @author hunk
- * @date 2022/4/5
- *     <p>
+ * @date 2022/4/6
+ * <p>
  */
-public class BankInfoListen extends EventSupportListen<BankInfoEvent> {
-
+public class RouteChannelListen extends EventSupportListen<RouteChannelEvent> {
     @Override
     @Subscribe
-    public Map<String, Object> onEvent(BankInfoEvent paramE) {
+    public Map<String, Object> onEvent(RouteChannelEvent paramE) {
         return null;
     }
-
 }

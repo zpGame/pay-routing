@@ -2,9 +2,10 @@ package com.hunk.route.application.impl;
 
 import com.hunk.route.application.RouteService;
 import com.hunk.route.domain.*;
+import com.hunk.route.domain.event.ResultWithDomainEvents;
+import com.hunk.route.domain.event.RouteChannelEvent;
+import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 /**
  * @author hunk
@@ -14,36 +15,33 @@ import java.util.Optional;
 public class RouteServiceImpl implements RouteService {
 
     private final RouteRuleRepository ruleRepository;
-
     private final RouteRepository routeRepository;
+    private final CustomEventBus customEventBus;
 
-    public RouteServiceImpl(RouteRuleRepository ruleRepository, RouteRepository routeRepository) {
+    public RouteServiceImpl(
+            RouteRuleRepository ruleRepository,
+            RouteRepository routeRepository,
+            CustomEventBus customEventBus) {
         this.ruleRepository = ruleRepository;
         this.routeRepository = routeRepository;
+        this.customEventBus = customEventBus;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RouteChannel createRoute(
             PaymentChannel paymentChannel,
-            long ruleId,
+            String ruleId,
             EffectiveTime effectiveTime,
             String createUser) {
-        RouteRule routeRule =
-                ruleRepository
-                        .findById(ruleId)
-                        .orElseThrow(() -> new RuleNotFoundException(ruleId));
+        RouteRule routeRule = ruleRepository.findRouteRuleByRuleId(ruleId);
         CreateInfo createInfo = CreateInfo.createInfo(createUser);
-
-        RouteChannel routeChannel =
+        ResultWithDomainEvents<RouteChannel, RouteChannelEvent> domainEvents =
                 RouteChannel.createRoute(paymentChannel, routeRule, effectiveTime, createInfo);
-        return routeRepository.save(routeChannel);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Optional<RouteChannel> findById(long routeId) {
-        return routeRepository.findById(routeId);
+        RouteChannel routeChannel = domainEvents.result;
+        routeRepository.save(routeChannel);
+        customEventBus.publish(domainEvents.event);
+        return routeChannel;
     }
 
     @Override

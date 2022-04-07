@@ -9,33 +9,34 @@ import java.util.Set;
 /**
  * @author hunk
  * @date 2022/4/2
- * <p>
+ *     <p>
  */
 @Getter
 public class MerchantRouteEvent extends CustomEvent {
 
-    private final Long id;
+    private final String merchantId;
 
     private final String merchantNo;
 
     private final String merchantName;
 
-    private final Set<Long> routeChannelIds;
+    private final Set<String> channelIds;
 
-    public MerchantRouteEvent(Long id, String merchantNo, String merchantName, Set<Long> routeChannelIds) {
-        this.id = id;
+    public MerchantRouteEvent(
+            String merchantId, String merchantNo, String merchantName, Set<String> channelIds) {
+        this.merchantId = merchantId;
         this.merchantNo = merchantNo;
         this.merchantName = merchantName;
-        this.routeChannelIds = routeChannelIds;
+        this.channelIds = channelIds;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("id", id)
+                .append("merchantId", merchantId)
                 .append("merchantNo", merchantNo)
                 .append("merchantName", merchantName)
-                .append("routeChannelIds", routeChannelIds)
+                .append("channelIds", channelIds)
                 .toString();
     }
 }

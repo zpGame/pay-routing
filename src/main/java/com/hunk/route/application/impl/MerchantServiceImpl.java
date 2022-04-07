@@ -2,6 +2,9 @@ package com.hunk.route.application.impl;
 
 import com.hunk.route.application.MerchantService;
 import com.hunk.route.domain.*;
+import com.hunk.route.domain.event.MerchantRouteEvent;
+import com.hunk.route.domain.event.ResultWithDomainEvents;
+import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,36 +20,40 @@ import java.util.stream.Collectors;
 public class MerchantServiceImpl implements MerchantService {
 
     private final MerchantRepository merchantRepository;
-
     private final RouteRepository routeRepository;
+    private final CustomEventBus customEventBus;
 
     public MerchantServiceImpl(
-            MerchantRepository merchantRepository, RouteRepository routeRepository) {
+            MerchantRepository merchantRepository,
+            RouteRepository routeRepository,
+            CustomEventBus customEventBus) {
         this.merchantRepository = merchantRepository;
         this.routeRepository = routeRepository;
+        this.customEventBus = customEventBus;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public MerchantRoute createMerchant(
-            String merchantNo, String merchantName, List<Long> routeIds, String createUser) {
+            String merchantNo, String merchantName, Set<String> routeIds, String createUser) {
         Set<RouteChannel> routeChannels =
                 routeIds.stream()
-                        .map(routeRepository::findById)
-                        .map(route -> route.orElse(null))
+                        .map(routeRepository::findRouteChannelByChannelId)
                         .filter(Objects::nonNull)
                         .collect(Collectors.toSet());
         CreateInfo createInfo = CreateInfo.createInfo(createUser);
-        MerchantRoute merchantRoute =
+        ResultWithDomainEvents<MerchantRoute, MerchantRouteEvent> domainEvents =
                 MerchantRoute.createMerchant(merchantNo, merchantName, routeChannels, createInfo);
-        return merchantRepository.save(merchantRoute);
+        MerchantRoute merchantRoute = domainEvents.result;
+        merchantRepository.save(merchantRoute);
+        customEventBus.publish(domainEvents.event);
+        return merchantRoute;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public MerchantRoute findByMerchantNo(String merchantNo) {
-        MerchantRoute merchantRoute = merchantRepository.findByMerchantNo(merchantNo);
-        return merchantRoute;
+        return merchantRepository.findMerchantRouteByMerchantNo(merchantNo);
     }
 
     @Override

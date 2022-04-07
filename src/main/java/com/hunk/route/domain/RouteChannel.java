@@ -1,5 +1,7 @@
 package com.hunk.route.domain;
 
+import com.hunk.route.domain.event.ResultWithDomainEvents;
+import com.hunk.route.domain.event.RouteChannelEvent;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -14,7 +16,28 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "route_channel")
+@org.hibernate.annotations.Table(appliesTo = "route_channel", comment = "路由表")
 public class RouteChannel extends BaseEntity {
+
+    public static ResultWithDomainEvents<RouteChannel, RouteChannelEvent> createRoute(
+            PaymentChannel paymentChannel,
+            RouteRule routeRule,
+            EffectiveTime effectiveTime,
+            CreateInfo createInfo) {
+        RouteChannel routeChannel =
+                new RouteChannel(paymentChannel, routeRule, effectiveTime, createInfo);
+        RouteChannelEvent routeChannelEvent =
+                new RouteChannelEvent(
+                        routeChannel.getChannelId(),
+                        paymentChannel,
+                        effectiveTime,
+                        routeChannel.getIsUpHold(),
+                        routeRule.getRuleId());
+        return new ResultWithDomainEvents<>(routeChannel, routeChannelEvent);
+    }
+
+    @Column(name = "channel_id", length = 32)
+    private String channelId;
 
     @Embedded private PaymentChannel paymentChannel;
 
@@ -22,7 +45,7 @@ public class RouteChannel extends BaseEntity {
     @OneToOne
     @JoinColumn(
             name = "associate_rule_id",
-            referencedColumnName = "id",
+            referencedColumnName = "rule_id",
             foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private RouteRule routeRule = new RouteRule();
     /** 有效时间 */
@@ -31,22 +54,6 @@ public class RouteChannel extends BaseEntity {
     /** 是否维护 */
     private int isUpHold;
 
-    /**
-     * 创建路由
-     *
-     * @param routeRule 路由规则
-     * @param effectiveTime 有效时间
-     * @param createInfo 创建信息
-     * @return route
-     */
-    public static RouteChannel createRoute(
-            PaymentChannel paymentChannel,
-            RouteRule routeRule,
-            EffectiveTime effectiveTime,
-            CreateInfo createInfo) {
-        return new RouteChannel(paymentChannel, routeRule, effectiveTime, createInfo);
-    }
-
     public RouteChannel() {}
 
     public RouteChannel(
@@ -54,6 +61,7 @@ public class RouteChannel extends BaseEntity {
             RouteRule routeRule,
             EffectiveTime effectiveTime,
             CreateInfo createInfo) {
+        this.channelId = MajorKey.getId();
         this.paymentChannel = paymentChannel;
         this.routeRule = routeRule;
         this.effectiveTime = effectiveTime;
@@ -120,6 +128,7 @@ public class RouteChannel extends BaseEntity {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
+                .append("channelId", channelId)
                 .append("paymentChannel", paymentChannel)
                 .append("routeRule", routeRule)
                 .append("effectiveTime", effectiveTime)

@@ -6,7 +6,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author hunk
@@ -21,8 +23,8 @@ public class MerchantServiceTest extends ApplicationTests {
     public void createMerchant() {
         String merchantNo = "4321541535234";
         String merchantName = "测试";
-        List<Long> routeIds = new ArrayList<>();
-        routeIds.add(1L);
+        Set<String> routeIds = new HashSet<>();
+        routeIds.add("1");
         String createUser = "system";
         MerchantRoute merchant =
                 merchantService.createMerchant(merchantNo, merchantName, routeIds, createUser);

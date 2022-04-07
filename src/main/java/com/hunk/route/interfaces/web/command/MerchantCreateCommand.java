@@ -2,8 +2,8 @@ package com.hunk.route.interfaces.web.command;
 
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author hunk
@@ -14,6 +14,6 @@ import java.util.List;
 public class MerchantCreateCommand {
     private String merchantNo;
     private String merchantName;
-    private List<Long> routeIds = new ArrayList<>();
+    private Set<String> routeIds = new HashSet<>();
     private String createUser;
 }

@@ -2,6 +2,7 @@ package com.hunk.route.config;
 
 import com.hunk.route.domain.event.BankInfoListen;
 import com.hunk.route.domain.event.MerchantRouteListen;
+import com.hunk.route.domain.event.RouteChannelListen;
 import com.hunk.route.domain.event.RouteRuleListen;
 import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
 import com.hunk.route.infrastructure.messaging.event.injvm.DefaultCustomEventBus;
@@ -34,5 +35,10 @@ public class EventAutoConfiguration {
     @Bean
     public RouteRuleListen routeRuleListen() {
         return new RouteRuleListen();
+    }
+
+    @Bean
+    public RouteChannelListen routeChannelListen() {
+        return new RouteChannelListen();
     }
 }

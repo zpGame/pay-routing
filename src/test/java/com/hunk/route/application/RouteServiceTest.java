@@ -20,7 +20,7 @@ public class RouteServiceTest  extends ApplicationTests {
     @Test
     public void createRoute() {
         PaymentChannel paymentChannel = new PaymentChannel(ChannelE.UNION, ServiceE.WITHHOLD);
-        long ruleId = 1L;
+        String ruleId = "1";
         EffectiveTime effectiveTime = new EffectiveTime(LocalDateTime.now(), LocalDateTime.now().plusMonths(1));
         String createUser = "system";
         RouteChannel route = routeService.createRoute(paymentChannel, ruleId, effectiveTime, createUser);

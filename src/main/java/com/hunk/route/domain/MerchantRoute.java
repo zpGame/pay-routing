@@ -1,6 +1,9 @@
 package com.hunk.route.domain;
 
+import com.hunk.route.domain.event.MerchantRouteEvent;
+import com.hunk.route.domain.event.ResultWithDomainEvents;
 import lombok.Getter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,6 +20,24 @@ import java.util.stream.Collectors;
 @Table(name = "merchant_route")
 public class MerchantRoute extends BaseEntity {
 
+    public static ResultWithDomainEvents<MerchantRoute, MerchantRouteEvent> createMerchant(
+            String merchantNo,
+            String merchantName,
+            Set<RouteChannel> routeChannels,
+            CreateInfo createInfo) {
+        MerchantRoute merchantRoute =
+                new MerchantRoute(merchantNo, merchantName, routeChannels, createInfo);
+        Set<String> channelIds =
+                routeChannels.stream().map(RouteChannel::getChannelId).collect(Collectors.toSet());
+        MerchantRouteEvent merchantRouteEvent =
+                new MerchantRouteEvent(
+                        merchantRoute.getMerchantId(), merchantNo, merchantName, channelIds);
+        return new ResultWithDomainEvents<>(merchantRoute, merchantRouteEvent);
+    }
+
+    @Column(name = "merchant_id", length = 32)
+    private String merchantId;
+
     @Column(name = "merchant_no", length = 32, unique = true)
     private String merchantNo;
 
@@ -26,19 +47,13 @@ public class MerchantRoute extends BaseEntity {
     @ManyToMany
     @JoinTable(
             name = "merchant_junction_route",
-            joinColumns = {@JoinColumn(name = "sys_merchant_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "sys_route_id", referencedColumnName = "id")},
+            joinColumns = {@JoinColumn(name = "merchant_id", referencedColumnName = "merchant_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "channel_id", referencedColumnName = "channel_id")
+            },
             foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
             inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Set<RouteChannel> routeChannels = new HashSet<>();
-
-    public static MerchantRoute createMerchant(
-            String merchantNo,
-            String merchantName,
-            Set<RouteChannel> routeChannels,
-            CreateInfo createInfo) {
-        return new MerchantRoute(merchantNo, merchantName, routeChannels, createInfo);
-    }
 
     public MerchantRoute() {}
 
@@ -47,6 +62,7 @@ public class MerchantRoute extends BaseEntity {
             String merchantName,
             Set<RouteChannel> routeChannels,
             CreateInfo createInfo) {
+        this.merchantId = MajorKey.getId();
         this.merchantNo = merchantNo;
         this.merchantName = merchantName;
         this.routeChannels = routeChannels;
@@ -78,5 +94,17 @@ public class MerchantRoute extends BaseEntity {
                 .filter(RouteChannel::isUpHold)
                 .filter(route -> route.getEffectiveTime().validTime())
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("createInfo", createInfo)
+                .append("merchantId", merchantId)
+                .append("merchantNo", merchantNo)
+                .append("merchantName", merchantName)
+                .append("routeChannels", routeChannels)
+                .toString();
     }
 }

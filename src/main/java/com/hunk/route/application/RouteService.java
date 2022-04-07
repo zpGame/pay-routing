@@ -3,9 +3,6 @@ package com.hunk.route.application;
 import com.hunk.route.domain.EffectiveTime;
 import com.hunk.route.domain.PaymentChannel;
 import com.hunk.route.domain.RouteChannel;
-import com.hunk.route.domain.RouteConstants;
-
-import java.util.Optional;
 
 /**
  * @author hunk
@@ -25,17 +22,9 @@ public interface RouteService {
      */
     RouteChannel createRoute(
             PaymentChannel paymentChannel,
-            long ruleId,
+            String ruleId,
             EffectiveTime effectiveTime,
             String createUser);
-
-    /**
-     * ID查询路由
-     *
-     * @param routeId ID
-     * @return Optional
-     */
-    Optional<RouteChannel> findById(long routeId);
 
     /**
      * 修改路由信息

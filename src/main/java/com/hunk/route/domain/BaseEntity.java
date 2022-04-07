@@ -3,6 +3,7 @@ package com.hunk.route.domain;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author hunk
@@ -11,7 +12,7 @@ import javax.persistence.*;
  */
 @Getter
 @MappedSuperclass
-public class BaseEntity {
+public class BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,4 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2022/2/20
  *     <p>
  */
-public interface RouteRuleRepository extends JpaRepository<RouteRule, Long> {}
+public interface RouteRuleRepository extends JpaRepository<RouteRule, Long> {
+
+    RouteRule findRouteRuleByRuleId(String ruleId);
+
+}

@@ -36,22 +36,26 @@ public class ServiceConfiguration {
 
     @Bean
     public RouteService routeService(
-            RouteRuleRepository ruleRepository, RouteRepository routeRepository) {
-        return new RouteServiceImpl(ruleRepository, routeRepository);
+            CustomEventBus customEventBus,
+            RouteRuleRepository ruleRepository,
+            RouteRepository routeRepository) {
+        return new RouteServiceImpl(ruleRepository, routeRepository, customEventBus);
     }
 
     @Bean
     public MerchantService merchantService(
-            MerchantRepository merchantRepository, RouteRepository routeRepository) {
-        return new MerchantServiceImpl(merchantRepository, routeRepository);
+            CustomEventBus customEventBus,
+            MerchantRepository merchantRepository,
+            RouteRepository routeRepository) {
+        return new MerchantServiceImpl(merchantRepository, routeRepository, customEventBus);
     }
 
     @Bean
     public InitData initData(
-            RouteRepository routeRepository,
+            RouteService routeService,
             BankInfoService bankInfoService,
-            MerchantRepository merchantRepository,
+            MerchantService merchantService,
             RouteRuleService routeRuleService) {
-        return new InitData(routeRepository, bankInfoService, merchantRepository, routeRuleService);
+        return new InitData(routeService, bankInfoService, merchantService, routeRuleService);
     }
 }

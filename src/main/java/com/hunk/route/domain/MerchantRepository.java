@@ -11,12 +11,5 @@ import org.springframework.data.repository.query.Param;
  */
 public interface MerchantRepository extends JpaRepository<MerchantRoute, Long> {
 
-    /**
-     * Query
-     *
-     * @param merchantNo 商户号
-     * @return MerchantRoute
-     */
-    @Query("select s from MerchantRoute s where s.merchantNo =: merchantNo")
-    MerchantRoute findByMerchantNo(@Param("merchantNo") String merchantNo);
+    MerchantRoute findMerchantRouteByMerchantNo(String merchantNo);
 }
