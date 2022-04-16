@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 @Getter
 @Setter
-public abstract class CustomEvent {
+public abstract class CustomEvent implements Serializable {
 
     private String eventName;
 

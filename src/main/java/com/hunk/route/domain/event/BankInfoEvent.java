@@ -4,6 +4,7 @@ import com.hunk.route.domain.BankName;
 import com.hunk.route.domain.CardType;
 import com.hunk.route.infrastructure.messaging.event.CustomEvent;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -11,12 +12,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * @date 2022/4/4
  *     <p>
  */
+@Setter
 @Getter
 public class BankInfoEvent extends CustomEvent {
 
-    private final String bankId;
-    private final BankName bankName;
-    private final CardType cardType;
+    private String bankId;
+    private BankName bankName;
+    private CardType cardType;
+
+    public BankInfoEvent() {
+    }
 
     public BankInfoEvent(String bankId, BankName bankName, CardType cardType) {
         this.bankId = bankId;

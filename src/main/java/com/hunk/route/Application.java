@@ -1,8 +1,10 @@
 package com.hunk.route;
 
 import com.hunk.route.config.ServiceWithRepositoriesConfiguration;
+import com.hunk.route.infrastructure.context.ApplicationUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 
 /**
@@ -15,6 +17,7 @@ import org.springframework.context.annotation.Import;
 public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+        ApplicationUtils.set(context);
     }
 }

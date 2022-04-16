@@ -1,5 +1,7 @@
 package com.hunk.route.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -10,6 +12,8 @@ import javax.persistence.Embeddable;
  * @date 2022/2/27
  *     <p>
  */
+@Getter
+@Setter
 @Embeddable
 public class BankName {
 
@@ -25,14 +29,6 @@ public class BankName {
     public BankName(String bankName, String bankShortName) {
         this.bankName = bankName;
         this.bankShortName = bankShortName;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public String getBankShortName() {
-        return bankShortName;
     }
 
     public boolean validBankShortName(String bankShortName) {
