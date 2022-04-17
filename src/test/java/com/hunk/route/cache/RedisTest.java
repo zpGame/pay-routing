@@ -36,14 +36,20 @@ public class RedisTest extends ApplicationTests {
 
     @Test
     public void delete() {
-        redisCache.deleteCache(RouteConstants.BANK_INFO_KEY_);
+        Key key = new Key(RouteConstants.BANK_INFO_KEY_, "");
+        redisCache.deleteCache(key);
     }
 
     @Test
-    public void query() {
+    public void pageQuery() {
         Query.Param param = new Query.Param(1, 5, RouteConstants.BANK_INFO_KEY_);
         final Query.Result<BankInfoEvent> bankInfoEventResult =
-                redisCache.queryCache(param, BankInfoEvent.class);
+                redisCache.pageQueryCache(param, BankInfoEvent.class);
         System.out.println(JSONObject.toJSONString(bankInfoEventResult));
+    }
+
+    @Test
+    public void query(){
+
     }
 }

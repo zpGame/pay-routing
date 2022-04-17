@@ -35,31 +35,48 @@ public class RedisCache {
                         timeout.getTimeUnit());
     }
 
-    public void deleteCache(String key) {
-        redisTemplate.delete(key);
+    public void deleteCache(Key key) {
+        redisTemplate.opsForZSet().remove(key.getKeyPrefix(), key.getKeySuffix());
+        redisTemplate.delete(key.getFullKey());
     }
 
-    // todo 目前逻辑有缺陷，后期改
-    public <T> Query.Result<T> queryCache(Query.Param param, Class<T> aClass) {
+    /**
+     * 分页查询
+     *
+     * @param param 查询参数
+     * @param aClass 转换类
+     * @return 结果
+     * @param <T> 泛型
+     *     <p>todo 目前逻辑有缺陷，后期改；目前不支持条件查询
+     */
+    public <T> Query.Result<T> pageQueryCache(Query.Param param, Class<T> aClass) {
         final String key = param.getKey();
         Set<Object> range = redisTemplate.opsForZSet().range(key, param.getStart(), param.getEnd());
         Objects.requireNonNull(range);
         final List<T> collect =
                 range.stream()
                         .map(String::valueOf)
-                        .map(id -> this.convert(new Key(key, id), aClass))
+                        .map(id -> this.query(new Key(key, id), aClass))
                         .collect(Collectors.toList());
         final Long aLong = redisTemplate.opsForZSet().zCard(RouteConstants.BANK_INFO_KEY_);
         return new Query.Result<>(collect, null == aLong ? 0 : aLong);
     }
 
-    private <T> T convert(Key key, Class<T> aClass) {
+    public <T> T query(Key key, Class<T> aClass) {
         JSONObject object = (JSONObject) redisTemplate.opsForValue().get(key.getFullKey());
         if (null == object) return null;
         return object.toJavaObject(aClass);
     }
 
-    public void reviseCache(){
-
+    public void reviseCache(CacheParam<?> param) {
+        Key key = param.getKey();
+        CacheParam.TimeOut timeout = param.getTimeout();
+        redisTemplate
+                .opsForValue()
+                .set(
+                        key.getFullKey(),
+                        param.getData(),
+                        timeout.getTimeout(),
+                        timeout.getTimeUnit());
     }
 }
