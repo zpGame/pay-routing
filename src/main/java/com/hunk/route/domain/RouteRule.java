@@ -46,13 +46,8 @@ public class RouteRule extends BaseEntity {
     @Column(name = "account_type", length = 24)
     private AccountType accountType;
 
-    @ManyToMany
-    @JoinTable(
-            name = "role_junction_bank",
-            joinColumns = {@JoinColumn(name = "rule_id", referencedColumnName = "rule_id")},
-            inverseJoinColumns = {@JoinColumn(name = "bank_id", referencedColumnName = "bank_id")},
-            foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
-            inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @OneToMany(mappedBy = "routeRule", fetch = FetchType.LAZY)
+    @org.hibernate.annotations.ForeignKey(name = "none")
     private Set<BankInfo> bankInfos = new HashSet<>();
 
     @Embedded private Money money = Money.ZERO;

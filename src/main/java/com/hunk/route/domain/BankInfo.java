@@ -35,6 +35,13 @@ public class BankInfo extends BaseEntity {
     @Column(name = "card_type", length = 12)
     private CardType cardType;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "rule_id",
+            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT),
+            unique = true)
+    private RouteRule routeRule;
+
     public BankInfo() {}
 
     public BankInfo(BankName bankName, CardType cardType, CreateInfo createInfo) {

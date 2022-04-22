@@ -44,15 +44,8 @@ public class MerchantRoute extends BaseEntity {
     @Column(name = "merchant_name", length = 56)
     private String merchantName;
 
-    @ManyToMany
-    @JoinTable(
-            name = "merchant_junction_route",
-            joinColumns = {@JoinColumn(name = "merchant_id", referencedColumnName = "merchant_id")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "channel_id", referencedColumnName = "channel_id")
-            },
-            foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
-            inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @OneToMany(mappedBy = "merchantRoute", fetch = FetchType.LAZY)
+    @org.hibernate.annotations.ForeignKey(name = "none")
     private Set<RouteChannel> routeChannels = new HashSet<>();
 
     public MerchantRoute() {}
