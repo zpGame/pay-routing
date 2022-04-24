@@ -54,13 +54,6 @@ public class RouteChannel extends BaseEntity {
     /** 是否维护 */
     private int isUpHold;
 
-    @ManyToOne
-    @JoinColumn(
-            name = "merchant_id",
-            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT),
-            unique = true)
-    private MerchantRoute merchantRoute;
-
     public RouteChannel() {}
 
     public RouteChannel(

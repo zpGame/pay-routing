@@ -26,21 +26,14 @@ public class BankInfo extends BaseEntity {
         return new ResultWithDomainEvents<>(bankInfo, event);
     }
 
-    @Column(name = "bank_id", length = 32)
+    @Column(name = "bank_id", length = 32, unique = true, nullable = false)
     private String bankId;
 
     @Embedded private BankName bankName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "card_type", length = 12)
+    @Column(length = 12)
     private CardType cardType;
-
-    @ManyToOne
-    @JoinColumn(
-            name = "rule_id",
-            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT),
-            unique = true)
-    private RouteRule routeRule;
 
     public BankInfo() {}
 

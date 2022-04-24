@@ -17,10 +17,10 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class BankName {
 
-    @Column(name = "bank_name", length = 32)
+    @Column(length = 32, nullable = false)
     private String bankName;
 
-    @Column(name = "bank_short_name", length = 8)
+    @Column(length = 8, nullable = false)
     private String bankShortName;
 
     public BankName() {

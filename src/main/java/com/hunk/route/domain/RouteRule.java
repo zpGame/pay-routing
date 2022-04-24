@@ -39,15 +39,20 @@ public class RouteRule extends BaseEntity {
     private String ruleId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "trade_type", length = 24)
+    @Column(length = 24)
     private TradeType tradeType;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "account_type", length = 24)
+    @Column(length = 24)
     private AccountType accountType;
 
-    @OneToMany(mappedBy = "routeRule", fetch = FetchType.LAZY)
-    @org.hibernate.annotations.ForeignKey(name = "none")
+    @ManyToMany
+    @JoinTable(
+            name = "role_link_bank",
+            joinColumns = {@JoinColumn(referencedColumnName = "rule_id")},
+            inverseJoinColumns = {@JoinColumn(referencedColumnName = "bank_id")},
+            foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
+            inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Set<BankInfo> bankInfos = new HashSet<>();
 
     @Embedded private Money money = Money.ZERO;
