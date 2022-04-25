@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic CRUD Application - jQuery EasyUI CRUD Demo</title>
+    <link rel="stylesheet" type="text/css" href="webjars/jquery-easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="webjars/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="webjars/jquery-easyui/themes/icon.css">
+    <script type="text/javascript" src="webjars/jquery-easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/jquery-easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+<table id="dg" class="easyui-datagrid" style="width:100%;height:100%"
+       url="bank/list.do"
+       toolbar="#toolbar" pagination="true"
+       rownumbers="true" fitColumns="true" singleSelect="true">
+    <thead>
+    <tr>
+        <th field="id" width="50">id</th>
+        <th field="bankName" width="50">bankName</th>
+        <th field="bankShortName" width="50">bankShortName</th>
+        <th field="cardType" width="50">cardType</th>
+    </tr>
+    </thead>
+</table>
+<div id="toolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">add</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">edit</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">remove</a>
+</div>
+
+<div id="dlg" class="easyui-dialog" style="width:400px"
+     data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+    <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+        <h3>Bank Information</h3>
+        <div style="margin-bottom:10px">
+            <input name="bankName" class="easyui-textbox" required="true" label="bankName:" style="width:100%">
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="bankShortName" class="easyui-textbox" required="true" label="bankShortName:" style="width:100%">
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="cardType" class="easyui-textbox" required="true" label="cardType:"
+                   style="width:100%">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+       onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+</div>
+<script type="text/javascript">
+    var url;
+
+    function newUser() {
+        $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'New User');
+        $('#fm').form('clear');
+        url = 'bank/add.do';
+    }
+
+    function editUser() {
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Edit User');
+            $('#fm').form('load', row);
+            url = 'bank/edit.do?id=' + row.id;
+        }
+    }
+
+    function saveUser() {
+        $('#fm').form('submit', {
+            url: url,
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.errorMsg) {
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlg').dialog('close');		// close the dialog
+                    $('#dg').datagrid('reload');	// reload the user data
+                }
+            }
+        });
+    }
+
+    function destroyUser() {
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            $.messager.confirm('Confirm', 'Are you sure you want to destroy this user?', function (r) {
+                if (r) {
+                    $.post('bank/delete.do', {id: row.id}, function (result) {
+                        if (result.success) {
+                            $('#dg').datagrid('reload');	// reload the user data
+                        } else {
+                            $.messager.show({	// show error message
+                                title: 'Error',
+                                msg: result.errorMsg
+                            });
+                        }
+                    }, 'json');
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

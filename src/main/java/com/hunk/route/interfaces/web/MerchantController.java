@@ -5,20 +5,19 @@ import com.hunk.route.domain.MerchantRepository;
 import com.hunk.route.domain.MerchantRoute;
 import com.hunk.route.interfaces.facade.dto.MerchantInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.MerchantAssembler;
-import com.hunk.route.interfaces.facade.page.PageBean;
-import com.hunk.route.interfaces.facade.page.PageUtils;
-import com.hunk.route.interfaces.web.command.MerchantCreateCommand;
-import com.hunk.route.interfaces.web.command.MerchantReviseCommand;
+import com.hunk.route.interfaces.web.command.MerchantCommand;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,56 +28,51 @@ import java.util.stream.Collectors;
  */
 @Controller
 @RequestMapping("/merchant")
-public class MerchantController {
+public class MerchantController extends BaseController {
 
-    @Resource
-    private MerchantService merchantService;
+    @Resource private MerchantService merchantService;
 
-    @Resource
-    private MerchantRepository merchantRepository;
-
+    @Resource private MerchantRepository merchantRepository;
 
     @GetMapping("/list.do")
-    public String list(Model model, HttpServletRequest request) {
-        PageBean pageBean = new PageBean();
-        pageBean.setRequest(request);
-        Page<MerchantRoute> all =
-                merchantRepository.findAll(
-                        PageRequest.of(pageBean.getPage() - 1, pageBean.getRows()));
+    public void list(
+            HttpServletResponse response,
+            @RequestParam(value = "rows") Integer size,
+            @RequestParam(value = "page") Integer page)
+            throws IOException {
+        final PageRequest pageRequest = PageRequest.of(page - 1, size);
+        Page<MerchantRoute> all = merchantRepository.findAll(pageRequest);
         List<MerchantInfoDTO> infoDtoS =
                 all.getContent().stream()
                         .map(MerchantAssembler::toDto)
                         .collect(Collectors.toList());
-        pageBean.setTotal(all.getTotalElements() + "");
-        model.addAttribute("routeChannels", infoDtoS);
-        model.addAttribute("pageCode", PageUtils.createPageCode(pageBean));
-        return "merchant/list";
+        super.pageWrite(response, all.getTotalElements(), infoDtoS);
     }
 
     @PostMapping("/add.do")
-    public String add(MerchantCreateCommand command) {
+    public void add(HttpServletResponse response, MerchantCommand command) throws IOException {
         merchantService.createMerchant(
                 command.getMerchantNo(),
                 command.getMerchantName(),
                 command.getRouteIds(),
                 command.getCreateUser());
-        return "redirect:/merchant/list.do";
+        super.write(response);
     }
 
     @PostMapping("/edit.do")
-    public String edit(MerchantReviseCommand command) {
+    public void edit(HttpServletResponse response, MerchantCommand command) throws IOException {
         merchantService.reviseInfo(
-                command.getOriId(),
-                command.getAlterMerchantNo(),
-                command.getAlterMerchantName(),
-                command.getAlterRouteIds(),
+                command.getId(),
+                command.getMerchantNo(),
+                command.getMerchantName(),
+                new ArrayList<>(),
                 command.getModifyUser());
-        return "redirect:/merchant/list.do";
+        super.write(response);
     }
 
     @PostMapping("/delete.do")
-    public String delete(Long id) {
+    public void delete(HttpServletResponse response, Long id) throws IOException {
         merchantRepository.deleteById(id);
-        return "redirect:/merchant/list.do";
+        super.write(response);
     }
 }

@@ -1,57 +1,45 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta charset="UTF-8">
     <title>首页</title>
+    <link rel="stylesheet" type="text/css" href="webjars/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="webjars/jquery-easyui/themes/icon.css">
+    <script type="text/javascript" src="webjars/jquery-easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/jquery-easyui/jquery.easyui.min.js"></script>
 </head>
-<body>
-
-<div th:include="header :: header"></div>
-
-<div class="container-fluid">
-    <div class="row">
-
-        <div th:include="sidebar :: sidebar"></div>
-
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-striped table-sm">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Header</th>
-                        <th scope="col">Header</th>
-                        <th scope="col">Header</th>
-                        <th scope="col">Header</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1,001</td>
-                        <td>random</td>
-                        <td>data</td>
-                        <td>placeholder</td>
-                        <td>text</td>
-                    </tr>
-                    <tr>
-                        <td>1,002</td>
-                        <td>placeholder</td>
-                        <td>irrelevant</td>
-                        <td>visual</td>
-                        <td>layout</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
+<body class="easyui-layout">
+<div data-options="region:'north',border:false" style="height:56px;background:#B3DFDA;padding:2px"><p align="center">
+    路由系统</p></div>
+<div data-options="region:'west',split:true,title:'导航栏'" style="width:200px;padding:10px;">
+    <ul>
+        <li><a href="javascript:void(0)" onclick="addTab('Merchant')">Merchant</a></li>
+        <li><a href="javascript:void(0)" onclick="addTab('Route')">Route</a></li>
+        <li><a href="javascript:void(0)" onclick="addTab('Rule')">Rule</a></li>
+        <li><a href="javascript:void(0)" onclick="addTab('BankInfo','bank')">BankInfo</a></li>
+    </ul>
 </div>
 
-<div th:include="resources :: resources"></div>
+
+<div data-options="region:'east'" style="width:5px;padding:5px;"></div>
+<div data-options="region:'south',border:false" style="height:10px;background:#A9FACD;padding:10px;"></div>
+<div data-options="region:'center'" class="easyui-tabs" id="tt"></div>
 </body>
+
+<script type="text/javascript">
+
+    function addTab(title, url) {
+        if ($('#tt').tabs('exists', title)) {
+            $('#tt').tabs('select', title);
+        } else {
+            var content = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:99%;"></iframe>';
+            $('#tt').tabs('add', {
+                title: title,
+                content: content,
+                closable: true
+            });
+        }
+    }
+
+</script>
 </html>

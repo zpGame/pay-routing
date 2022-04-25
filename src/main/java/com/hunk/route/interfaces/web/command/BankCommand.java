@@ -8,7 +8,9 @@ import lombok.Data;
  *     <p>
  */
 @Data
-public final class BankCreatCommand {
+public final class BankCommand {
+
+    private Long id;
 
     private String bankName;
 
@@ -18,4 +20,5 @@ public final class BankCreatCommand {
 
     private String createUser;
 
+    private String modifyUser;
 }

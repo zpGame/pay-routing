@@ -50,7 +50,7 @@ public class ServiceConfiguration {
         return new MerchantServiceImpl(merchantRepository, routeRepository, customEventBus);
     }
 
-    @Bean
+//    @Bean
     public InitData initData(
             RouteService routeService,
             BankInfoService bankInfoService,

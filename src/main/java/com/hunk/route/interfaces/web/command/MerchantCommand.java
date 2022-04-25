@@ -11,9 +11,11 @@ import java.util.Set;
  *     <p>
  */
 @Data
-public class MerchantCreateCommand {
+public class MerchantCommand {
+    private Long id;
     private String merchantNo;
     private String merchantName;
     private Set<String> routeIds = new HashSet<>();
     private String createUser;
+    private String modifyUser;
 }

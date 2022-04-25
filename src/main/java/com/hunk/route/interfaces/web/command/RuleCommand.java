@@ -11,10 +11,12 @@ import java.util.List;
  *     <p>
  */
 @Data
-public class RuleCreateCommand {
+public class RuleCommand {
+    private Long id;
     private String tradeType;
     private String accountType;
     private List<String> bankIds = new ArrayList<>();
     private String money;
     private String createUser;
+    private String modifyUser;
 }

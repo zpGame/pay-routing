@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 /**
  * @author hunk
  * @date 2022/3/11
- * <p>
+ *     <p>
  */
 @Data
-public class RouteCreateCommand {
-
+public class RouteCommand {
+    private Long id;
     private String channelE;
     private String serviceE;
     private String ruleId;
@@ -19,5 +19,5 @@ public class RouteCreateCommand {
     private LocalDateTime endDate;
     private Integer isUpHold;
     private String createUser;
-
+    private String modifyUser;
 }

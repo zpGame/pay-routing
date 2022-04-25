@@ -5,23 +5,21 @@ import com.hunk.route.domain.*;
 import com.hunk.route.interfaces.facade.dto.RouteChannelDTO;
 import com.hunk.route.interfaces.facade.dto.RouteInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.RouteChannelAssembler;
-import com.hunk.route.interfaces.facade.page.PageBean;
-import com.hunk.route.interfaces.facade.page.PageUtils;
 import com.hunk.route.interfaces.web.command.ObtainRouteCommand;
-import com.hunk.route.interfaces.web.command.RouteCreateCommand;
-import com.hunk.route.interfaces.web.command.RouteReviseCommand;
+import com.hunk.route.interfaces.web.command.RouteCommand;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
@@ -35,13 +33,11 @@ import java.util.stream.Collectors;
 @Api(tags = "获取路由模块")
 @Controller
 @RequestMapping("/route")
-public class RouteController {
+public class RouteController extends BaseController {
 
-    @Resource
-    private RouteService routeService;
+    @Resource private RouteService routeService;
 
-    @Resource
-    private RouteRepository routeRepository;
+    @Resource private RouteRepository routeRepository;
 
     @GetMapping()
     public String index() {
@@ -50,24 +46,23 @@ public class RouteController {
 
     @PostMapping("/obtainRoute.do")
     @ApiOperation("获取路由信息")
-    public RouteInfoDTO obtainRoute(ObtainRouteCommand command){
+    public RouteInfoDTO obtainRoute(ObtainRouteCommand command) {
         return null;
     }
 
     @GetMapping("/list.do")
-    public String list(Model model, HttpServletRequest request) {
-        PageBean pageBean = new PageBean();
-        pageBean.setRequest(request);
-        Page<RouteChannel> all =
-                routeRepository.findAll(PageRequest.of(pageBean.getPage() - 1, pageBean.getRows()));
+    public void list(
+            HttpServletResponse response,
+            @RequestParam(value = "rows") Integer size,
+            @RequestParam(value = "page") Integer page)
+            throws IOException {
+        final PageRequest pageRequest = PageRequest.of(page - 1, size);
+        Page<RouteChannel> all = routeRepository.findAll(pageRequest);
         List<RouteChannelDTO> infoDtoS =
                 all.getContent().stream()
                         .map(RouteChannelAssembler::toDto)
                         .collect(Collectors.toList());
-        pageBean.setTotal(all.getTotalElements() + "");
-        model.addAttribute("routeChannels", infoDtoS);
-        model.addAttribute("pageCode", PageUtils.createPageCode(pageBean));
-        return "route/list";
+        super.pageWrite(response, all.getTotalElements(), infoDtoS);
     }
 
     Function<String, ChannelE> channelE =
@@ -81,7 +76,7 @@ public class RouteController {
                             .orElseThrow(() -> new NoSuchElementException(serviceE));
 
     @PostMapping("/add.do")
-    public String add(RouteCreateCommand command) {
+    public void add(HttpServletResponse response, RouteCommand command) throws IOException {
         routeService.createRoute(
                 new PaymentChannel(
                         channelE.apply(command.getChannelE()),
@@ -89,31 +84,32 @@ public class RouteController {
                 command.getRuleId(),
                 new EffectiveTime(command.getBeginDate(), command.getEndDate()),
                 command.getCreateUser());
-        return "redirect:/route/list.do";
+        super.write(response);
     }
 
     @PostMapping("/edit.do")
-    public String edit(RouteReviseCommand command) {
+    public void edit(HttpServletResponse response, RouteCommand command) throws IOException {
         routeService.reviseInfo(
-                command.getOriId(),
+                command.getId(),
                 new PaymentChannel(
-                        channelE.apply(command.getAlterChannelE()),
-                        serviceE.apply(command.getAlterServiceE())),
-                command.getAlterRuleId(),
-                new EffectiveTime(command.getAlterBeginDate(), command.getAlterBndDate()),
+                        channelE.apply(command.getChannelE()),
+                        serviceE.apply(command.getServiceE())),
+                Long.parseLong(command.getRuleId()),
+                new EffectiveTime(command.getBeginDate(), command.getEndDate()),
                 command.getModifyUser());
-        return "redirect:/route/list.do";
+        super.write(response);
     }
 
     @PostMapping("/delete.do")
-    public String delete(Long id) {
+    public void delete(HttpServletResponse response, Long id) throws IOException {
         routeRepository.deleteById(id);
-        return "redirect:/route/list.do";
+        super.write(response);
     }
 
     @PostMapping("/changeUpHold.do")
-    public String changeUpHold(Long id, Integer upHold) {
+    public void changeUpHold(HttpServletResponse response, Long id, Integer upHold)
+            throws IOException {
         routeService.changeUpHold(id, upHold, "system");
-        return "redirect:/route/list.do";
+        super.write(response);
     }
 }
