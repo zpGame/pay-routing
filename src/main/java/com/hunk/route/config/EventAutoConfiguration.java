@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022/3/18
  *     <p>eventBus
  */
-@Configuration
 public class EventAutoConfiguration {
 
     @Bean

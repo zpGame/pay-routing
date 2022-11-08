@@ -17,8 +17,8 @@ import java.net.URL;
 /**
  * @author hunk
  * @date 2022/3/1
- *     <p>开发 thymeleaf 时用
- *     <p>开启此类,修改html不需要重启,直接生效
+ * <p>开发 thymeleaf 时用
+ * <p>开启此类,修改html不需要重启,直接生效
  */
 @Configuration
 @EnableWebMvc

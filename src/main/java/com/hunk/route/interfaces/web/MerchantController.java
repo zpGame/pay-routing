@@ -24,15 +24,17 @@ import java.util.stream.Collectors;
 /**
  * @author hunk
  * @date 2022/3/10
- *     <p>
+ * <p>
  */
 @Controller
 @RequestMapping("/merchant")
 public class MerchantController extends BaseController {
 
-    @Resource private MerchantService merchantService;
+    @Resource
+    private MerchantService merchantService;
 
-    @Resource private MerchantRepository merchantRepository;
+    @Resource
+    private MerchantRepository merchantRepository;
 
     @GetMapping("/list.do")
     public void list(

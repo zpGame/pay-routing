@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022/2/21
  *     <p>
  */
-@Configuration
 public class ServiceConfiguration {
 
     @Bean
@@ -50,7 +49,7 @@ public class ServiceConfiguration {
         return new MerchantServiceImpl(merchantRepository, routeRepository, customEventBus);
     }
 
-//    @Bean
+    @Bean
     public InitData initData(
             RouteService routeService,
             BankInfoService bankInfoService,
