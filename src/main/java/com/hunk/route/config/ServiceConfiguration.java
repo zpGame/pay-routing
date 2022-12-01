@@ -5,7 +5,6 @@ import com.hunk.route.application.impl.*;
 import com.hunk.route.domain.*;
 import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @author hunk
