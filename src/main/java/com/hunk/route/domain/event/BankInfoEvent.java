@@ -1,7 +1,7 @@
 package com.hunk.route.domain.event;
 
-import com.hunk.route.domain.BankName;
-import com.hunk.route.domain.CardType;
+import com.hunk.route.domain.model.bank.BankName;
+import com.hunk.route.domain.model.em.CardType;
 import com.hunk.route.infrastructure.messaging.event.CustomEvent;
 import lombok.Getter;
 import lombok.Setter;

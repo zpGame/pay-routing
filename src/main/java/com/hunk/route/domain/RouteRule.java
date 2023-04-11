@@ -2,6 +2,10 @@ package com.hunk.route.domain;
 
 import com.hunk.route.domain.event.ResultWithDomainEvents;
 import com.hunk.route.domain.event.RouteRuleEvent;
+import com.hunk.route.domain.model.bank.BankInfo;
+import com.hunk.route.domain.model.em.AccountType;
+import com.hunk.route.domain.model.em.CardType;
+import com.hunk.route.domain.model.em.TradeType;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

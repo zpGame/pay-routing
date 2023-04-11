@@ -1,8 +1,8 @@
 package com.hunk.route.interfaces.web;
 
 import com.hunk.route.application.MerchantService;
-import com.hunk.route.domain.MerchantRepository;
-import com.hunk.route.domain.MerchantRoute;
+import com.hunk.route.domain.model.merchant.MerchantRepository;
+import com.hunk.route.domain.model.merchant.MerchantRoute;
 import com.hunk.route.interfaces.facade.dto.MerchantInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.MerchantAssembler;
 import com.hunk.route.interfaces.web.command.MerchantCommand;

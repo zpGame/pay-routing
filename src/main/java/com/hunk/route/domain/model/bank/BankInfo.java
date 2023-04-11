@@ -1,7 +1,11 @@
-package com.hunk.route.domain;
+package com.hunk.route.domain.model.bank;
 
+import com.hunk.route.domain.BaseEntity;
+import com.hunk.route.domain.CreateInfo;
+import com.hunk.route.domain.MajorKey;
 import com.hunk.route.domain.event.BankInfoEvent;
 import com.hunk.route.domain.event.ResultWithDomainEvents;
+import com.hunk.route.domain.model.em.CardType;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;

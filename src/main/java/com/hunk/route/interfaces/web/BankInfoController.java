@@ -1,10 +1,10 @@
 package com.hunk.route.interfaces.web;
 
 import com.hunk.route.application.BankInfoService;
-import com.hunk.route.domain.BankInfo;
-import com.hunk.route.domain.BankInfoRepository;
-import com.hunk.route.domain.BankName;
-import com.hunk.route.domain.CardType;
+import com.hunk.route.domain.model.bank.BankInfo;
+import com.hunk.route.domain.model.bank.BankInfoRepository;
+import com.hunk.route.domain.model.bank.BankName;
+import com.hunk.route.domain.model.em.CardType;
 import com.hunk.route.interfaces.facade.dto.BankInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.BanInfoAssembler;
 import com.hunk.route.interfaces.web.command.BankCommand;

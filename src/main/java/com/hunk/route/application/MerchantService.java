@@ -1,6 +1,6 @@
 package com.hunk.route.application;
 
-import com.hunk.route.domain.MerchantRoute;
+import com.hunk.route.domain.model.merchant.MerchantRoute;
 
 import java.util.List;
 import java.util.Set;

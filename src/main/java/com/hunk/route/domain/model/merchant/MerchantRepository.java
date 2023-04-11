@@ -1,8 +1,6 @@
-package com.hunk.route.domain;
+package com.hunk.route.domain.model.merchant;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * @author hunk

@@ -2,12 +2,14 @@ package com.hunk.route.application;
 
 import com.hunk.route.ApplicationTests;
 import com.hunk.route.domain.*;
+import com.hunk.route.domain.model.em.AccountType;
+import com.hunk.route.domain.model.em.CardType;
+import com.hunk.route.domain.model.em.TradeType;
+import com.hunk.route.domain.model.merchant.MerchantRoute;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

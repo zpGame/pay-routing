@@ -4,6 +4,9 @@ import com.hunk.route.application.MerchantService;
 import com.hunk.route.domain.*;
 import com.hunk.route.domain.event.MerchantRouteEvent;
 import com.hunk.route.domain.event.ResultWithDomainEvents;
+import com.hunk.route.domain.model.merchant.MerchantNotFoundException;
+import com.hunk.route.domain.model.merchant.MerchantRepository;
+import com.hunk.route.domain.model.merchant.MerchantRoute;
 import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
 import org.springframework.transaction.annotation.Transactional;
 

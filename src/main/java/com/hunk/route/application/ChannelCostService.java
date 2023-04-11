@@ -1,6 +1,6 @@
 package com.hunk.route.application;
 
-import com.hunk.route.domain.ChannelCost;
+import com.hunk.route.domain.model.channel.ChannelCost;
 import com.hunk.route.domain.PaymentChannel;
 
 import java.util.List;

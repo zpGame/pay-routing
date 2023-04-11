@@ -1,4 +1,4 @@
-package com.hunk.route.domain;
+package com.hunk.route.domain.model.bank;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

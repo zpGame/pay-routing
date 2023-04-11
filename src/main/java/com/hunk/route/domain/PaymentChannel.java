@@ -1,5 +1,7 @@
 package com.hunk.route.domain;
 
+import com.hunk.route.domain.model.em.ChannelE;
+import com.hunk.route.domain.model.em.ServiceE;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

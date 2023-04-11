@@ -1,7 +1,7 @@
 package com.hunk.route.interfaces.facade.internal.assembler;
 
-import com.hunk.route.domain.BankInfo;
-import com.hunk.route.domain.MerchantRoute;
+import com.hunk.route.domain.model.bank.BankInfo;
+import com.hunk.route.domain.model.merchant.MerchantRoute;
 import com.hunk.route.domain.RouteChannel;
 import com.hunk.route.domain.RouteRule;
 import com.hunk.route.interfaces.facade.dto.RouteInfoDTO;

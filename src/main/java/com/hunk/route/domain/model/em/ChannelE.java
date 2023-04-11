@@ -1,4 +1,4 @@
-package com.hunk.route.domain;
+package com.hunk.route.domain.model.em;
 
 import org.apache.commons.lang3.StringUtils;
 

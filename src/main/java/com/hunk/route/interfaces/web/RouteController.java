@@ -2,6 +2,8 @@ package com.hunk.route.interfaces.web;
 
 import com.hunk.route.application.RouteService;
 import com.hunk.route.domain.*;
+import com.hunk.route.domain.model.em.ChannelE;
+import com.hunk.route.domain.model.em.ServiceE;
 import com.hunk.route.interfaces.facade.dto.RouteChannelDTO;
 import com.hunk.route.interfaces.facade.dto.RouteInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.RouteChannelAssembler;

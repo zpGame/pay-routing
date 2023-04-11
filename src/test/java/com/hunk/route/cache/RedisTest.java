@@ -2,8 +2,8 @@ package com.hunk.route.cache;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hunk.route.ApplicationTests;
-import com.hunk.route.domain.BankName;
-import com.hunk.route.domain.CardType;
+import com.hunk.route.domain.model.bank.BankName;
+import com.hunk.route.domain.model.em.CardType;
 import com.hunk.route.domain.RouteConstants;
 import com.hunk.route.domain.event.BankInfoEvent;
 import com.hunk.route.infrastructure.cache.CacheParam;

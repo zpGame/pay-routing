@@ -1,9 +1,9 @@
 package com.hunk.route.application;
 
-import com.hunk.route.domain.AccountType;
+import com.hunk.route.domain.model.em.AccountType;
 import com.hunk.route.domain.Money;
 import com.hunk.route.domain.RouteRule;
-import com.hunk.route.domain.TradeType;
+import com.hunk.route.domain.model.em.TradeType;
 
 import java.util.List;
 

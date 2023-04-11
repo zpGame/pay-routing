@@ -1,7 +1,7 @@
 package com.hunk.route.interfaces.facade.internal.assembler;
 
-import com.hunk.route.domain.BankInfo;
-import com.hunk.route.domain.BankName;
+import com.hunk.route.domain.model.bank.BankInfo;
+import com.hunk.route.domain.model.bank.BankName;
 import com.hunk.route.interfaces.facade.dto.BankInfoDTO;
 
 /**

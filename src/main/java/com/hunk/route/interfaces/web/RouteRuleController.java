@@ -2,6 +2,8 @@ package com.hunk.route.interfaces.web;
 
 import com.hunk.route.application.RouteRuleService;
 import com.hunk.route.domain.*;
+import com.hunk.route.domain.model.em.AccountType;
+import com.hunk.route.domain.model.em.TradeType;
 import com.hunk.route.interfaces.facade.dto.RuleInfoDTO;
 import com.hunk.route.interfaces.facade.internal.assembler.RuleAssembler;
 import com.hunk.route.interfaces.web.command.RuleCommand;

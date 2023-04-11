@@ -1,8 +1,8 @@
 package com.hunk.route.application;
 
-import com.hunk.route.domain.BankInfo;
-import com.hunk.route.domain.BankName;
-import com.hunk.route.domain.CardType;
+import com.hunk.route.domain.model.bank.BankInfo;
+import com.hunk.route.domain.model.bank.BankName;
+import com.hunk.route.domain.model.em.CardType;
 
 import java.util.Optional;
 
