@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 /**
  * @author Zhao Peng
  * @date 2022/4/12
- *     <p>Redis工具类
+ *       <p>
+ *       Redis工具类
  */
 public class RedisCache {
 
@@ -26,13 +27,7 @@ public class RedisCache {
         final Key key = param.getKey();
         redisTemplate.opsForZSet().incrementScore(key.getKeyPrefix(), key.getKeySuffix(), 1);
         final CacheParam.TimeOut timeout = param.getTimeout();
-        redisTemplate
-                .opsForValue()
-                .set(
-                        key.getFullKey(),
-                        param.getData(),
-                        timeout.getTimeout(),
-                        timeout.getTimeUnit());
+        redisTemplate.opsForValue().set(key.getFullKey(), param.getData(), timeout.getTimeout(), timeout.getTimeUnit());
     }
 
     public void deleteCache(Key key) {
@@ -45,38 +40,29 @@ public class RedisCache {
      *
      * @param param 查询参数
      * @param aClass 转换类
-     * @return 结果
      * @param <T> 泛型
-     *     <p>todo 目前逻辑有缺陷，后期改；目前不支持条件查询
+     *            <p>
+     *            todo 目前逻辑有缺陷，后期改；目前不支持条件查询
+     * @return 结果
      */
     public <T> Query.Result<T> pageQueryCache(Query.Param param, Class<T> aClass) {
         final String key = param.getKey();
         Set<Object> range = redisTemplate.opsForZSet().range(key, param.getStart(), param.getEnd());
         Objects.requireNonNull(range);
-        final List<T> collect =
-                range.stream()
-                        .map(String::valueOf)
-                        .map(id -> this.query(new Key(key, id), aClass))
-                        .collect(Collectors.toList());
+        final List<T> collect = range.stream().map(String::valueOf).map(id -> this.query(new Key(key, id), aClass))
+            .collect(Collectors.toList());
         final Long aLong = redisTemplate.opsForZSet().zCard(RouteConstants.BANK_INFO_KEY_);
         return new Query.Result<>(collect, null == aLong ? 0 : aLong);
     }
 
     public <T> T query(Key key, Class<T> aClass) {
-        JSONObject object = (JSONObject) redisTemplate.opsForValue().get(key.getFullKey());
-        if (null == object) return null;
-        return object.toJavaObject(aClass);
+        JSONObject object = (JSONObject)redisTemplate.opsForValue().get(key.getFullKey());
+        return null == object ? null : object.toJavaObject(aClass);
     }
 
     public void reviseCache(CacheParam<?> param) {
         Key key = param.getKey();
         CacheParam.TimeOut timeout = param.getTimeout();
-        redisTemplate
-                .opsForValue()
-                .set(
-                        key.getFullKey(),
-                        param.getData(),
-                        timeout.getTimeout(),
-                        timeout.getTimeUnit());
+        redisTemplate.opsForValue().set(key.getFullKey(), param.getData(), timeout.getTimeout(), timeout.getTimeUnit());
     }
 }
