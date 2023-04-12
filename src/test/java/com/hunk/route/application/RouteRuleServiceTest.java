@@ -2,8 +2,8 @@ package com.hunk.route.application;
 
 import com.hunk.route.ApplicationTests;
 import com.hunk.route.domain.model.em.AccountType;
-import com.hunk.route.domain.Money;
-import com.hunk.route.domain.RouteRule;
+import com.hunk.route.domain.model.Money;
+import com.hunk.route.domain.model.rule.RouteRule;
 import com.hunk.route.domain.model.em.TradeType;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

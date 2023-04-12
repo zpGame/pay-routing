@@ -1,9 +1,9 @@
 package com.hunk.route.domain.model.merchant;
 
-import com.hunk.route.domain.BaseEntity;
-import com.hunk.route.domain.CreateInfo;
-import com.hunk.route.domain.MajorKey;
-import com.hunk.route.domain.RouteChannel;
+import com.hunk.route.domain.model.BaseEntity;
+import com.hunk.route.domain.model.CreateInfo;
+import com.hunk.route.domain.model.MajorKey;
+import com.hunk.route.domain.model.route.RouteChannel;
 import com.hunk.route.domain.event.MerchantRouteEvent;
 import com.hunk.route.domain.event.ResultWithDomainEvents;
 import lombok.Getter;

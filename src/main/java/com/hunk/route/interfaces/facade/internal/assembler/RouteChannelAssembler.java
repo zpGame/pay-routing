@@ -1,6 +1,6 @@
 package com.hunk.route.interfaces.facade.internal.assembler;
 
-import com.hunk.route.domain.RouteChannel;
+import com.hunk.route.domain.model.route.RouteChannel;
 import com.hunk.route.interfaces.facade.dto.RouteChannelDTO;
 
 /**

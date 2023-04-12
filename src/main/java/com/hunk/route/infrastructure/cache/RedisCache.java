@@ -1,7 +1,7 @@
 package com.hunk.route.infrastructure.cache;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hunk.route.domain.RouteConstants;
+import com.hunk.route.domain.model.route.RouteConstants;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;

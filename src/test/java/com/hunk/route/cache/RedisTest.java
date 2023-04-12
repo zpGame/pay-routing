@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hunk.route.ApplicationTests;
 import com.hunk.route.domain.model.bank.BankName;
 import com.hunk.route.domain.model.em.CardType;
-import com.hunk.route.domain.RouteConstants;
+import com.hunk.route.domain.model.route.RouteConstants;
 import com.hunk.route.domain.event.BankInfoEvent;
 import com.hunk.route.infrastructure.cache.CacheParam;
 import com.hunk.route.infrastructure.cache.Key;

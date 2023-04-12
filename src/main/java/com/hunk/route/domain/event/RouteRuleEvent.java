@@ -1,7 +1,7 @@
 package com.hunk.route.domain.event;
 
 import com.hunk.route.domain.model.em.AccountType;
-import com.hunk.route.domain.Money;
+import com.hunk.route.domain.model.Money;
 import com.hunk.route.domain.model.em.TradeType;
 import com.hunk.route.infrastructure.messaging.event.CustomEvent;
 import lombok.Getter;

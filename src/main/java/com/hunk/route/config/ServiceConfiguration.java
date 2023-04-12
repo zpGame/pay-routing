@@ -2,10 +2,11 @@ package com.hunk.route.config;
 
 import com.hunk.route.application.*;
 import com.hunk.route.application.impl.*;
-import com.hunk.route.domain.*;
 import com.hunk.route.domain.model.bank.BankInfoRepository;
 import com.hunk.route.domain.model.channel.ChannelCostRepository;
 import com.hunk.route.domain.model.merchant.MerchantRepository;
+import com.hunk.route.domain.model.route.RouteRepository;
+import com.hunk.route.domain.model.rule.RouteRuleRepository;
 import com.hunk.route.infrastructure.messaging.event.CustomEventBus;
 import org.springframework.context.annotation.Bean;
 

@@ -1,7 +1,7 @@
 package com.hunk.route.domain.event;
 
 import com.google.common.eventbus.Subscribe;
-import com.hunk.route.domain.RouteConstants;
+import com.hunk.route.domain.model.route.RouteConstants;
 import com.hunk.route.infrastructure.cache.CacheParam;
 import com.hunk.route.infrastructure.cache.Key;
 import com.hunk.route.infrastructure.cache.RedisCache;

@@ -1,4 +1,4 @@
-package com.hunk.route.domain;
+package com.hunk.route.domain.model.channel;
 
 import com.hunk.route.domain.model.em.ChannelE;
 import com.hunk.route.domain.model.em.ServiceE;

@@ -1,5 +1,9 @@
-package com.hunk.route.domain;
+package com.hunk.route.domain.model.rule;
 
+import com.hunk.route.domain.model.BaseEntity;
+import com.hunk.route.domain.model.CreateInfo;
+import com.hunk.route.domain.model.MajorKey;
+import com.hunk.route.domain.model.Money;
 import com.hunk.route.domain.event.ResultWithDomainEvents;
 import com.hunk.route.domain.event.RouteRuleEvent;
 import com.hunk.route.domain.model.bank.BankInfo;

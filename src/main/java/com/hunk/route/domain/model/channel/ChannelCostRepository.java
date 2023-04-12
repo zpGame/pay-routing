@@ -1,7 +1,5 @@
 package com.hunk.route.domain.model.channel;
 
-import com.hunk.route.domain.PaymentChannel;
-import com.hunk.route.domain.model.channel.ChannelCost;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

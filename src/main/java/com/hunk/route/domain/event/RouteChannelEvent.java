@@ -1,7 +1,7 @@
 package com.hunk.route.domain.event;
 
-import com.hunk.route.domain.EffectiveTime;
-import com.hunk.route.domain.PaymentChannel;
+import com.hunk.route.domain.model.route.EffectiveTime;
+import com.hunk.route.domain.model.channel.PaymentChannel;
 import com.hunk.route.infrastructure.messaging.event.CustomEvent;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;

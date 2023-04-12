@@ -1,5 +1,6 @@
 package com.hunk.route.domain;
 
+import com.hunk.route.domain.model.CreateInfo;
 import com.hunk.route.domain.model.bank.BankInfo;
 import com.hunk.route.domain.model.bank.BankName;
 import com.hunk.route.domain.model.em.CardType;

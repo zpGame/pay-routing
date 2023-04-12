@@ -1,9 +1,11 @@
 package com.hunk.route.application;
 
 import com.hunk.route.ApplicationTests;
-import com.hunk.route.domain.*;
+import com.hunk.route.domain.model.channel.PaymentChannel;
 import com.hunk.route.domain.model.em.ChannelE;
 import com.hunk.route.domain.model.em.ServiceE;
+import com.hunk.route.domain.model.route.EffectiveTime;
+import com.hunk.route.domain.model.route.RouteChannel;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,8 +1,8 @@
 package com.hunk.route.application;
 
-import com.hunk.route.domain.EffectiveTime;
-import com.hunk.route.domain.PaymentChannel;
-import com.hunk.route.domain.RouteChannel;
+import com.hunk.route.domain.model.route.EffectiveTime;
+import com.hunk.route.domain.model.channel.PaymentChannel;
+import com.hunk.route.domain.model.route.RouteChannel;
 
 /**
  * @author hunk

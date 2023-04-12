@@ -1,8 +1,7 @@
 package com.hunk.route.domain.model.channel;
 
-import com.hunk.route.domain.BaseEntity;
-import com.hunk.route.domain.CreateInfo;
-import com.hunk.route.domain.PaymentChannel;
+import com.hunk.route.domain.model.BaseEntity;
+import com.hunk.route.domain.model.CreateInfo;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

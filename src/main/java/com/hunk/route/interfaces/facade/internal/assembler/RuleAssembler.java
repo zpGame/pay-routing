@@ -1,6 +1,6 @@
 package com.hunk.route.interfaces.facade.internal.assembler;
 
-import com.hunk.route.domain.RouteRule;
+import com.hunk.route.domain.model.rule.RouteRule;
 import com.hunk.route.interfaces.facade.dto.BankInfoDTO;
 import com.hunk.route.interfaces.facade.dto.RuleInfoDTO;
 

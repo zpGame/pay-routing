@@ -1,5 +1,6 @@
 package com.hunk.route.domain;
 
+import com.hunk.route.domain.model.route.RouteConstants;
 import com.hunk.route.infrastructure.cache.Query;
 import org.junit.Test;
 

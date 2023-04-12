@@ -1,9 +1,8 @@
 package com.hunk.route.domain;
 
+import com.hunk.route.domain.model.Money;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * @author hunk
