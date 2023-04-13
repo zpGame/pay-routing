@@ -19,7 +19,7 @@ public class BaseController {
     protected <T> void pageWrite(HttpServletResponse response, long total, List<T> infoDtoS)
             throws IOException {
         Map<String, Object> ret = new HashMap<>(16);
-        ret.put("total", total);
+        ret.put("pages", total);
         ret.put("rows", infoDtoS);
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(JSONObject.toJSONString(ret));

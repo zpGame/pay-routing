@@ -1,0 +1,69 @@
+body,
+html {
+    width: 100%;
+    height: 100%;
+    font: 14px/1.5 "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+    background-color: #f5f6f7;
+    color: #333;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+a,
+abbr,
+body,
+cite,
+dd,
+dl,
+dt,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+iframe,
+input,
+li,
+object,
+ol,
+p,
+pre,
+span,
+ul {
+    font-family: 'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;
+}
+
+h1,
+h2,
+h3,
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    cursor: pointer;
+    color: #333;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+
+a:hover {
+    color: #ff6700;
+}

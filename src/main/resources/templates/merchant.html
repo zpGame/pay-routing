@@ -150,7 +150,7 @@
     function getPage(pageNo) {
         let dataRow = "";
         $.ajax({
-                url: ctx + "/bank/list.do",
+                url: ctx + "/merchant/list.do",
                 type: "post",
                 data: {
                     "page": pageNo,
@@ -216,7 +216,7 @@
         if (confirm("确定删除数据？")) {
             $.ajax({
                 type: "POST",
-                url: ctx + "/bank/delete.do",
+                url: ctx + "/merchant/delete.do",
                 traditional: true,
                 data: {
                     id: id
@@ -251,7 +251,7 @@
         const command = {"id": id, bankName: bankName, bankShortName: bankShortName, cardType: cardType};
 
         $.ajax({
-            url: ctx + "/bank/edit.do",
+            url: ctx + "/merchant/edit.do",
             type: "POST",
             data: command,
             dataType: "json",
@@ -277,7 +277,7 @@
         const command = {bankName: bankName, bankShortName: bankShortName, cardType: cardType};
 
         $.ajax({
-            url: ctx + "/bank/add.do",
+            url: ctx + "/merchant/add.do",
             type: "POST",
             data: command,
             dataType: "json",

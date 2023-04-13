@@ -36,6 +36,11 @@ public class MerchantController extends BaseController {
     @Resource
     private MerchantRepository merchantRepository;
 
+    @GetMapping()
+    public String index() {
+        return "merchant";
+    }
+
     @GetMapping("/list.do")
     public void list(
             HttpServletResponse response,
@@ -48,7 +53,7 @@ public class MerchantController extends BaseController {
                 all.getContent().stream()
                         .map(MerchantAssembler::toDto)
                         .collect(Collectors.toList());
-        super.pageWrite(response, all.getTotalElements(), infoDtoS);
+        super.pageWrite(response, all.getTotalPages(), infoDtoS);
     }
 
     @PostMapping("/add.do")

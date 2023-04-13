@@ -37,6 +37,11 @@ public class RouteRuleController extends BaseController {
 
     @Resource private RouteRuleRepository routeRuleRepository;
 
+    @GetMapping()
+    public String index() {
+        return "rule";
+    }
+
     @GetMapping("/list.do")
     public void list(
             HttpServletResponse response,
@@ -47,7 +52,7 @@ public class RouteRuleController extends BaseController {
         Page<RouteRule> all = routeRuleRepository.findAll(pageRequest);
         List<RuleInfoDTO> infoDtoS =
                 all.getContent().stream().map(RuleAssembler::toDto).collect(Collectors.toList());
-        super.pageWrite(response, all.getTotalElements(), infoDtoS);
+        super.pageWrite(response, all.getTotalPages(), infoDtoS);
     }
 
     @PostMapping("/add.do")

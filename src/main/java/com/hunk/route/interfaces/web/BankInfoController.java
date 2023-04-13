@@ -50,7 +50,7 @@ public class BankInfoController extends BaseController {
         Page<BankInfo> all = bankInfoRepository.findAll(pageRequest);
         List<BankInfoDTO> infoDtoS =
                 all.getContent().stream().map(BanInfoAssembler::toDto).collect(Collectors.toList());
-        super.pageWrite(response, all.getTotalElements(), infoDtoS);
+        super.pageWrite(response, all.getTotalPages(), infoDtoS);
     }
 
     @PostMapping("/add.do")

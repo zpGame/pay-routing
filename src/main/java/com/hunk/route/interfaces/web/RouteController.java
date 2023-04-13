@@ -46,7 +46,7 @@ public class RouteController extends BaseController {
 
     @GetMapping()
     public String index() {
-        return "index";
+        return "route";
     }
 
     @PostMapping("/obtainRoute.do")
@@ -67,7 +67,7 @@ public class RouteController extends BaseController {
                 all.getContent().stream()
                         .map(RouteChannelAssembler::toDto)
                         .collect(Collectors.toList());
-        super.pageWrite(response, all.getTotalElements(), infoDtoS);
+        super.pageWrite(response, all.getTotalPages(), infoDtoS);
     }
 
     Function<String, ChannelE> channelE =

@@ -1,53 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>首页</title>
-    <link rel="stylesheet" type="text/css" href="webjars/jquery-easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="webjars/jquery-easyui/themes/icon.css">
-    <script type="text/javascript" src="webjars/jquery-easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="webjars/jquery-easyui/jquery.easyui.min.js"></script>
-</head>
-<body class="easyui-layout">
-<div data-options="region:'north',border:false" style="height:56px;background:#B3DFDA;padding:2px"><p align="center">
-    路由系统</p></div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理后台</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="" th:href="@{/css/index.css}">
+    <style type="text/css">
+        .footer {
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            margin-top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*position: absolute;*/
+            z-index: 10;
+            background-color: #343a40;
+        }
 
-<div id="sm" data-options="region:'west',split:true,title:'导航栏',data:data, onSelect:addTab" class="easyui-sidemenu"
-     style="width:200px;padding:10px;">
-    <ul>
-        <li><a href="javascript:void(0)" onclick="addTab('Merchant')">Merchant</a></li>
-        <li><a href="javascript:void(0)" onclick="addTab('Route')">Route</a></li>
-        <li><a href="javascript:void(0)" onclick="addTab('Rule')">Rule</a></li>
-        <li><a href="javascript:void(0)" onclick="addTab('BankInfo','bank')">BankInfo</a></li>
-    </ul>
+        .footer a {
+            font-family: Georgia, "Times New Roman", Times, serif;;
+            color: #fff;
+        }
+
+        .navbar-nav {
+            width: 300px;
+            float: left !important;
+            display: block !important;
+        }
+
+        .nav-item {
+            padding-left: 20px;
+            float: left !important;
+        }
+
+        .menua {
+            font-size: 1.2em;
+        }
+
+        .menua:hover {
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+<!--顶部导航栏部分-->
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">支付路由管理</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="sidebar-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active menua" href="merchant.html" th:href="@{merchant}" target="mainFrame">
+                            <span data-feather="home"></span>
+                            商户信息 <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active menua" href="route.html" th:href="@{route}" target="mainFrame">
+                            <span data-feather="home"></span>
+                            路由信息 <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active menua" href="rule.html" th:href="@{rule}" target="mainFrame">
+                            <span data-feather="home"></span>
+                            规则信息 <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active menua" href="bankInfo.html" th:href="@{bank}" target="mainFrame">
+                            <span data-feather="home"></span>
+                            银行信息 <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- 中间主体内容部分 -->
+        <main class="main col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <iframe id="mainFrame" name="mainFrame" width="100%" height="700px" frameBorder="0"></iframe>
+        </main>
+    </div>
 </div>
 
-
-<div data-options="region:'east'" style="width:5px;padding:5px;"></div>
-<div data-options="region:'south',border:false" style="height:10px;background:#A9FACD;padding:10px;"></div>
-<div data-options="region:'center'" class="easyui-tabs" id="tt"></div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
 </body>
 
-<script type="text/javascript">
-
-    function addTab(title, url) {
-        if ($('#tt').tabs('exists', title)) {
-            $('#tt').tabs('select', title);
-        } else {
-            var content = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:99%;"></iframe>';
-            $('#tt').tabs('add', {
-                title: title.text,
-                content: content,
-                closable: true
-            });
-        }
-    }
-
-    const data = [{
-        text: 'Item1'
-    }, {
-        text: 'BankInfo'
-    }];
-
-</script>
 </html>
